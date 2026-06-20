@@ -69,6 +69,10 @@
 		D4C0DE000000000000000051 /* AutoEqImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000149 /* AutoEqImporter.swift */; };
 		D4C0DE000000000000000052 /* HeadphonePresetRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000150 /* HeadphonePresetRepository.swift */; };
 		D4C0DE000000000000000053 /* HeadphonePresetSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000151 /* HeadphonePresetSearchViewModel.swift */; };
+		D4C0DE000000000000000054 /* CustomDSPTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000152 /* CustomDSPTests.swift */; };
+		D4C0DE000000000000000055 /* BiquadCoefficients.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000153 /* BiquadCoefficients.swift */; };
+		D4C0DE000000000000000056 /* BiquadFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000154 /* BiquadFilter.swift */; };
+		D4C0DE000000000000000057 /* CustomBiquadDSPPrototype.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000155 /* CustomBiquadDSPPrototype.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -144,6 +148,10 @@
 		D4C0DE000000000000000149 /* AutoEqImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoEqImporter.swift; sourceTree = "<group>"; };
 		D4C0DE000000000000000150 /* HeadphonePresetRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadphonePresetRepository.swift; sourceTree = "<group>"; };
 		D4C0DE000000000000000151 /* HeadphonePresetSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadphonePresetSearchViewModel.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000152 /* CustomDSPTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDSPTests.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000153 /* BiquadCoefficients.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiquadCoefficients.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000154 /* BiquadFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiquadFilter.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000155 /* CustomBiquadDSPPrototype.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBiquadDSPPrototype.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -298,6 +306,9 @@
 				D4C0DE000000000000000144 /* EQBandwidthConverter.swift */,
 				D4C0DE000000000000000149 /* AutoEqImporter.swift */,
 				D4C0DE000000000000000150 /* HeadphonePresetRepository.swift */,
+				D4C0DE000000000000000153 /* BiquadCoefficients.swift */,
+				D4C0DE000000000000000154 /* BiquadFilter.swift */,
+				D4C0DE000000000000000155 /* CustomBiquadDSPPrototype.swift */,
 			);
 			path = DSP;
 			sourceTree = "<group>";
@@ -321,6 +332,7 @@
 				D4C0DE00000000000000013A /* PlaybackSystemTests.swift */,
 				D4C0DE000000000000000140 /* EqualizerTests.swift */,
 				D4C0DE000000000000000148 /* AutoEqImporterTests.swift */,
+				D4C0DE000000000000000152 /* CustomDSPTests.swift */,
 				D4C0DE00000000000000010F /* Info.plist */,
 			);
 			path = PlayerAppTests;
@@ -506,6 +518,9 @@
 				D4C0DE000000000000000046 /* EQBandwidthConverter.swift in Sources */,
 				D4C0DE000000000000000051 /* AutoEqImporter.swift in Sources */,
 				D4C0DE000000000000000052 /* HeadphonePresetRepository.swift in Sources */,
+				D4C0DE000000000000000055 /* BiquadCoefficients.swift in Sources */,
+				D4C0DE000000000000000056 /* BiquadFilter.swift in Sources */,
+				D4C0DE000000000000000057 /* CustomBiquadDSPPrototype.swift in Sources */,
 				D4C0DE000000000000000009 /* SharedModule.swift in Sources */,
 				D4C0DE00000000000000000A /* LibraryFeature.swift in Sources */,
 				D4C0DE00000000000000000B /* NowPlayingFeature.swift in Sources */,
@@ -531,6 +546,7 @@
 				D4C0DE00000000000000003C /* PlaybackSystemTests.swift in Sources */,
 				D4C0DE000000000000000042 /* EqualizerTests.swift in Sources */,
 				D4C0DE000000000000000050 /* AutoEqImporterTests.swift in Sources */,
+				D4C0DE000000000000000054 /* CustomDSPTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
