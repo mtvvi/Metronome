@@ -73,6 +73,10 @@
 		D4C0DE000000000000000055 /* BiquadCoefficients.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000153 /* BiquadCoefficients.swift */; };
 		D4C0DE000000000000000056 /* BiquadFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000154 /* BiquadFilter.swift */; };
 		D4C0DE000000000000000057 /* CustomBiquadDSPPrototype.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000155 /* CustomBiquadDSPPrototype.swift */; };
+		D4C0DE000000000000000058 /* GaplessQueueTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000156 /* GaplessQueueTests.swift */; };
+		D4C0DE000000000000000059 /* PlaybackQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000157 /* PlaybackQueue.swift */; };
+		D4C0DE00000000000000005A /* QueueDecoderPreparing.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000158 /* QueueDecoderPreparing.swift */; };
+		D4C0DE00000000000000005B /* GaplessPlaybackCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000159 /* GaplessPlaybackCoordinator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -152,6 +156,10 @@
 		D4C0DE000000000000000153 /* BiquadCoefficients.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiquadCoefficients.swift; sourceTree = "<group>"; };
 		D4C0DE000000000000000154 /* BiquadFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiquadFilter.swift; sourceTree = "<group>"; };
 		D4C0DE000000000000000155 /* CustomBiquadDSPPrototype.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomBiquadDSPPrototype.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000156 /* GaplessQueueTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaplessQueueTests.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000157 /* PlaybackQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackQueue.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000158 /* QueueDecoderPreparing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueDecoderPreparing.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000159 /* GaplessPlaybackCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaplessPlaybackCoordinator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -258,6 +266,9 @@
 				D4C0DE00000000000000013E /* AudioRouteDiagnostics.swift */,
 				D4C0DE00000000000000013F /* PlaybackCommandAdapters.swift */,
 				D4C0DE000000000000000145 /* EqualizerNodeController.swift */,
+				D4C0DE000000000000000157 /* PlaybackQueue.swift */,
+				D4C0DE000000000000000158 /* QueueDecoderPreparing.swift */,
+				D4C0DE000000000000000159 /* GaplessPlaybackCoordinator.swift */,
 			);
 			path = AudioCore;
 			sourceTree = "<group>";
@@ -333,6 +344,7 @@
 				D4C0DE000000000000000140 /* EqualizerTests.swift */,
 				D4C0DE000000000000000148 /* AutoEqImporterTests.swift */,
 				D4C0DE000000000000000152 /* CustomDSPTests.swift */,
+				D4C0DE000000000000000156 /* GaplessQueueTests.swift */,
 				D4C0DE00000000000000010F /* Info.plist */,
 			);
 			path = PlayerAppTests;
@@ -491,6 +503,9 @@
 				D4C0DE000000000000000040 /* AudioRouteDiagnostics.swift in Sources */,
 				D4C0DE000000000000000041 /* PlaybackCommandAdapters.swift in Sources */,
 				D4C0DE000000000000000047 /* EqualizerNodeController.swift in Sources */,
+				D4C0DE000000000000000059 /* PlaybackQueue.swift in Sources */,
+				D4C0DE00000000000000005A /* QueueDecoderPreparing.swift in Sources */,
+				D4C0DE00000000000000005B /* GaplessPlaybackCoordinator.swift in Sources */,
 				D4C0DE000000000000000021 /* AudioFileExtensionFilter.swift in Sources */,
 				D4C0DE000000000000000022 /* ScannedAudioFile.swift in Sources */,
 				D4C0DE000000000000000023 /* LibraryScanner.swift in Sources */,
@@ -547,6 +562,7 @@
 				D4C0DE000000000000000042 /* EqualizerTests.swift in Sources */,
 				D4C0DE000000000000000050 /* AutoEqImporterTests.swift in Sources */,
 				D4C0DE000000000000000054 /* CustomDSPTests.swift in Sources */,
+				D4C0DE000000000000000058 /* GaplessQueueTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
