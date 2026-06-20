@@ -1,0 +1,45 @@
+
+.codex/
+.codex-log/
+docs/superpowers/
+docs/plans/
+docs/recommendations/
+LOCAL_*.md
+*.local.md
+*recommendations*.md
+ios player app.txt
+
+# Xcode user state
+DerivedData/
+*.xcuserstate
+*.xcscmblueprint
+*.xccheckout
+*.moved-aside
+*.hmap
+*.ipa
+*.dSYM.zip
+*.dSYM
+*.xcodeproj/project.xcworkspace/xcuserdata/
+*.xcodeproj/xcuserdata/
+*.xcworkspace/xcuserdata/
+
+# Swift Package Manager build output
+.build/
+.swiftpm/
+
+# CocoaPods and Carthage generated output
+Pods/
+Carthage/Build/
+
+# macOS and editor noise
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+.vscode/
+.idea/
+
+# Logs and temporary files
+*.log
+tmp/
+temp/

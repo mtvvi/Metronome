@@ -1,0 +1,1 @@
+protocol SearchRepository: Sendable {}
