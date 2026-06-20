@@ -1,1 +1,3 @@
-enum SourcesFeature {}
+enum SourcesFeature {
+    static let title = "Sources"
+}

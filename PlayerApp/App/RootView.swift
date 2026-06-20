@@ -5,12 +5,7 @@ struct RootView: View {
 
     var body: some View {
         NavigationStack {
-            ContentUnavailableView(
-                "No Tracks",
-                systemImage: "music.note.list",
-                description: Text("Sources will appear here.")
-            )
-            .navigationTitle("Metronome")
+            SourcesView()
         }
     }
 }

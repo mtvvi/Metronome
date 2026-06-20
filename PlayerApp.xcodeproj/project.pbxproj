@@ -21,6 +21,30 @@
 		D4C0DE00000000000000000C /* SourcesFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE00000000000000010C /* SourcesFeature.swift */; };
 		D4C0DE00000000000000000D /* BootstrapTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE00000000000000010D /* BootstrapTests.swift */; };
 		D4C0DE00000000000000000E /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = D4C0DE000000000000000702 /* GRDB */; };
+		D4C0DE00000000000000000F /* DatabaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000112 /* DatabaseTests.swift */; };
+		D4C0DE000000000000000010 /* PlayerDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000113 /* PlayerDatabase.swift */; };
+		D4C0DE000000000000000011 /* DatabaseMigrations.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000114 /* DatabaseMigrations.swift */; };
+		D4C0DE000000000000000012 /* SourceRootRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000115 /* SourceRootRecord.swift */; };
+		D4C0DE000000000000000013 /* ArtworkRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000116 /* ArtworkRecord.swift */; };
+		D4C0DE000000000000000014 /* TrackRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000117 /* TrackRecord.swift */; };
+		D4C0DE000000000000000015 /* TrackSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000118 /* TrackSearchResult.swift */; };
+		D4C0DE000000000000000016 /* GRDBTrackRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000119 /* GRDBTrackRepository.swift */; };
+		D4C0DE000000000000000017 /* GRDB in Frameworks */ = {isa = PBXBuildFile; productRef = D4C0DE000000000000000702 /* GRDB */; };
+		D4C0DE000000000000000020 /* LibraryScannerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000122 /* LibraryScannerTests.swift */; };
+		D4C0DE000000000000000021 /* AudioFileExtensionFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000123 /* AudioFileExtensionFilter.swift */; };
+		D4C0DE000000000000000022 /* ScannedAudioFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000124 /* ScannedAudioFile.swift */; };
+		D4C0DE000000000000000023 /* LibraryScanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000125 /* LibraryScanner.swift */; };
+		D4C0DE000000000000000024 /* SourceRootAccess.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000126 /* SourceRootAccess.swift */; };
+		D4C0DE000000000000000025 /* SourceRootRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000127 /* SourceRootRepository.swift */; };
+		D4C0DE000000000000000026 /* FolderPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000128 /* FolderPicker.swift */; };
+		D4C0DE000000000000000027 /* SourcesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000129 /* SourcesViewModel.swift */; };
+		D4C0DE000000000000000028 /* SourcesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE00000000000000012A /* SourcesView.swift */; };
+		D4C0DE000000000000000030 /* MetadataReaderTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000130 /* MetadataReaderTests.swift */; };
+		D4C0DE000000000000000031 /* MetadataReading.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000131 /* MetadataReading.swift */; };
+		D4C0DE000000000000000032 /* AudioFileMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000132 /* AudioFileMetadata.swift */; };
+		D4C0DE000000000000000033 /* AudioMetadataTagNormalizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000133 /* AudioMetadataTagNormalizer.swift */; };
+		D4C0DE000000000000000034 /* AVFoundationMetadataReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000134 /* AVFoundationMetadataReader.swift */; };
+		D4C0DE000000000000000035 /* SFBAudioMetadataReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000135 /* SFBAudioMetadataReader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +75,29 @@
 		D4C0DE00000000000000010F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D4C0DE000000000000000110 /* PlayerApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PlayerApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D4C0DE000000000000000111 /* PlayerAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlayerAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D4C0DE000000000000000112 /* DatabaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseTests.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000113 /* PlayerDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerDatabase.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000114 /* DatabaseMigrations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseMigrations.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000115 /* SourceRootRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceRootRecord.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000116 /* ArtworkRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtworkRecord.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000117 /* TrackRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackRecord.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000118 /* TrackSearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackSearchResult.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000119 /* GRDBTrackRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRDBTrackRepository.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000122 /* LibraryScannerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryScannerTests.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000123 /* AudioFileExtensionFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioFileExtensionFilter.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000124 /* ScannedAudioFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedAudioFile.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000125 /* LibraryScanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryScanner.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000126 /* SourceRootAccess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceRootAccess.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000127 /* SourceRootRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceRootRepository.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000128 /* FolderPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FolderPicker.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000129 /* SourcesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourcesViewModel.swift; sourceTree = "<group>"; };
+		D4C0DE00000000000000012A /* SourcesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourcesView.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000130 /* MetadataReaderTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetadataReaderTests.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000131 /* MetadataReading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetadataReading.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000132 /* AudioFileMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioFileMetadata.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000133 /* AudioMetadataTagNormalizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioMetadataTagNormalizer.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000134 /* AVFoundationMetadataReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVFoundationMetadataReader.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000135 /* SFBAudioMetadataReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SFBAudioMetadataReader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +113,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4C0DE000000000000000017 /* GRDB in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -151,6 +199,15 @@
 		D4C0DE000000000000000209 /* LibraryCore */ = {
 			isa = PBXGroup;
 			children = (
+				D4C0DE000000000000000123 /* AudioFileExtensionFilter.swift */,
+				D4C0DE000000000000000124 /* ScannedAudioFile.swift */,
+				D4C0DE000000000000000125 /* LibraryScanner.swift */,
+				D4C0DE000000000000000126 /* SourceRootAccess.swift */,
+				D4C0DE000000000000000131 /* MetadataReading.swift */,
+				D4C0DE000000000000000132 /* AudioFileMetadata.swift */,
+				D4C0DE000000000000000133 /* AudioMetadataTagNormalizer.swift */,
+				D4C0DE000000000000000134 /* AVFoundationMetadataReader.swift */,
+				D4C0DE000000000000000135 /* SFBAudioMetadataReader.swift */,
 				D4C0DE000000000000000105 /* LibraryScanning.swift */,
 			);
 			path = LibraryCore;
@@ -159,6 +216,14 @@
 		D4C0DE00000000000000020A /* Persistence */ = {
 			isa = PBXGroup;
 			children = (
+				D4C0DE000000000000000113 /* PlayerDatabase.swift */,
+				D4C0DE000000000000000114 /* DatabaseMigrations.swift */,
+				D4C0DE000000000000000115 /* SourceRootRecord.swift */,
+				D4C0DE000000000000000116 /* ArtworkRecord.swift */,
+				D4C0DE000000000000000117 /* TrackRecord.swift */,
+				D4C0DE000000000000000118 /* TrackSearchResult.swift */,
+				D4C0DE000000000000000119 /* GRDBTrackRepository.swift */,
+				D4C0DE000000000000000127 /* SourceRootRepository.swift */,
 				D4C0DE000000000000000106 /* TrackRepository.swift */,
 				D4C0DE000000000000000107 /* SearchRepository.swift */,
 			);
@@ -185,6 +250,9 @@
 			isa = PBXGroup;
 			children = (
 				D4C0DE00000000000000010D /* BootstrapTests.swift */,
+				D4C0DE000000000000000112 /* DatabaseTests.swift */,
+				D4C0DE000000000000000122 /* LibraryScannerTests.swift */,
+				D4C0DE000000000000000130 /* MetadataReaderTests.swift */,
 				D4C0DE00000000000000010F /* Info.plist */,
 			);
 			path = PlayerAppTests;
@@ -202,6 +270,9 @@
 		D4C0DE00000000000000020F /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				D4C0DE000000000000000128 /* FolderPicker.swift */,
+				D4C0DE000000000000000129 /* SourcesViewModel.swift */,
+				D4C0DE00000000000000012A /* SourcesView.swift */,
 				D4C0DE00000000000000010C /* SourcesFeature.swift */,
 			);
 			path = Sources;
@@ -244,6 +315,9 @@
 				D4C0DE000000000000000902 /* PBXTargetDependency */,
 			);
 			name = PlayerAppTests;
+			packageProductDependencies = (
+				D4C0DE000000000000000702 /* GRDB */,
+			);
 			productName = PlayerAppTests;
 			productReference = D4C0DE000000000000000111 /* PlayerAppTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -315,13 +389,33 @@
 				D4C0DE000000000000000003 /* DependencyContainer.swift in Sources */,
 				D4C0DE000000000000000002 /* RootView.swift in Sources */,
 				D4C0DE000000000000000004 /* PlaybackControlling.swift in Sources */,
+				D4C0DE000000000000000021 /* AudioFileExtensionFilter.swift in Sources */,
+				D4C0DE000000000000000022 /* ScannedAudioFile.swift in Sources */,
+				D4C0DE000000000000000023 /* LibraryScanner.swift in Sources */,
+				D4C0DE000000000000000024 /* SourceRootAccess.swift in Sources */,
+				D4C0DE000000000000000031 /* MetadataReading.swift in Sources */,
+				D4C0DE000000000000000032 /* AudioFileMetadata.swift in Sources */,
+				D4C0DE000000000000000033 /* AudioMetadataTagNormalizer.swift in Sources */,
+				D4C0DE000000000000000034 /* AVFoundationMetadataReader.swift in Sources */,
+				D4C0DE000000000000000035 /* SFBAudioMetadataReader.swift in Sources */,
 				D4C0DE000000000000000005 /* LibraryScanning.swift in Sources */,
+				D4C0DE000000000000000010 /* PlayerDatabase.swift in Sources */,
+				D4C0DE000000000000000011 /* DatabaseMigrations.swift in Sources */,
+				D4C0DE000000000000000012 /* SourceRootRecord.swift in Sources */,
+				D4C0DE000000000000000013 /* ArtworkRecord.swift in Sources */,
+				D4C0DE000000000000000014 /* TrackRecord.swift in Sources */,
+				D4C0DE000000000000000015 /* TrackSearchResult.swift in Sources */,
+				D4C0DE000000000000000016 /* GRDBTrackRepository.swift in Sources */,
+				D4C0DE000000000000000025 /* SourceRootRepository.swift in Sources */,
 				D4C0DE000000000000000006 /* TrackRepository.swift in Sources */,
 				D4C0DE000000000000000007 /* SearchRepository.swift in Sources */,
 				D4C0DE000000000000000008 /* DSPModule.swift in Sources */,
 				D4C0DE000000000000000009 /* SharedModule.swift in Sources */,
 				D4C0DE00000000000000000A /* LibraryFeature.swift in Sources */,
 				D4C0DE00000000000000000B /* NowPlayingFeature.swift in Sources */,
+				D4C0DE000000000000000026 /* FolderPicker.swift in Sources */,
+				D4C0DE000000000000000027 /* SourcesViewModel.swift in Sources */,
+				D4C0DE000000000000000028 /* SourcesView.swift in Sources */,
 				D4C0DE00000000000000000C /* SourcesFeature.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -331,6 +425,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				D4C0DE00000000000000000D /* BootstrapTests.swift in Sources */,
+				D4C0DE00000000000000000F /* DatabaseTests.swift in Sources */,
+				D4C0DE000000000000000020 /* LibraryScannerTests.swift in Sources */,
+				D4C0DE000000000000000030 /* MetadataReaderTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
