@@ -65,6 +65,10 @@
 		D4C0DE000000000000000047 /* EqualizerNodeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000145 /* EqualizerNodeController.swift */; };
 		D4C0DE000000000000000048 /* EqualizerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000146 /* EqualizerViewModel.swift */; };
 		D4C0DE000000000000000049 /* EqualizerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000147 /* EqualizerView.swift */; };
+		D4C0DE000000000000000050 /* AutoEqImporterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000148 /* AutoEqImporterTests.swift */; };
+		D4C0DE000000000000000051 /* AutoEqImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000149 /* AutoEqImporter.swift */; };
+		D4C0DE000000000000000052 /* HeadphonePresetRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000150 /* HeadphonePresetRepository.swift */; };
+		D4C0DE000000000000000053 /* HeadphonePresetSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000151 /* HeadphonePresetSearchViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -136,6 +140,10 @@
 		D4C0DE000000000000000145 /* EqualizerNodeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EqualizerNodeController.swift; sourceTree = "<group>"; };
 		D4C0DE000000000000000146 /* EqualizerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EqualizerViewModel.swift; sourceTree = "<group>"; };
 		D4C0DE000000000000000147 /* EqualizerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EqualizerView.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000148 /* AutoEqImporterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoEqImporterTests.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000149 /* AutoEqImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoEqImporter.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000150 /* HeadphonePresetRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadphonePresetRepository.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000151 /* HeadphonePresetSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadphonePresetSearchViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -288,6 +296,8 @@
 				D4C0DE000000000000000142 /* EQPreset.swift */,
 				D4C0DE000000000000000143 /* EqualizerState.swift */,
 				D4C0DE000000000000000144 /* EQBandwidthConverter.swift */,
+				D4C0DE000000000000000149 /* AutoEqImporter.swift */,
+				D4C0DE000000000000000150 /* HeadphonePresetRepository.swift */,
 			);
 			path = DSP;
 			sourceTree = "<group>";
@@ -310,6 +320,7 @@
 				D4C0DE000000000000000136 /* SFBAudioIntegrationTests.swift */,
 				D4C0DE00000000000000013A /* PlaybackSystemTests.swift */,
 				D4C0DE000000000000000140 /* EqualizerTests.swift */,
+				D4C0DE000000000000000148 /* AutoEqImporterTests.swift */,
 				D4C0DE00000000000000010F /* Info.plist */,
 			);
 			path = PlayerAppTests;
@@ -339,6 +350,7 @@
 			isa = PBXGroup;
 			children = (
 				D4C0DE000000000000000146 /* EqualizerViewModel.swift */,
+				D4C0DE000000000000000151 /* HeadphonePresetSearchViewModel.swift */,
 				D4C0DE000000000000000147 /* EqualizerView.swift */,
 			);
 			path = Equalizer;
@@ -492,10 +504,13 @@
 				D4C0DE000000000000000044 /* EQPreset.swift in Sources */,
 				D4C0DE000000000000000045 /* EqualizerState.swift in Sources */,
 				D4C0DE000000000000000046 /* EQBandwidthConverter.swift in Sources */,
+				D4C0DE000000000000000051 /* AutoEqImporter.swift in Sources */,
+				D4C0DE000000000000000052 /* HeadphonePresetRepository.swift in Sources */,
 				D4C0DE000000000000000009 /* SharedModule.swift in Sources */,
 				D4C0DE00000000000000000A /* LibraryFeature.swift in Sources */,
 				D4C0DE00000000000000000B /* NowPlayingFeature.swift in Sources */,
 				D4C0DE000000000000000048 /* EqualizerViewModel.swift in Sources */,
+				D4C0DE000000000000000053 /* HeadphonePresetSearchViewModel.swift in Sources */,
 				D4C0DE000000000000000049 /* EqualizerView.swift in Sources */,
 				D4C0DE000000000000000026 /* FolderPicker.swift in Sources */,
 				D4C0DE000000000000000027 /* SourcesViewModel.swift in Sources */,
@@ -515,6 +530,7 @@
 				D4C0DE000000000000000036 /* SFBAudioIntegrationTests.swift in Sources */,
 				D4C0DE00000000000000003C /* PlaybackSystemTests.swift in Sources */,
 				D4C0DE000000000000000042 /* EqualizerTests.swift in Sources */,
+				D4C0DE000000000000000050 /* AutoEqImporterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

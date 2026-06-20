@@ -1,10 +1,16 @@
+import Foundation
 import SwiftUI
 
 struct EqualizerView: View {
     @StateObject private var viewModel: EqualizerViewModel
+    @StateObject private var headphonePresetViewModel: HeadphonePresetSearchViewModel
 
-    init(viewModel: EqualizerViewModel = EqualizerViewModel()) {
+    init(
+        viewModel: EqualizerViewModel = EqualizerViewModel(),
+        headphonePresetViewModel: HeadphonePresetSearchViewModel = HeadphonePresetSearchViewModel()
+    ) {
         _viewModel = StateObject(wrappedValue: viewModel)
+        _headphonePresetViewModel = StateObject(wrappedValue: headphonePresetViewModel)
     }
 
     var body: some View {
@@ -24,6 +30,60 @@ struct EqualizerView: View {
                 Text(viewModel.statusText)
                     .font(.footnote)
                     .foregroundStyle(.secondary)
+            }
+
+            Section("Headphone Presets") {
+                TextField(
+                    "Search headphones",
+                    text: Binding(
+                        get: { headphonePresetViewModel.query },
+                        set: { headphonePresetViewModel.updateQuery($0) }
+                    )
+                )
+                .textInputAutocapitalization(.never)
+                .autocorrectionDisabled()
+
+                if let errorMessage = headphonePresetViewModel.errorMessage {
+                    Label(errorMessage, systemImage: "exclamationmark.triangle")
+                        .foregroundStyle(.secondary)
+                } else if headphonePresetViewModel.results.isEmpty {
+                    Label("No presets found", systemImage: "headphones")
+                        .foregroundStyle(.secondary)
+                } else {
+                    ForEach(headphonePresetViewModel.results) { preset in
+                        Button {
+                            headphonePresetViewModel.select(preset)
+                        } label: {
+                            Label(preset.headphoneName, systemImage: "headphones")
+                        }
+                    }
+                }
+            }
+
+            if let selectedPreset = headphonePresetViewModel.selectedPreset {
+                Section("Preset Details") {
+                    LabeledContent("Headphones", value: selectedPreset.headphoneName)
+                    LabeledContent("Source", value: selectedPreset.sourceDescription)
+                    LabeledContent("Data", value: selectedPreset.attribution.sourceName)
+                    LabeledContent("License", value: selectedPreset.attribution.licenseName)
+                    LabeledContent(
+                        "Pinned Commit",
+                        value: String(selectedPreset.attribution.pinnedCommit.prefix(12))
+                    )
+
+                    if let repositoryURL = URL(string: selectedPreset.attribution.repositoryURL) {
+                        Link(destination: repositoryURL) {
+                            Label("AutoEq Repository", systemImage: "link")
+                        }
+                    }
+
+                    Button {
+                        headphonePresetViewModel.applySelected(to: viewModel)
+                    } label: {
+                        Label("Apply Preset", systemImage: "checkmark.circle")
+                    }
+                    .disabled(viewModel.isEqualizerLocked)
+                }
             }
 
             Section("Preamp") {

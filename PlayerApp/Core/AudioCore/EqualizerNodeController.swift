@@ -6,12 +6,14 @@ struct EqualizerBandNodeConfiguration: Equatable, Sendable {
     var gainDB: Float
     var bandwidthOctaves: Float
     var isBypassed: Bool
+    var filterType: PEQFilterType
 
     static let bypassed = EqualizerBandNodeConfiguration(
         frequencyHz: 1_000,
         gainDB: 0,
         bandwidthOctaves: 1,
-        isBypassed: true
+        isBypassed: true,
+        filterType: .peaking
     )
 }
 
@@ -36,14 +38,23 @@ final class EqualizerNodeController {
         node.isBypassed = state.isEffectivelyBypassed
         node.globalGainDB = Float(state.effectivePreampGainDB)
 
-        state.effectiveBands.prefix(16).enumerated().forEach { index, band in
+        let effectiveBands = Array(state.effectiveBands.prefix(16))
+
+        for index in 0..<16 {
+            guard effectiveBands.indices.contains(index) else {
+                node.configureBand(at: index, configuration: .bypassed)
+                continue
+            }
+
+            let band = effectiveBands[index]
             node.configureBand(
                 at: index,
                 configuration: EqualizerBandNodeConfiguration(
                     frequencyHz: Float(band.source.frequencyHz),
                     gainDB: Float(band.isBypassed ? 0 : band.source.gainDB),
                     bandwidthOctaves: Float(EQBandwidthConverter.bandwidthOctaves(forQ: band.source.q)),
-                    isBypassed: band.isBypassed
+                    isBypassed: band.isBypassed,
+                    filterType: band.source.filterType
                 )
             )
         }
@@ -74,10 +85,23 @@ final class AVAudioUnitEQNodeAdapter: EqualizerNodeApplying {
         guard equalizer.bands.indices.contains(index) else { return }
 
         let parameters = equalizer.bands[index]
-        parameters.filterType = .parametric
+        parameters.filterType = configuration.filterType.avAudioUnitEQFilterType
         parameters.frequency = configuration.frequencyHz
         parameters.gain = configuration.gainDB
         parameters.bandwidth = configuration.bandwidthOctaves
         parameters.bypass = configuration.isBypassed
+    }
+}
+
+private extension PEQFilterType {
+    var avAudioUnitEQFilterType: AVAudioUnitEQFilterType {
+        switch self {
+        case .peaking:
+            return .parametric
+        case .lowShelf:
+            return .lowShelf
+        case .highShelf:
+            return .highShelf
+        }
     }
 }

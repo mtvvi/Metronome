@@ -8,6 +8,7 @@ LOCAL_*.md
 *.local.md
 *recommendations*.md
 ios player app.txt
+PlayerApp/Resources/AutoEq/generated/
 
 # Xcode user state
 DerivedData/

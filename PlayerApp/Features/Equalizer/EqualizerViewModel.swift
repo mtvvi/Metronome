@@ -46,6 +46,16 @@ final class EqualizerViewModel: ObservableObject {
         preset.bands[index] = band
     }
 
+    func applyHeadphonePreset(_ headphonePreset: HeadphonePreset) {
+        var copiedPreset = headphonePreset.equalizerPreset
+        copiedPreset.id = UUID()
+        copiedPreset.name = headphonePreset.headphoneName
+        copiedPreset.isEnabled = true
+
+        preset = copiedPreset
+        clippingStatus = .notChecked
+    }
+
     func state() -> EqualizerState {
         EqualizerState(
             preset: preset,
