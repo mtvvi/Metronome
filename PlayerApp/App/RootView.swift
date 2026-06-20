@@ -2,10 +2,30 @@ import SwiftUI
 
 struct RootView: View {
     let container: DependencyContainer
+    @State private var selectedTab: AppTab = .sources
 
     var body: some View {
-        NavigationStack {
-            SourcesView()
+        TabView(selection: $selectedTab) {
+            NavigationStack {
+                SourcesView()
+            }
+            .tabItem {
+                Label("Sources", systemImage: "externaldrive")
+            }
+            .tag(AppTab.sources)
+
+            NavigationStack {
+                EqualizerView()
+            }
+            .tabItem {
+                Label("EQ", systemImage: "slider.horizontal.3")
+            }
+            .tag(AppTab.equalizer)
         }
     }
+}
+
+private enum AppTab: Hashable {
+    case sources
+    case equalizer
 }

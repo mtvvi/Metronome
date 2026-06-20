@@ -51,6 +51,13 @@
 		D4C0DE000000000000000039 /* SFBAudioPlaybackBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000139 /* SFBAudioPlaybackBackend.swift */; };
 		D4C0DE00000000000000003A /* SFBAudioEngine in Frameworks */ = {isa = PBXBuildFile; productRef = D4C0DE000000000000000704 /* SFBAudioEngine */; };
 		D4C0DE00000000000000003B /* SFBAudioEngine in Frameworks */ = {isa = PBXBuildFile; productRef = D4C0DE000000000000000704 /* SFBAudioEngine */; };
+		D4C0DE00000000000000003C /* PlaybackSystemTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE00000000000000013A /* PlaybackSystemTests.swift */; };
+		D4C0DE00000000000000003D /* NowPlayingController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE00000000000000013B /* NowPlayingController.swift */; };
+		D4C0DE00000000000000003E /* RemoteCommandController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE00000000000000013C /* RemoteCommandController.swift */; };
+		D4C0DE00000000000000003F /* AudioSessionEventObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE00000000000000013D /* AudioSessionEventObserver.swift */; };
+		D4C0DE000000000000000040 /* AudioRouteDiagnostics.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE00000000000000013E /* AudioRouteDiagnostics.swift */; };
+		D4C0DE000000000000000041 /* PlaybackCommandAdapters.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE00000000000000013F /* PlaybackCommandAdapters.swift */; };
+		D4C0DE000000000000000042 /* EqualizerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000140 /* EqualizerTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -108,6 +115,13 @@
 		D4C0DE000000000000000137 /* AudioSessionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSessionController.swift; sourceTree = "<group>"; };
 		D4C0DE000000000000000138 /* PlaybackEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackEngine.swift; sourceTree = "<group>"; };
 		D4C0DE000000000000000139 /* SFBAudioPlaybackBackend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SFBAudioPlaybackBackend.swift; sourceTree = "<group>"; };
+		D4C0DE00000000000000013A /* PlaybackSystemTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackSystemTests.swift; sourceTree = "<group>"; };
+		D4C0DE00000000000000013B /* NowPlayingController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowPlayingController.swift; sourceTree = "<group>"; };
+		D4C0DE00000000000000013C /* RemoteCommandController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteCommandController.swift; sourceTree = "<group>"; };
+		D4C0DE00000000000000013D /* AudioSessionEventObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSessionEventObserver.swift; sourceTree = "<group>"; };
+		D4C0DE00000000000000013E /* AudioRouteDiagnostics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRouteDiagnostics.swift; sourceTree = "<group>"; };
+		D4C0DE00000000000000013F /* PlaybackCommandAdapters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackCommandAdapters.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000140 /* EqualizerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EqualizerTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -207,6 +221,11 @@
 				D4C0DE000000000000000137 /* AudioSessionController.swift */,
 				D4C0DE000000000000000138 /* PlaybackEngine.swift */,
 				D4C0DE000000000000000139 /* SFBAudioPlaybackBackend.swift */,
+				D4C0DE00000000000000013B /* NowPlayingController.swift */,
+				D4C0DE00000000000000013C /* RemoteCommandController.swift */,
+				D4C0DE00000000000000013D /* AudioSessionEventObserver.swift */,
+				D4C0DE00000000000000013E /* AudioRouteDiagnostics.swift */,
+				D4C0DE00000000000000013F /* PlaybackCommandAdapters.swift */,
 			);
 			path = AudioCore;
 			sourceTree = "<group>";
@@ -269,6 +288,8 @@
 				D4C0DE000000000000000122 /* LibraryScannerTests.swift */,
 				D4C0DE000000000000000130 /* MetadataReaderTests.swift */,
 				D4C0DE000000000000000136 /* SFBAudioIntegrationTests.swift */,
+				D4C0DE00000000000000013A /* PlaybackSystemTests.swift */,
+				D4C0DE000000000000000140 /* EqualizerTests.swift */,
 				D4C0DE00000000000000010F /* Info.plist */,
 			);
 			path = PlayerAppTests;
@@ -411,6 +432,11 @@
 				D4C0DE000000000000000037 /* AudioSessionController.swift in Sources */,
 				D4C0DE000000000000000038 /* PlaybackEngine.swift in Sources */,
 				D4C0DE000000000000000039 /* SFBAudioPlaybackBackend.swift in Sources */,
+				D4C0DE00000000000000003D /* NowPlayingController.swift in Sources */,
+				D4C0DE00000000000000003E /* RemoteCommandController.swift in Sources */,
+				D4C0DE00000000000000003F /* AudioSessionEventObserver.swift in Sources */,
+				D4C0DE000000000000000040 /* AudioRouteDiagnostics.swift in Sources */,
+				D4C0DE000000000000000041 /* PlaybackCommandAdapters.swift in Sources */,
 				D4C0DE000000000000000021 /* AudioFileExtensionFilter.swift in Sources */,
 				D4C0DE000000000000000022 /* ScannedAudioFile.swift in Sources */,
 				D4C0DE000000000000000023 /* LibraryScanner.swift in Sources */,
@@ -451,6 +477,8 @@
 				D4C0DE000000000000000020 /* LibraryScannerTests.swift in Sources */,
 				D4C0DE000000000000000030 /* MetadataReaderTests.swift in Sources */,
 				D4C0DE000000000000000036 /* SFBAudioIntegrationTests.swift in Sources */,
+				D4C0DE00000000000000003C /* PlaybackSystemTests.swift in Sources */,
+				D4C0DE000000000000000042 /* EqualizerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

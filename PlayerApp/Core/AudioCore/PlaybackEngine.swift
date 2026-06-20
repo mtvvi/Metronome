@@ -2,11 +2,15 @@ import Foundation
 
 enum PlaybackEngineError: Error, Equatable {
     case nonFileURL(URL)
+    case playbackCommandFailed(String)
 }
 
 protocol LocalAudioPlaybackBackend: Sendable {
     func play(url: URL) throws
+    func resume() throws
+    func pause()
     func stop()
+    func seek(to time: TimeInterval) throws
 }
 
 final class PlaybackEngine: PlaybackControlling, @unchecked Sendable {
@@ -37,8 +41,22 @@ final class PlaybackEngine: PlaybackControlling, @unchecked Sendable {
         }
     }
 
+    func resume() throws {
+        try session.configureForPlayback()
+        try session.activate()
+        try backend.resume()
+    }
+
+    func pause() {
+        backend.pause()
+    }
+
     func stop() {
         backend.stop()
         try? session.deactivate()
+    }
+
+    func seek(to time: TimeInterval) throws {
+        try backend.seek(to: time)
     }
 }

@@ -6,7 +6,7 @@ protocol AudioSessionControlling: Sendable {
     func deactivate() throws
 }
 
-final class AudioSessionController: AudioSessionControlling, @unchecked Sendable {
+final class AudioSessionController: AudioSessionControlling, AudioRouteDiagnosticsProviding, @unchecked Sendable {
     private let session: AVAudioSession
 
     init(session: AVAudioSession = .sharedInstance()) {
@@ -23,5 +23,9 @@ final class AudioSessionController: AudioSessionControlling, @unchecked Sendable
 
     func deactivate() throws {
         try session.setActive(false, options: .notifyOthersOnDeactivation)
+    }
+
+    func currentRouteDiagnostics() -> AudioRouteDiagnostics {
+        AudioRouteDiagnostics(session: session)
     }
 }

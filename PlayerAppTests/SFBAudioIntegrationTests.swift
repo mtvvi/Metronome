@@ -117,12 +117,27 @@ private final class FakeAudioSessionController: AudioSessionControlling, @unchec
 private final class FakePlaybackBackend: LocalAudioPlaybackBackend, @unchecked Sendable {
     private(set) var playedURLs: [URL] = []
     private(set) var stopCount = 0
+    private(set) var resumeCount = 0
+    private(set) var pauseCount = 0
+    private(set) var seekTimes: [TimeInterval] = []
 
     func play(url: URL) throws {
         playedURLs.append(url)
     }
 
+    func resume() throws {
+        resumeCount += 1
+    }
+
+    func pause() {
+        pauseCount += 1
+    }
+
     func stop() {
         stopCount += 1
+    }
+
+    func seek(to time: TimeInterval) throws {
+        seekTimes.append(time)
     }
 }
