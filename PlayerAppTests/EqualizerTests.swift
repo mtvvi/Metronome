@@ -61,7 +61,11 @@ final class EqualizerTests: XCTestCase {
         XCTAssertEqual(node.configuredBands.count, 16)
         XCTAssertEqual(node.configuredBands[0].frequencyHz, 60)
         XCTAssertEqual(node.configuredBands[0].gainDB, 4)
-        XCTAssertEqual(node.configuredBands[0].bandwidthOctaves, EQBandwidthConverter.bandwidthOctaves(forQ: 2))
+        XCTAssertEqual(
+            Double(node.configuredBands[0].bandwidthOctaves),
+            EQBandwidthConverter.bandwidthOctaves(forQ: 2),
+            accuracy: 0.001
+        )
         XCTAssertFalse(node.configuredBands[0].isBypassed)
     }
 

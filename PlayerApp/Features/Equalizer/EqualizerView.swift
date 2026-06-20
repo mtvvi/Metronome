@@ -37,7 +37,7 @@ struct EqualizerView: View {
                 )
                 .disabled(viewModel.isEqualizerLocked || !viewModel.preset.isEnabled)
 
-                Text("\(viewModel.preset.preampGainDB, format: .number.precision(.fractionLength(1))) dB")
+                Text("\(viewModel.preset.preampGainDB.formatted(.number.precision(.fractionLength(1)))) dB")
                     .font(.footnote)
                     .foregroundStyle(.secondary)
             }
@@ -71,14 +71,14 @@ private struct EqualizerBandRow: View {
         VStack(alignment: .leading, spacing: 10) {
             HStack {
                 Toggle(isOn: $band.isEnabled) {
-                    Text("\(band.frequencyHz, format: .number.precision(.fractionLength(0))) Hz")
+                    Text("\(band.frequencyHz.formatted(.number.precision(.fractionLength(0)))) Hz")
                         .font(.headline)
                 }
                 .disabled(isDisabled)
 
                 Spacer()
 
-                Text("\(band.gainDB, format: .number.precision(.fractionLength(1))) dB")
+                Text("\(band.gainDB.formatted(.number.precision(.fractionLength(1)))) dB")
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
             }
@@ -103,7 +103,7 @@ private struct EqualizerBandRow: View {
                 HStack {
                     Text("Q")
                     Spacer()
-                    Text("\(band.q, format: .number.precision(.fractionLength(2)))")
+                    Text(band.q.formatted(.number.precision(.fractionLength(2))))
                 }
                 .font(.caption)
                 .foregroundStyle(.secondary)

@@ -58,6 +58,13 @@
 		D4C0DE000000000000000040 /* AudioRouteDiagnostics.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE00000000000000013E /* AudioRouteDiagnostics.swift */; };
 		D4C0DE000000000000000041 /* PlaybackCommandAdapters.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE00000000000000013F /* PlaybackCommandAdapters.swift */; };
 		D4C0DE000000000000000042 /* EqualizerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000140 /* EqualizerTests.swift */; };
+		D4C0DE000000000000000043 /* PEQBand.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000141 /* PEQBand.swift */; };
+		D4C0DE000000000000000044 /* EQPreset.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000142 /* EQPreset.swift */; };
+		D4C0DE000000000000000045 /* EqualizerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000143 /* EqualizerState.swift */; };
+		D4C0DE000000000000000046 /* EQBandwidthConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000144 /* EQBandwidthConverter.swift */; };
+		D4C0DE000000000000000047 /* EqualizerNodeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000145 /* EqualizerNodeController.swift */; };
+		D4C0DE000000000000000048 /* EqualizerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000146 /* EqualizerViewModel.swift */; };
+		D4C0DE000000000000000049 /* EqualizerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000147 /* EqualizerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -122,6 +129,13 @@
 		D4C0DE00000000000000013E /* AudioRouteDiagnostics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioRouteDiagnostics.swift; sourceTree = "<group>"; };
 		D4C0DE00000000000000013F /* PlaybackCommandAdapters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackCommandAdapters.swift; sourceTree = "<group>"; };
 		D4C0DE000000000000000140 /* EqualizerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EqualizerTests.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000141 /* PEQBand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PEQBand.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000142 /* EQPreset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EQPreset.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000143 /* EqualizerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EqualizerState.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000144 /* EQBandwidthConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EQBandwidthConverter.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000145 /* EqualizerNodeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EqualizerNodeController.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000146 /* EqualizerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EqualizerViewModel.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000147 /* EqualizerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EqualizerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -181,6 +195,7 @@
 			children = (
 				D4C0DE000000000000000205 /* Library */,
 				D4C0DE000000000000000206 /* NowPlaying */,
+				D4C0DE000000000000000210 /* Equalizer */,
 				D4C0DE00000000000000020F /* Sources */,
 			);
 			path = Features;
@@ -226,6 +241,7 @@
 				D4C0DE00000000000000013D /* AudioSessionEventObserver.swift */,
 				D4C0DE00000000000000013E /* AudioRouteDiagnostics.swift */,
 				D4C0DE00000000000000013F /* PlaybackCommandAdapters.swift */,
+				D4C0DE000000000000000145 /* EqualizerNodeController.swift */,
 			);
 			path = AudioCore;
 			sourceTree = "<group>";
@@ -268,6 +284,10 @@
 			isa = PBXGroup;
 			children = (
 				D4C0DE000000000000000108 /* DSPModule.swift */,
+				D4C0DE000000000000000141 /* PEQBand.swift */,
+				D4C0DE000000000000000142 /* EQPreset.swift */,
+				D4C0DE000000000000000143 /* EqualizerState.swift */,
+				D4C0DE000000000000000144 /* EQBandwidthConverter.swift */,
 			);
 			path = DSP;
 			sourceTree = "<group>";
@@ -313,6 +333,15 @@
 				D4C0DE00000000000000010C /* SourcesFeature.swift */,
 			);
 			path = Sources;
+			sourceTree = "<group>";
+		};
+		D4C0DE000000000000000210 /* Equalizer */ = {
+			isa = PBXGroup;
+			children = (
+				D4C0DE000000000000000146 /* EqualizerViewModel.swift */,
+				D4C0DE000000000000000147 /* EqualizerView.swift */,
+			);
+			path = Equalizer;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -437,6 +466,7 @@
 				D4C0DE00000000000000003F /* AudioSessionEventObserver.swift in Sources */,
 				D4C0DE000000000000000040 /* AudioRouteDiagnostics.swift in Sources */,
 				D4C0DE000000000000000041 /* PlaybackCommandAdapters.swift in Sources */,
+				D4C0DE000000000000000047 /* EqualizerNodeController.swift in Sources */,
 				D4C0DE000000000000000021 /* AudioFileExtensionFilter.swift in Sources */,
 				D4C0DE000000000000000022 /* ScannedAudioFile.swift in Sources */,
 				D4C0DE000000000000000023 /* LibraryScanner.swift in Sources */,
@@ -458,9 +488,15 @@
 				D4C0DE000000000000000006 /* TrackRepository.swift in Sources */,
 				D4C0DE000000000000000007 /* SearchRepository.swift in Sources */,
 				D4C0DE000000000000000008 /* DSPModule.swift in Sources */,
+				D4C0DE000000000000000043 /* PEQBand.swift in Sources */,
+				D4C0DE000000000000000044 /* EQPreset.swift in Sources */,
+				D4C0DE000000000000000045 /* EqualizerState.swift in Sources */,
+				D4C0DE000000000000000046 /* EQBandwidthConverter.swift in Sources */,
 				D4C0DE000000000000000009 /* SharedModule.swift in Sources */,
 				D4C0DE00000000000000000A /* LibraryFeature.swift in Sources */,
 				D4C0DE00000000000000000B /* NowPlayingFeature.swift in Sources */,
+				D4C0DE000000000000000048 /* EqualizerViewModel.swift in Sources */,
+				D4C0DE000000000000000049 /* EqualizerView.swift in Sources */,
 				D4C0DE000000000000000026 /* FolderPicker.swift in Sources */,
 				D4C0DE000000000000000027 /* SourcesViewModel.swift in Sources */,
 				D4C0DE000000000000000028 /* SourcesView.swift in Sources */,
