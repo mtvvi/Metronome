@@ -45,6 +45,12 @@
 		D4C0DE000000000000000033 /* AudioMetadataTagNormalizer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000133 /* AudioMetadataTagNormalizer.swift */; };
 		D4C0DE000000000000000034 /* AVFoundationMetadataReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000134 /* AVFoundationMetadataReader.swift */; };
 		D4C0DE000000000000000035 /* SFBAudioMetadataReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000135 /* SFBAudioMetadataReader.swift */; };
+		D4C0DE000000000000000036 /* SFBAudioIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000136 /* SFBAudioIntegrationTests.swift */; };
+		D4C0DE000000000000000037 /* AudioSessionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000137 /* AudioSessionController.swift */; };
+		D4C0DE000000000000000038 /* PlaybackEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000138 /* PlaybackEngine.swift */; };
+		D4C0DE000000000000000039 /* SFBAudioPlaybackBackend.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000139 /* SFBAudioPlaybackBackend.swift */; };
+		D4C0DE00000000000000003A /* SFBAudioEngine in Frameworks */ = {isa = PBXBuildFile; productRef = D4C0DE000000000000000704 /* SFBAudioEngine */; };
+		D4C0DE00000000000000003B /* SFBAudioEngine in Frameworks */ = {isa = PBXBuildFile; productRef = D4C0DE000000000000000704 /* SFBAudioEngine */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,6 +104,10 @@
 		D4C0DE000000000000000133 /* AudioMetadataTagNormalizer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioMetadataTagNormalizer.swift; sourceTree = "<group>"; };
 		D4C0DE000000000000000134 /* AVFoundationMetadataReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVFoundationMetadataReader.swift; sourceTree = "<group>"; };
 		D4C0DE000000000000000135 /* SFBAudioMetadataReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SFBAudioMetadataReader.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000136 /* SFBAudioIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SFBAudioIntegrationTests.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000137 /* AudioSessionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioSessionController.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000138 /* PlaybackEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackEngine.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000139 /* SFBAudioPlaybackBackend.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SFBAudioPlaybackBackend.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +116,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D4C0DE00000000000000000E /* GRDB in Frameworks */,
+				D4C0DE00000000000000003A /* SFBAudioEngine in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -114,6 +125,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D4C0DE000000000000000017 /* GRDB in Frameworks */,
+				D4C0DE00000000000000003B /* SFBAudioEngine in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -192,6 +204,9 @@
 			isa = PBXGroup;
 			children = (
 				D4C0DE000000000000000104 /* PlaybackControlling.swift */,
+				D4C0DE000000000000000137 /* AudioSessionController.swift */,
+				D4C0DE000000000000000138 /* PlaybackEngine.swift */,
+				D4C0DE000000000000000139 /* SFBAudioPlaybackBackend.swift */,
 			);
 			path = AudioCore;
 			sourceTree = "<group>";
@@ -253,6 +268,7 @@
 				D4C0DE000000000000000112 /* DatabaseTests.swift */,
 				D4C0DE000000000000000122 /* LibraryScannerTests.swift */,
 				D4C0DE000000000000000130 /* MetadataReaderTests.swift */,
+				D4C0DE000000000000000136 /* SFBAudioIntegrationTests.swift */,
 				D4C0DE00000000000000010F /* Info.plist */,
 			);
 			path = PlayerAppTests;
@@ -296,6 +312,7 @@
 			name = PlayerApp;
 			packageProductDependencies = (
 				D4C0DE000000000000000702 /* GRDB */,
+				D4C0DE000000000000000704 /* SFBAudioEngine */,
 			);
 			productName = PlayerApp;
 			productReference = D4C0DE000000000000000110 /* PlayerApp.app */;
@@ -317,6 +334,7 @@
 			name = PlayerAppTests;
 			packageProductDependencies = (
 				D4C0DE000000000000000702 /* GRDB */,
+				D4C0DE000000000000000704 /* SFBAudioEngine */,
 			);
 			productName = PlayerAppTests;
 			productReference = D4C0DE000000000000000111 /* PlayerAppTests.xctest */;
@@ -352,6 +370,7 @@
 			mainGroup = D4C0DE000000000000000201;
 			packageReferences = (
 				D4C0DE000000000000000701 /* XCRemoteSwiftPackageReference "GRDB.swift" */,
+				D4C0DE000000000000000703 /* XCRemoteSwiftPackageReference "SFBAudioEngine" */,
 			);
 			productRefGroup = D4C0DE00000000000000020E /* Products */;
 			projectDirPath = "";
@@ -389,6 +408,9 @@
 				D4C0DE000000000000000003 /* DependencyContainer.swift in Sources */,
 				D4C0DE000000000000000002 /* RootView.swift in Sources */,
 				D4C0DE000000000000000004 /* PlaybackControlling.swift in Sources */,
+				D4C0DE000000000000000037 /* AudioSessionController.swift in Sources */,
+				D4C0DE000000000000000038 /* PlaybackEngine.swift in Sources */,
+				D4C0DE000000000000000039 /* SFBAudioPlaybackBackend.swift in Sources */,
 				D4C0DE000000000000000021 /* AudioFileExtensionFilter.swift in Sources */,
 				D4C0DE000000000000000022 /* ScannedAudioFile.swift in Sources */,
 				D4C0DE000000000000000023 /* LibraryScanner.swift in Sources */,
@@ -428,6 +450,7 @@
 				D4C0DE00000000000000000F /* DatabaseTests.swift in Sources */,
 				D4C0DE000000000000000020 /* LibraryScannerTests.swift in Sources */,
 				D4C0DE000000000000000030 /* MetadataReaderTests.swift in Sources */,
+				D4C0DE000000000000000036 /* SFBAudioIntegrationTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -673,6 +696,14 @@
 				minimumVersion = 7.11.1;
 			};
 		};
+		D4C0DE000000000000000703 /* XCRemoteSwiftPackageReference "SFBAudioEngine" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sbooth/SFBAudioEngine.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -680,6 +711,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D4C0DE000000000000000701 /* XCRemoteSwiftPackageReference "GRDB.swift" */;
 			productName = GRDB;
+		};
+		D4C0DE000000000000000704 /* SFBAudioEngine */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D4C0DE000000000000000703 /* XCRemoteSwiftPackageReference "SFBAudioEngine" */;
+			productName = SFBAudioEngine;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

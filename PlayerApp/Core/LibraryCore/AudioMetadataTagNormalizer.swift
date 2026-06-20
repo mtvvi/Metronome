@@ -22,7 +22,7 @@ enum AudioMetadataTagNormalizer {
 
             if keys.contains("title") {
                 tags.title = rawTag.value
-            } else if keys.contains("albumname") || keys.contains("album") || keys.contains("talb") {
+            } else if keys.contains("albumtitle") || keys.contains("albumname") || keys.contains("album") || keys.contains("talb") {
                 tags.album = rawTag.value
             } else if keys.contains("albumartist") || keys.contains("tpe2") {
                 tags.albumArtist = rawTag.value
@@ -38,10 +38,14 @@ enum AudioMetadataTagNormalizer {
                 let parsed = parseNumberPair(rawTag.value)
                 tags.trackNumber = parsed.current
                 tags.trackTotal = parsed.total
+            } else if keys.contains("tracktotal") {
+                tags.trackTotal = parseFirstInteger(rawTag.value)
             } else if keys.contains("discnumber") || keys.contains("tpos") {
                 let parsed = parseNumberPair(rawTag.value)
                 tags.discNumber = parsed.current
                 tags.discTotal = parsed.total
+            } else if keys.contains("disctotal") {
+                tags.discTotal = parseFirstInteger(rawTag.value)
             }
         }
 
@@ -67,6 +71,7 @@ enum AudioMetadataTagNormalizer {
             result.insert(value)
             result.insert(value.replacingOccurrences(of: "_", with: ""))
             result.insert(value.replacingOccurrences(of: "-", with: ""))
+            result.insert(value.replacingOccurrences(of: " ", with: ""))
             result.insert(value.components(separatedBy: ".").last ?? value)
         }
     }
