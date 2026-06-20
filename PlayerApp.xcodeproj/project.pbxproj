@@ -84,6 +84,8 @@
 		D4C0DE000000000000000060 /* AirPlayRoutePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE00000000000000015E /* AirPlayRoutePickerView.swift */; };
 		D4C0DE000000000000000061 /* OutputRouteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE00000000000000015F /* OutputRouteViewModel.swift */; };
 		D4C0DE000000000000000062 /* OutputRouteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000160 /* OutputRouteView.swift */; };
+		D4C0DE000000000000000063 /* SpotlightIndexerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000161 /* SpotlightIndexerTests.swift */; };
+		D4C0DE000000000000000064 /* LibrarySpotlightIndexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000162 /* LibrarySpotlightIndexer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -174,6 +176,8 @@
 		D4C0DE00000000000000015E /* AirPlayRoutePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirPlayRoutePickerView.swift; sourceTree = "<group>"; };
 		D4C0DE00000000000000015F /* OutputRouteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputRouteViewModel.swift; sourceTree = "<group>"; };
 		D4C0DE000000000000000160 /* OutputRouteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputRouteView.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000161 /* SpotlightIndexerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotlightIndexerTests.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000162 /* LibrarySpotlightIndexer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibrarySpotlightIndexer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -302,6 +306,7 @@
 				D4C0DE000000000000000135 /* SFBAudioMetadataReader.swift */,
 				D4C0DE00000000000000015B /* MusicLibraryImporter.swift */,
 				D4C0DE00000000000000015C /* MediaPlayerMusicLibraryClient.swift */,
+				D4C0DE000000000000000162 /* LibrarySpotlightIndexer.swift */,
 				D4C0DE000000000000000105 /* LibraryScanning.swift */,
 			);
 			path = LibraryCore;
@@ -364,6 +369,7 @@
 				D4C0DE000000000000000156 /* GaplessQueueTests.swift */,
 				D4C0DE00000000000000015A /* MusicLibraryImporterTests.swift */,
 				D4C0DE00000000000000015D /* OutputRouteTests.swift */,
+				D4C0DE000000000000000161 /* SpotlightIndexerTests.swift */,
 				D4C0DE00000000000000010F /* Info.plist */,
 			);
 			path = PlayerAppTests;
@@ -546,6 +552,7 @@
 				D4C0DE000000000000000035 /* SFBAudioMetadataReader.swift in Sources */,
 				D4C0DE00000000000000005D /* MusicLibraryImporter.swift in Sources */,
 				D4C0DE00000000000000005E /* MediaPlayerMusicLibraryClient.swift in Sources */,
+				D4C0DE000000000000000064 /* LibrarySpotlightIndexer.swift in Sources */,
 				D4C0DE000000000000000005 /* LibraryScanning.swift in Sources */,
 				D4C0DE000000000000000010 /* PlayerDatabase.swift in Sources */,
 				D4C0DE000000000000000011 /* DatabaseMigrations.swift in Sources */,
@@ -599,6 +606,7 @@
 				D4C0DE000000000000000058 /* GaplessQueueTests.swift in Sources */,
 				D4C0DE00000000000000005C /* MusicLibraryImporterTests.swift in Sources */,
 				D4C0DE00000000000000005F /* OutputRouteTests.swift in Sources */,
+				D4C0DE000000000000000063 /* SpotlightIndexerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -26,7 +26,8 @@ struct DependencyContainer: Sendable {
             repository: repository,
             musicLibraryImporter: MusicLibraryImporter(
                 sourceRootRepository: repository,
-                trackRepository: repository
+                trackRepository: repository,
+                spotlightIndexer: LibrarySpotlightIndexer()
             )
         )
     }

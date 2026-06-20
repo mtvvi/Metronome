@@ -81,17 +81,20 @@ struct MusicLibraryImporter: MusicLibraryImporting {
     private let query: any MusicLibraryQuerying
     private let sourceRootRepository: any SourceRootRepository
     private let trackRepository: any TrackRepository
+    private let spotlightIndexer: (any LibraryTrackSearchIndexing)?
 
     init(
         authorization: any MusicLibraryAuthorizationProviding = MediaPlayerMusicLibraryClient(),
         query: any MusicLibraryQuerying = MediaPlayerMusicLibraryClient(),
         sourceRootRepository: any SourceRootRepository,
-        trackRepository: any TrackRepository
+        trackRepository: any TrackRepository,
+        spotlightIndexer: (any LibraryTrackSearchIndexing)? = nil
     ) {
         self.authorization = authorization
         self.query = query
         self.sourceRootRepository = sourceRootRepository
         self.trackRepository = trackRepository
+        self.spotlightIndexer = spotlightIndexer
     }
 
     func importLocalMusicLibrary() async throws -> MusicLibraryImportSummary {
@@ -126,6 +129,7 @@ struct MusicLibraryImporter: MusicLibraryImporting {
 
         try sourceRootRepository.upsertSourceRoots([Self.musicLibrarySourceRoot()])
         try trackRepository.upsertTracks(importedTracks)
+        try? await spotlightIndexer?.indexTracks(importedTracks)
 
         return MusicLibraryImportSummary(
             authorizationStatus: authorizationStatus,

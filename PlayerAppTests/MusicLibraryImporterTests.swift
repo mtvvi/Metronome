@@ -69,6 +69,44 @@ final class MusicLibraryImporterTests: XCTestCase {
         XCTAssertEqual(repository.tracks.map(\.mediaPersistentID), [1])
     }
 
+    func testIndexesImportedMusicLibraryTracksForSpotlight() async throws {
+        let repository = FakeMusicLibraryRepository()
+        let spotlightIndexer = FakeLibraryTrackSearchIndexer()
+        let importer = MusicLibraryImporter(
+            authorization: FakeMusicLibraryAuthorization(statuses: [.authorized]),
+            query: FakeMusicLibraryQuery(items: [
+                makeMediaItem(id: 1, assetURL: fileURL("readable.m4a"), hasProtectedAsset: false),
+                makeMediaItem(id: 2, assetURL: fileURL("protected.m4p"), hasProtectedAsset: true)
+            ]),
+            sourceRootRepository: repository,
+            trackRepository: repository,
+            spotlightIndexer: spotlightIndexer
+        )
+
+        _ = try await importer.importLocalMusicLibrary()
+
+        XCTAssertEqual(spotlightIndexer.indexedTracks.map(\.id), ["music-library-1"])
+    }
+
+    func testMusicLibraryImportSucceedsWhenSpotlightIndexingFails() async throws {
+        let repository = FakeMusicLibraryRepository()
+        let spotlightIndexer = FakeLibraryTrackSearchIndexer(indexError: TestError.indexFailed)
+        let importer = MusicLibraryImporter(
+            authorization: FakeMusicLibraryAuthorization(statuses: [.authorized]),
+            query: FakeMusicLibraryQuery(items: [
+                makeMediaItem(id: 1, assetURL: fileURL("readable.m4a"), hasProtectedAsset: false)
+            ]),
+            sourceRootRepository: repository,
+            trackRepository: repository,
+            spotlightIndexer: spotlightIndexer
+        )
+
+        let summary = try await importer.importLocalMusicLibrary()
+
+        XCTAssertEqual(summary.importedCount, 1)
+        XCTAssertEqual(repository.tracks.map(\.id), ["music-library-1"])
+    }
+
     func testMapsMediaMetadataToTrackRecord() async throws {
         let item = makeMediaItem(
             id: 99,
@@ -214,6 +252,27 @@ private final class FakeMusicLibraryRepository: SourceRootRepository, TrackRepos
 
     func upsertTracks(_ tracks: [TrackRecord]) throws {
         self.tracks = tracks
+    }
+}
+
+private enum TestError: Error {
+    case indexFailed
+}
+
+private final class FakeLibraryTrackSearchIndexer: LibraryTrackSearchIndexing, @unchecked Sendable {
+    private(set) var indexedTracks: [TrackRecord] = []
+    private let indexError: Error?
+
+    init(indexError: Error? = nil) {
+        self.indexError = indexError
+    }
+
+    func indexTracks(_ tracks: [TrackRecord]) async throws {
+        if let indexError {
+            throw indexError
+        }
+
+        indexedTracks = tracks
     }
 }
 
