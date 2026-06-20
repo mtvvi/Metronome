@@ -77,6 +77,9 @@
 		D4C0DE000000000000000059 /* PlaybackQueue.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000157 /* PlaybackQueue.swift */; };
 		D4C0DE00000000000000005A /* QueueDecoderPreparing.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000158 /* QueueDecoderPreparing.swift */; };
 		D4C0DE00000000000000005B /* GaplessPlaybackCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000159 /* GaplessPlaybackCoordinator.swift */; };
+		D4C0DE00000000000000005C /* MusicLibraryImporterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE00000000000000015A /* MusicLibraryImporterTests.swift */; };
+		D4C0DE00000000000000005D /* MusicLibraryImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE00000000000000015B /* MusicLibraryImporter.swift */; };
+		D4C0DE00000000000000005E /* MediaPlayerMusicLibraryClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE00000000000000015C /* MediaPlayerMusicLibraryClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -160,6 +163,9 @@
 		D4C0DE000000000000000157 /* PlaybackQueue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackQueue.swift; sourceTree = "<group>"; };
 		D4C0DE000000000000000158 /* QueueDecoderPreparing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueDecoderPreparing.swift; sourceTree = "<group>"; };
 		D4C0DE000000000000000159 /* GaplessPlaybackCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GaplessPlaybackCoordinator.swift; sourceTree = "<group>"; };
+		D4C0DE00000000000000015A /* MusicLibraryImporterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicLibraryImporterTests.swift; sourceTree = "<group>"; };
+		D4C0DE00000000000000015B /* MusicLibraryImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicLibraryImporter.swift; sourceTree = "<group>"; };
+		D4C0DE00000000000000015C /* MediaPlayerMusicLibraryClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlayerMusicLibraryClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -285,6 +291,8 @@
 				D4C0DE000000000000000133 /* AudioMetadataTagNormalizer.swift */,
 				D4C0DE000000000000000134 /* AVFoundationMetadataReader.swift */,
 				D4C0DE000000000000000135 /* SFBAudioMetadataReader.swift */,
+				D4C0DE00000000000000015B /* MusicLibraryImporter.swift */,
+				D4C0DE00000000000000015C /* MediaPlayerMusicLibraryClient.swift */,
 				D4C0DE000000000000000105 /* LibraryScanning.swift */,
 			);
 			path = LibraryCore;
@@ -345,6 +353,7 @@
 				D4C0DE000000000000000148 /* AutoEqImporterTests.swift */,
 				D4C0DE000000000000000152 /* CustomDSPTests.swift */,
 				D4C0DE000000000000000156 /* GaplessQueueTests.swift */,
+				D4C0DE00000000000000015A /* MusicLibraryImporterTests.swift */,
 				D4C0DE00000000000000010F /* Info.plist */,
 			);
 			path = PlayerAppTests;
@@ -515,6 +524,8 @@
 				D4C0DE000000000000000033 /* AudioMetadataTagNormalizer.swift in Sources */,
 				D4C0DE000000000000000034 /* AVFoundationMetadataReader.swift in Sources */,
 				D4C0DE000000000000000035 /* SFBAudioMetadataReader.swift in Sources */,
+				D4C0DE00000000000000005D /* MusicLibraryImporter.swift in Sources */,
+				D4C0DE00000000000000005E /* MediaPlayerMusicLibraryClient.swift in Sources */,
 				D4C0DE000000000000000005 /* LibraryScanning.swift in Sources */,
 				D4C0DE000000000000000010 /* PlayerDatabase.swift in Sources */,
 				D4C0DE000000000000000011 /* DatabaseMigrations.swift in Sources */,
@@ -563,6 +574,7 @@
 				D4C0DE000000000000000050 /* AutoEqImporterTests.swift in Sources */,
 				D4C0DE000000000000000054 /* CustomDSPTests.swift in Sources */,
 				D4C0DE000000000000000058 /* GaplessQueueTests.swift in Sources */,
+				D4C0DE00000000000000005C /* MusicLibraryImporterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

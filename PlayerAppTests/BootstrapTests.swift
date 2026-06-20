@@ -7,4 +7,15 @@ final class BootstrapTests: XCTestCase {
 
         XCTAssertNotNil(Optional(container))
     }
+
+    @MainActor
+    func testDependencyContainerBuildsSourcesViewModelWithMusicImportAvailable() {
+        let database = try? PlayerDatabase.inMemory()
+        let repository = database.map(GRDBTrackRepository.init(database:))
+        let container = DependencyContainer(repository: repository)
+
+        let viewModel = container.makeSourcesViewModel()
+
+        XCTAssertEqual(viewModel.canImportMusicLibrary, repository != nil)
+    }
 }

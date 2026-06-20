@@ -5,19 +5,27 @@ import Foundation
 final class SourcesViewModel: ObservableObject {
     @Published private(set) var sources: [SourceRootRecord] = []
     @Published private(set) var statusMessage: String?
+    @Published private(set) var latestMusicLibraryImportSummary: MusicLibraryImportSummary?
 
     private let access: any SourceRootAccessing
     private let repository: (any SourceRootRepository)?
     private let scanner: any LibraryScanning
+    private let musicLibraryImporter: (any MusicLibraryImporting)?
 
     init(
         access: any SourceRootAccessing = SourceRootAccess(),
         repository: (any SourceRootRepository)? = nil,
-        scanner: any LibraryScanning = LibraryScanner()
+        scanner: any LibraryScanning = LibraryScanner(),
+        musicLibraryImporter: (any MusicLibraryImporting)? = nil
     ) {
         self.access = access
         self.repository = repository
         self.scanner = scanner
+        self.musicLibraryImporter = musicLibraryImporter
+    }
+
+    var canImportMusicLibrary: Bool {
+        musicLibraryImporter != nil
     }
 
     func loadSources() {
@@ -58,5 +66,28 @@ final class SourcesViewModel: ObservableObject {
         } catch {
             statusMessage = "Unable to scan \(sourceRoot.displayName)."
         }
+    }
+
+    func importMusicLibrary() async {
+        guard let musicLibraryImporter else {
+            statusMessage = "Music Library import is unavailable."
+            return
+        }
+
+        do {
+            let summary = try await musicLibraryImporter.importLocalMusicLibrary()
+            latestMusicLibraryImportSummary = summary
+            statusMessage = statusMessage(for: summary)
+        } catch {
+            statusMessage = "Unable to import Music Library."
+        }
+    }
+
+    private func statusMessage(for summary: MusicLibraryImportSummary) -> String {
+        guard summary.authorizationStatus == .authorized else {
+            return "Music Library access was not granted."
+        }
+
+        return "Imported \(summary.importedCount) Music Library tracks. Skipped \(summary.protectedSkippedCount) protected and \(summary.unavailableSkippedCount) unavailable."
     }
 }

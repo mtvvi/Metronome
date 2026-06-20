@@ -16,6 +16,15 @@ struct SourcesView: View {
                 } label: {
                     Label("Add Folder", systemImage: "folder.badge.plus")
                 }
+
+                Button {
+                    Task {
+                        await viewModel.importMusicLibrary()
+                    }
+                } label: {
+                    Label("Import Music Library", systemImage: "music.note.list")
+                }
+                .disabled(!viewModel.canImportMusicLibrary)
             }
 
             Section("Sources") {

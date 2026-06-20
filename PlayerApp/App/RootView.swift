@@ -7,7 +7,7 @@ struct RootView: View {
     var body: some View {
         TabView(selection: $selectedTab) {
             NavigationStack {
-                SourcesView()
+                SourcesView(viewModel: container.makeSourcesViewModel())
             }
             .tabItem {
                 Label("Sources", systemImage: "externaldrive")
