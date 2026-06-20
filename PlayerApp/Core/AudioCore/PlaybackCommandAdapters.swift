@@ -42,15 +42,18 @@ final class PlaybackRemoteCommandHandler: RemotePlaybackCommandHandling, @unchec
 final class PlaybackAudioSessionEventHandler: AudioSessionEventHandling, @unchecked Sendable {
     private let playback: any PlaybackControlling
     private let diagnosticsProvider: any AudioRouteDiagnosticsProviding
+    private let routeChangeReconfigurer: (any RouteChangeReconfiguring)?
 
     private(set) var latestDiagnostics: AudioRouteDiagnostics?
 
     init(
         playback: any PlaybackControlling,
-        diagnosticsProvider: any AudioRouteDiagnosticsProviding
+        diagnosticsProvider: any AudioRouteDiagnosticsProviding,
+        routeChangeReconfigurer: (any RouteChangeReconfiguring)? = nil
     ) {
         self.playback = playback
         self.diagnosticsProvider = diagnosticsProvider
+        self.routeChangeReconfigurer = routeChangeReconfigurer
     }
 
     func handleAudioSessionEvent(_ event: AudioSessionEvent) {
@@ -62,7 +65,13 @@ final class PlaybackAudioSessionEventHandler: AudioSessionEventHandling, @unchec
                 try? playback.resume()
             }
         case .routeChanged:
-            latestDiagnostics = diagnosticsProvider.currentRouteDiagnostics()
+            let diagnostics = diagnosticsProvider.currentRouteDiagnostics()
+            latestDiagnostics = diagnostics
+            routeChangeReconfigurer?.reconfigureAfterRouteChange(diagnostics: diagnostics)
         }
     }
+}
+
+protocol RouteChangeReconfiguring: Sendable {
+    func reconfigureAfterRouteChange(diagnostics: AudioRouteDiagnostics)
 }

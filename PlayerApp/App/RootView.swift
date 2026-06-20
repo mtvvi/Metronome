@@ -21,6 +21,14 @@ struct RootView: View {
                 Label("EQ", systemImage: "slider.horizontal.3")
             }
             .tag(AppTab.equalizer)
+
+            NavigationStack {
+                OutputRouteView()
+            }
+            .tabItem {
+                Label("Output", systemImage: "airplayaudio")
+            }
+            .tag(AppTab.output)
         }
     }
 }
@@ -28,4 +36,5 @@ struct RootView: View {
 private enum AppTab: Hashable {
     case sources
     case equalizer
+    case output
 }

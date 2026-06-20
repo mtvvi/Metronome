@@ -104,6 +104,21 @@ final class PlaybackSystemTests: XCTestCase {
         XCTAssertEqual(diagnostics.outputChannelCount, 2)
     }
 
+    func testAudioSessionControllerUsesLongFormAudioPlaybackPolicy() throws {
+        let session = FakePlaybackSession()
+        let controller = AudioSessionController(playbackSession: session)
+
+        try controller.configureForPlayback()
+        try controller.activate()
+        try controller.deactivate()
+
+        XCTAssertEqual(session.routeSharingPolicy, .longFormAudio)
+        XCTAssertEqual(session.activeEvents, [
+            .init(active: true, options: []),
+            .init(active: false, options: .notifyOthersOnDeactivation)
+        ])
+    }
+
     func testPlaybackAudioSessionEventHandlerPausesResumesAndRefreshesDiagnostics() {
         let playback = FakePlaybackController()
         let diagnosticsProvider = FakeRouteDiagnosticsProvider(
@@ -126,6 +141,26 @@ final class PlaybackSystemTests: XCTestCase {
         XCTAssertEqual(playback.events, [.pause, .resume])
         XCTAssertEqual(handler.latestDiagnostics?.routeSummary, "AirPods (BluetoothA2DP)")
         XCTAssertEqual(handler.latestDiagnostics?.actualSampleRate, 48_000)
+    }
+
+    func testPlaybackAudioSessionEventHandlerReconfiguresAfterRouteChange() {
+        let playback = FakePlaybackController()
+        let diagnostics = AudioRouteDiagnostics(
+            actualSampleRate: 192_000,
+            outputs: [
+                AudioRouteOutput(name: "USB DAC", portType: "USBAudio", channelCount: 2)
+            ]
+        )
+        let reconfigurer = FakeRouteChangeReconfigurer()
+        let handler = PlaybackAudioSessionEventHandler(
+            playback: playback,
+            diagnosticsProvider: FakeRouteDiagnosticsProvider(diagnostics: diagnostics),
+            routeChangeReconfigurer: reconfigurer
+        )
+
+        handler.handleAudioSessionEvent(.routeChanged(AudioSessionRouteChangeEvent(reason: .routeConfigurationChange)))
+
+        XCTAssertEqual(reconfigurer.events, [diagnostics])
     }
 
     func testPlaybackRemoteCommandHandlerBridgesSupportedPlaybackCommands() {
@@ -265,5 +300,36 @@ private struct FakeRouteDiagnosticsProvider: AudioRouteDiagnosticsProviding {
 
     func currentRouteDiagnostics() -> AudioRouteDiagnostics {
         diagnostics
+    }
+}
+
+private final class FakePlaybackSession: AudioPlaybackSessionConfiguring, @unchecked Sendable {
+    struct ActiveEvent: Equatable {
+        var active: Bool
+        var options: AVAudioSession.SetActiveOptions
+    }
+
+    var routeSharingPolicy: AVAudioSession.RouteSharingPolicy?
+    var activeEvents: [ActiveEvent] = []
+    var diagnostics = AudioRouteDiagnostics(actualSampleRate: 44_100, outputs: [])
+
+    func setPlaybackCategory(routeSharingPolicy: AVAudioSession.RouteSharingPolicy) throws {
+        self.routeSharingPolicy = routeSharingPolicy
+    }
+
+    func setActive(_ active: Bool, options: AVAudioSession.SetActiveOptions) throws {
+        activeEvents.append(ActiveEvent(active: active, options: options))
+    }
+
+    func currentRouteDiagnostics() -> AudioRouteDiagnostics {
+        diagnostics
+    }
+}
+
+private final class FakeRouteChangeReconfigurer: RouteChangeReconfiguring, @unchecked Sendable {
+    private(set) var events: [AudioRouteDiagnostics] = []
+
+    func reconfigureAfterRouteChange(diagnostics: AudioRouteDiagnostics) {
+        events.append(diagnostics)
     }
 }

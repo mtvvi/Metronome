@@ -80,6 +80,10 @@
 		D4C0DE00000000000000005C /* MusicLibraryImporterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE00000000000000015A /* MusicLibraryImporterTests.swift */; };
 		D4C0DE00000000000000005D /* MusicLibraryImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE00000000000000015B /* MusicLibraryImporter.swift */; };
 		D4C0DE00000000000000005E /* MediaPlayerMusicLibraryClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE00000000000000015C /* MediaPlayerMusicLibraryClient.swift */; };
+		D4C0DE00000000000000005F /* OutputRouteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE00000000000000015D /* OutputRouteTests.swift */; };
+		D4C0DE000000000000000060 /* AirPlayRoutePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE00000000000000015E /* AirPlayRoutePickerView.swift */; };
+		D4C0DE000000000000000061 /* OutputRouteViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE00000000000000015F /* OutputRouteViewModel.swift */; };
+		D4C0DE000000000000000062 /* OutputRouteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000160 /* OutputRouteView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -166,6 +170,10 @@
 		D4C0DE00000000000000015A /* MusicLibraryImporterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicLibraryImporterTests.swift; sourceTree = "<group>"; };
 		D4C0DE00000000000000015B /* MusicLibraryImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicLibraryImporter.swift; sourceTree = "<group>"; };
 		D4C0DE00000000000000015C /* MediaPlayerMusicLibraryClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaPlayerMusicLibraryClient.swift; sourceTree = "<group>"; };
+		D4C0DE00000000000000015D /* OutputRouteTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputRouteTests.swift; sourceTree = "<group>"; };
+		D4C0DE00000000000000015E /* AirPlayRoutePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AirPlayRoutePickerView.swift; sourceTree = "<group>"; };
+		D4C0DE00000000000000015F /* OutputRouteViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputRouteViewModel.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000160 /* OutputRouteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputRouteView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -227,6 +235,7 @@
 				D4C0DE000000000000000206 /* NowPlaying */,
 				D4C0DE000000000000000210 /* Equalizer */,
 				D4C0DE00000000000000020F /* Sources */,
+				D4C0DE000000000000000211 /* Output */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -354,6 +363,7 @@
 				D4C0DE000000000000000152 /* CustomDSPTests.swift */,
 				D4C0DE000000000000000156 /* GaplessQueueTests.swift */,
 				D4C0DE00000000000000015A /* MusicLibraryImporterTests.swift */,
+				D4C0DE00000000000000015D /* OutputRouteTests.swift */,
 				D4C0DE00000000000000010F /* Info.plist */,
 			);
 			path = PlayerAppTests;
@@ -387,6 +397,16 @@
 				D4C0DE000000000000000147 /* EqualizerView.swift */,
 			);
 			path = Equalizer;
+			sourceTree = "<group>";
+		};
+		D4C0DE000000000000000211 /* Output */ = {
+			isa = PBXGroup;
+			children = (
+				D4C0DE00000000000000015E /* AirPlayRoutePickerView.swift */,
+				D4C0DE00000000000000015F /* OutputRouteViewModel.swift */,
+				D4C0DE000000000000000160 /* OutputRouteView.swift */,
+			);
+			path = Output;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -553,6 +573,9 @@
 				D4C0DE000000000000000048 /* EqualizerViewModel.swift in Sources */,
 				D4C0DE000000000000000053 /* HeadphonePresetSearchViewModel.swift in Sources */,
 				D4C0DE000000000000000049 /* EqualizerView.swift in Sources */,
+				D4C0DE000000000000000060 /* AirPlayRoutePickerView.swift in Sources */,
+				D4C0DE000000000000000061 /* OutputRouteViewModel.swift in Sources */,
+				D4C0DE000000000000000062 /* OutputRouteView.swift in Sources */,
 				D4C0DE000000000000000026 /* FolderPicker.swift in Sources */,
 				D4C0DE000000000000000027 /* SourcesViewModel.swift in Sources */,
 				D4C0DE000000000000000028 /* SourcesView.swift in Sources */,
@@ -575,6 +598,7 @@
 				D4C0DE000000000000000054 /* CustomDSPTests.swift in Sources */,
 				D4C0DE000000000000000058 /* GaplessQueueTests.swift in Sources */,
 				D4C0DE00000000000000005C /* MusicLibraryImporterTests.swift in Sources */,
+				D4C0DE00000000000000005F /* OutputRouteTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
