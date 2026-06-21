@@ -17,6 +17,11 @@ struct DependencyContainer: Sendable {
     }
 
     @MainActor
+    func makeLibraryViewModel() -> LibraryViewModel {
+        LibraryViewModel(searchRepository: repository)
+    }
+
+    @MainActor
     func makeSourcesViewModel() -> SourcesViewModel {
         guard let repository else {
             return SourcesViewModel()

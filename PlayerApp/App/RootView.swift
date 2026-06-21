@@ -2,10 +2,18 @@ import SwiftUI
 
 struct RootView: View {
     let container: DependencyContainer
-    @State private var selectedTab: AppTab = .sources
+    @State private var selectedTab: AppTab = .library
 
     var body: some View {
         TabView(selection: $selectedTab) {
+            NavigationStack {
+                LibraryView(viewModel: container.makeLibraryViewModel())
+            }
+            .tabItem {
+                Label("Library", systemImage: "music.note.list")
+            }
+            .tag(AppTab.library)
+
             NavigationStack {
                 SourcesView(viewModel: container.makeSourcesViewModel())
             }
@@ -34,6 +42,7 @@ struct RootView: View {
 }
 
 private enum AppTab: Hashable {
+    case library
     case sources
     case equalizer
     case output

@@ -90,6 +90,9 @@
 		D4C0DE000000000000000066 /* ReplayGain.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000164 /* ReplayGain.swift */; };
 		D4C0DE000000000000000067 /* LibraryScanImportTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000165 /* LibraryScanImportTests.swift */; };
 		D4C0DE000000000000000068 /* LibraryScanImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000166 /* LibraryScanImporter.swift */; };
+		D4C0DE000000000000000069 /* LibraryViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000167 /* LibraryViewModelTests.swift */; };
+		D4C0DE00000000000000006A /* LibraryViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000168 /* LibraryViewModel.swift */; };
+		D4C0DE00000000000000006B /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000169 /* LibraryView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -186,6 +189,9 @@
 		D4C0DE000000000000000164 /* ReplayGain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplayGain.swift; sourceTree = "<group>"; };
 		D4C0DE000000000000000165 /* LibraryScanImportTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryScanImportTests.swift; sourceTree = "<group>"; };
 		D4C0DE000000000000000166 /* LibraryScanImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryScanImporter.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000167 /* LibraryViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewModelTests.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000168 /* LibraryViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewModel.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000169 /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -256,6 +262,8 @@
 			isa = PBXGroup;
 			children = (
 				D4C0DE00000000000000010A /* LibraryFeature.swift */,
+				D4C0DE000000000000000168 /* LibraryViewModel.swift */,
+				D4C0DE000000000000000169 /* LibraryView.swift */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -382,6 +390,7 @@
 				D4C0DE000000000000000161 /* SpotlightIndexerTests.swift */,
 				D4C0DE000000000000000163 /* ReplayGainTests.swift */,
 				D4C0DE000000000000000165 /* LibraryScanImportTests.swift */,
+				D4C0DE000000000000000167 /* LibraryViewModelTests.swift */,
 				D4C0DE00000000000000010F /* Info.plist */,
 			);
 			path = PlayerAppTests;
@@ -590,6 +599,8 @@
 				D4C0DE000000000000000057 /* CustomBiquadDSPPrototype.swift in Sources */,
 				D4C0DE000000000000000009 /* SharedModule.swift in Sources */,
 				D4C0DE00000000000000000A /* LibraryFeature.swift in Sources */,
+				D4C0DE00000000000000006A /* LibraryViewModel.swift in Sources */,
+				D4C0DE00000000000000006B /* LibraryView.swift in Sources */,
 				D4C0DE00000000000000000B /* NowPlayingFeature.swift in Sources */,
 				D4C0DE000000000000000048 /* EqualizerViewModel.swift in Sources */,
 				D4C0DE000000000000000053 /* HeadphonePresetSearchViewModel.swift in Sources */,
@@ -623,6 +634,7 @@
 				D4C0DE000000000000000063 /* SpotlightIndexerTests.swift in Sources */,
 				D4C0DE000000000000000065 /* ReplayGainTests.swift in Sources */,
 				D4C0DE000000000000000067 /* LibraryScanImportTests.swift in Sources */,
+				D4C0DE000000000000000069 /* LibraryViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -136,4 +136,80 @@ final class DatabaseTests: XCTestCase {
         results = try repository.searchTracks(matching: "Freddie", limit: 10)
         XCTAssertEqual(results.map(\.track.title), ["Freddie Freeloader"])
     }
+
+    func testFetchLibraryTracksReturnsImportedTracksInAlbumOrder() throws {
+        let database = try PlayerDatabase.inMemory()
+        let repository = GRDBTrackRepository(database: database)
+        let sourceRoot = SourceRootRecord(
+            id: "source-1",
+            kind: "securityScopedFolder",
+            displayName: "Documents",
+            bookmarkData: nil,
+            baseURL: nil,
+            isEnabled: true,
+            lastScanDate: nil
+        )
+
+        try repository.upsertSourceRoots([sourceRoot])
+        try repository.upsertTracks([
+            makeTrack(id: "track-2", album: "Kind of Blue", trackNumber: 2, fileName: "02 Freddie.flac"),
+            makeTrack(id: "track-1", album: "Kind of Blue", trackNumber: 1, fileName: "01 So What.flac"),
+            makeTrack(id: "track-3", album: "Blue Train", trackNumber: 1, fileName: "01 Blue Train.flac")
+        ])
+
+        let results = try repository.fetchLibraryTracks(limit: 10)
+
+        XCTAssertEqual(results.map(\.track.id), ["track-3", "track-1", "track-2"])
+    }
+
+    private func makeTrack(
+        id: String,
+        album: String,
+        trackNumber: Int,
+        fileName: String
+    ) -> TrackRecord {
+        TrackRecord(
+            id: id,
+            sourceRootID: "source-1",
+            sourceKind: "securityScopedFolder",
+            bookmarkData: nil,
+            mediaPersistentID: nil,
+            relativePath: fileName,
+            fileName: fileName,
+            fileSize: nil,
+            modifiedDate: nil,
+            contentHash: nil,
+            containerFormat: "FLAC",
+            codec: "FLAC",
+            sampleRate: 96_000,
+            bitDepth: 24,
+            channelCount: 2,
+            duration: nil,
+            totalFrames: nil,
+            bitrate: nil,
+            isLossless: true,
+            isDSD: false,
+            dsdRate: nil,
+            title: nil,
+            album: album,
+            albumArtist: nil,
+            artist: nil,
+            composer: nil,
+            genre: nil,
+            year: nil,
+            discNumber: nil,
+            discTotal: nil,
+            trackNumber: trackNumber,
+            trackTotal: nil,
+            sortTitle: nil,
+            sortAlbum: nil,
+            sortArtist: nil,
+            musicBrainzID: nil,
+            replayGainTrackGain: nil,
+            replayGainAlbumGain: nil,
+            replayGainTrackPeak: nil,
+            replayGainAlbumPeak: nil,
+            artworkID: nil
+        )
+    }
 }

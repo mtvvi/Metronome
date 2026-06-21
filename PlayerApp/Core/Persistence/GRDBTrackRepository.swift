@@ -41,6 +41,31 @@ final class GRDBTrackRepository: TrackRepository, SearchRepository, SourceRootRe
         }
     }
 
+    func fetchLibraryTracks(limit: Int) throws -> [TrackSearchResult] {
+        let boundedLimit = max(1, limit)
+        return try database.read { db in
+            let tracks = try TrackRecord.fetchAll(
+                db,
+                sql: """
+                SELECT *
+                FROM tracks
+                ORDER BY
+                    album IS NULL,
+                    album,
+                    disc_number IS NULL,
+                    disc_number,
+                    track_number IS NULL,
+                    track_number,
+                    file_name
+                LIMIT ?
+                """,
+                arguments: [boundedLimit]
+            )
+
+            return tracks.map { TrackSearchResult(track: $0) }
+        }
+    }
+
     func searchTracks(matching query: String, limit: Int) throws -> [TrackSearchResult] {
         let pattern = FTSQueryPattern.make(from: query)
         guard let pattern else { return [] }
