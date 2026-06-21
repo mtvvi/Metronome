@@ -16,6 +16,12 @@ final class GRDBTrackRepository: TrackRepository, SearchRepository, SourceRootRe
         }
     }
 
+    func fetchSourceRoot(id: String) throws -> SourceRootRecord? {
+        try database.read { db in
+            try SourceRootRecord.fetchOne(db, key: id)
+        }
+    }
+
     func fetchSourceRoots() throws -> [SourceRootRecord] {
         try database.read { db in
             try SourceRootRecord

@@ -7,15 +7,22 @@ final class LibraryViewModel: ObservableObject {
     @Published private(set) var rows: [LibraryTrackRow] = []
     @Published private(set) var statusMessage: String?
     @Published private(set) var isLoading = false
+    @Published private(set) var currentlyPlayingTrackID: String?
 
     private let searchRepository: (any SearchRepository)?
+    private let playbackStarter: (any LibraryTrackPlaybackStarting)?
+    private let nowPlayingUpdater: (any NowPlayingUpdating)?
     private let resultLimit: Int
 
     init(
         searchRepository: (any SearchRepository)? = nil,
+        playbackStarter: (any LibraryTrackPlaybackStarting)? = nil,
+        nowPlayingUpdater: (any NowPlayingUpdating)? = nil,
         resultLimit: Int = 200
     ) {
         self.searchRepository = searchRepository
+        self.playbackStarter = playbackStarter
+        self.nowPlayingUpdater = nowPlayingUpdater
         self.resultLimit = resultLimit
     }
 
@@ -46,6 +53,26 @@ final class LibraryViewModel: ObservableObject {
         }
     }
 
+    func play(row: LibraryTrackRow) async {
+        guard let playbackStarter else {
+            statusMessage = "Playback is unavailable."
+            return
+        }
+
+        do {
+            try playbackStarter.play(track: row.track)
+            nowPlayingUpdater?.update(
+                track: NowPlayingTrackMetadata(track: row.track),
+                elapsed: 0,
+                playbackRate: 1
+            )
+            currentlyPlayingTrackID = row.id
+            statusMessage = "Playing \(row.title)."
+        } catch {
+            statusMessage = "Unable to play \(row.title)."
+        }
+    }
+
     private func statusMessage(resultCount: Int, query: String) -> String? {
         guard resultCount == 0 else { return nil }
 
@@ -59,12 +86,14 @@ final class LibraryViewModel: ObservableObject {
 
 struct LibraryTrackRow: Identifiable, Equatable, Sendable {
     var id: String
+    var track: TrackRecord
     var title: String
     var subtitle: String
     var technicalSummary: String
 
     init(track: TrackRecord) {
         id = track.id
+        self.track = track
         title = nonEmpty(track.title) ?? track.fileName
         subtitle = Self.subtitle(for: track)
         technicalSummary = Self.technicalSummary(for: track)
@@ -114,6 +143,25 @@ struct LibraryTrackRow: Identifiable, Equatable, Sendable {
     }
 
     private static func nonEmpty(_ value: String?) -> String? {
+        guard let value else { return nil }
+
+        let trimmed = value.trimmingCharacters(in: .whitespacesAndNewlines)
+        return trimmed.isEmpty ? nil : trimmed
+    }
+}
+
+private extension NowPlayingTrackMetadata {
+    init(track: TrackRecord) {
+        self.init(
+            fileName: track.fileName,
+            title: Self.nonEmpty(track.title),
+            artist: Self.nonEmpty(track.artist) ?? Self.nonEmpty(track.albumArtist),
+            albumTitle: Self.nonEmpty(track.album),
+            duration: track.duration
+        )
+    }
+
+    static func nonEmpty(_ value: String?) -> String? {
         guard let value else { return nil }
 
         let trimmed = value.trimmingCharacters(in: .whitespacesAndNewlines)

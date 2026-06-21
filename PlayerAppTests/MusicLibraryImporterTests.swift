@@ -242,6 +242,10 @@ private final class FakeMusicLibraryRepository: SourceRootRepository, TrackRepos
     private(set) var sourceRoots: [SourceRootRecord] = []
     private(set) var tracks: [TrackRecord] = []
 
+    func fetchSourceRoot(id: String) throws -> SourceRootRecord? {
+        sourceRoots.first { $0.id == id }
+    }
+
     func fetchSourceRoots() throws -> [SourceRootRecord] {
         sourceRoots
     }

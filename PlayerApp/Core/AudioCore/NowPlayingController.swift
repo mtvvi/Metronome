@@ -15,6 +15,16 @@ protocol NowPlayingInfoWriting: AnyObject {
 }
 
 @MainActor
+protocol NowPlayingUpdating: AnyObject {
+    func update(
+        track: NowPlayingTrackMetadata,
+        elapsed: TimeInterval,
+        playbackRate: Double
+    )
+    func clear()
+}
+
+@MainActor
 final class SystemNowPlayingInfoWriter: NowPlayingInfoWriting {
     private let center: MPNowPlayingInfoCenter
 
@@ -60,3 +70,5 @@ final class NowPlayingController {
         infoWriter.nowPlayingInfo = nil
     }
 }
+
+extension NowPlayingController: NowPlayingUpdating {}

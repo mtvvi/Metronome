@@ -16,7 +16,14 @@ struct LibraryView: View {
                 )
             } else {
                 ForEach(viewModel.rows) { row in
-                    LibraryTrackRowView(row: row)
+                    LibraryTrackRowView(
+                        row: row,
+                        isPlaying: viewModel.currentlyPlayingTrackID == row.id
+                    ) {
+                        Task {
+                            await viewModel.play(row: row)
+                        }
+                    }
                 }
             }
         }
@@ -35,22 +42,35 @@ struct LibraryView: View {
 
 private struct LibraryTrackRowView: View {
     var row: LibraryTrackRow
+    var isPlaying: Bool
+    var playAction: () -> Void
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            Text(row.title)
-                .font(.body)
-                .lineLimit(1)
-            Text(row.subtitle)
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
-                .lineLimit(1)
-            Text(row.technicalSummary)
-                .font(.caption)
-                .foregroundStyle(.tertiary)
-                .lineLimit(1)
+        HStack(spacing: 12) {
+            VStack(alignment: .leading, spacing: 4) {
+                Text(row.title)
+                    .font(.body)
+                    .lineLimit(1)
+                Text(row.subtitle)
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                    .lineLimit(1)
+                Text(row.technicalSummary)
+                    .font(.caption)
+                    .foregroundStyle(.tertiary)
+                    .lineLimit(1)
+            }
+            .accessibilityElement(children: .combine)
+
+            Spacer(minLength: 8)
+
+            Button(action: playAction) {
+                Image(systemName: isPlaying ? "speaker.wave.2.fill" : "play.fill")
+                    .frame(width: 32, height: 32)
+            }
+            .buttonStyle(.borderless)
+            .accessibilityLabel("Play \(row.title)")
         }
-        .accessibilityElement(children: .combine)
     }
 }
 

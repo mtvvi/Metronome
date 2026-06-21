@@ -18,7 +18,15 @@ struct DependencyContainer: Sendable {
 
     @MainActor
     func makeLibraryViewModel() -> LibraryViewModel {
-        LibraryViewModel(searchRepository: repository)
+        guard let repository else {
+            return LibraryViewModel()
+        }
+
+        return LibraryViewModel(
+            searchRepository: repository,
+            playbackStarter: LibraryTrackPlaybackCoordinator(sourceRootRepository: repository),
+            nowPlayingUpdater: NowPlayingController()
+        )
     }
 
     @MainActor
