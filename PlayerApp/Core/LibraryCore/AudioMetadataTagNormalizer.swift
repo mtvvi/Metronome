@@ -46,6 +46,14 @@ enum AudioMetadataTagNormalizer {
                 tags.discTotal = parsed.total
             } else if keys.contains("disctotal") {
                 tags.discTotal = parseFirstInteger(rawTag.value)
+            } else if keys.contains("replaygaintrackgain") {
+                tags.replayGainTrackGain = parseReplayGainNumber(rawTag.value)
+            } else if keys.contains("replaygainalbumgain") {
+                tags.replayGainAlbumGain = parseReplayGainNumber(rawTag.value)
+            } else if keys.contains("replaygaintrackpeak") {
+                tags.replayGainTrackPeak = parseReplayGainPeak(rawTag.value)
+            } else if keys.contains("replaygainalbumpeak") {
+                tags.replayGainAlbumPeak = parseReplayGainPeak(rawTag.value)
             }
         }
 
@@ -86,5 +94,22 @@ enum AudioMetadataTagNormalizer {
         let current = parts.first.flatMap { Int($0.trimmingCharacters(in: .whitespacesAndNewlines)) }
         let total = parts.dropFirst().first.flatMap { Int($0.trimmingCharacters(in: .whitespacesAndNewlines)) }
         return (current, total)
+    }
+
+    private static func parseReplayGainNumber(_ value: String) -> Double? {
+        let normalizedValue = value
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .replacingOccurrences(of: ",", with: ".")
+
+        guard let token = normalizedValue.split(whereSeparator: { $0.isWhitespace }).first else {
+            return Double(normalizedValue)
+        }
+
+        return Double(String(token))
+    }
+
+    private static func parseReplayGainPeak(_ value: String) -> Double? {
+        guard let peak = parseReplayGainNumber(value), peak > 0 else { return nil }
+        return peak
     }
 }

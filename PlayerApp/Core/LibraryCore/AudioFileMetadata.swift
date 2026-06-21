@@ -25,6 +25,10 @@ struct AudioMetadataTags: Equatable, Sendable {
     var discTotal: Int? = nil
     var trackNumber: Int? = nil
     var trackTotal: Int? = nil
+    var replayGainTrackGain: Double? = nil
+    var replayGainAlbumGain: Double? = nil
+    var replayGainTrackPeak: Double? = nil
+    var replayGainAlbumPeak: Double? = nil
 
     static let empty = AudioMetadataTags()
 }

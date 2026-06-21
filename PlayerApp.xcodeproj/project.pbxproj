@@ -86,6 +86,8 @@
 		D4C0DE000000000000000062 /* OutputRouteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000160 /* OutputRouteView.swift */; };
 		D4C0DE000000000000000063 /* SpotlightIndexerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000161 /* SpotlightIndexerTests.swift */; };
 		D4C0DE000000000000000064 /* LibrarySpotlightIndexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000162 /* LibrarySpotlightIndexer.swift */; };
+		D4C0DE000000000000000065 /* ReplayGainTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000163 /* ReplayGainTests.swift */; };
+		D4C0DE000000000000000066 /* ReplayGain.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000164 /* ReplayGain.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -178,6 +180,8 @@
 		D4C0DE000000000000000160 /* OutputRouteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputRouteView.swift; sourceTree = "<group>"; };
 		D4C0DE000000000000000161 /* SpotlightIndexerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpotlightIndexerTests.swift; sourceTree = "<group>"; };
 		D4C0DE000000000000000162 /* LibrarySpotlightIndexer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibrarySpotlightIndexer.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000163 /* ReplayGainTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplayGainTests.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000164 /* ReplayGain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplayGain.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -339,6 +343,7 @@
 				D4C0DE000000000000000144 /* EQBandwidthConverter.swift */,
 				D4C0DE000000000000000149 /* AutoEqImporter.swift */,
 				D4C0DE000000000000000150 /* HeadphonePresetRepository.swift */,
+				D4C0DE000000000000000164 /* ReplayGain.swift */,
 				D4C0DE000000000000000153 /* BiquadCoefficients.swift */,
 				D4C0DE000000000000000154 /* BiquadFilter.swift */,
 				D4C0DE000000000000000155 /* CustomBiquadDSPPrototype.swift */,
@@ -370,6 +375,7 @@
 				D4C0DE00000000000000015A /* MusicLibraryImporterTests.swift */,
 				D4C0DE00000000000000015D /* OutputRouteTests.swift */,
 				D4C0DE000000000000000161 /* SpotlightIndexerTests.swift */,
+				D4C0DE000000000000000163 /* ReplayGainTests.swift */,
 				D4C0DE00000000000000010F /* Info.plist */,
 			);
 			path = PlayerAppTests;
@@ -571,6 +577,7 @@
 				D4C0DE000000000000000046 /* EQBandwidthConverter.swift in Sources */,
 				D4C0DE000000000000000051 /* AutoEqImporter.swift in Sources */,
 				D4C0DE000000000000000052 /* HeadphonePresetRepository.swift in Sources */,
+				D4C0DE000000000000000066 /* ReplayGain.swift in Sources */,
 				D4C0DE000000000000000055 /* BiquadCoefficients.swift in Sources */,
 				D4C0DE000000000000000056 /* BiquadFilter.swift in Sources */,
 				D4C0DE000000000000000057 /* CustomBiquadDSPPrototype.swift in Sources */,
@@ -607,6 +614,7 @@
 				D4C0DE00000000000000005C /* MusicLibraryImporterTests.swift in Sources */,
 				D4C0DE00000000000000005F /* OutputRouteTests.swift in Sources */,
 				D4C0DE000000000000000063 /* SpotlightIndexerTests.swift in Sources */,
+				D4C0DE000000000000000065 /* ReplayGainTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
