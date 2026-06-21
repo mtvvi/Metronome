@@ -88,6 +88,8 @@
 		D4C0DE000000000000000064 /* LibrarySpotlightIndexer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000162 /* LibrarySpotlightIndexer.swift */; };
 		D4C0DE000000000000000065 /* ReplayGainTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000163 /* ReplayGainTests.swift */; };
 		D4C0DE000000000000000066 /* ReplayGain.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000164 /* ReplayGain.swift */; };
+		D4C0DE000000000000000067 /* LibraryScanImportTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000165 /* LibraryScanImportTests.swift */; };
+		D4C0DE000000000000000068 /* LibraryScanImporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000166 /* LibraryScanImporter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -182,6 +184,8 @@
 		D4C0DE000000000000000162 /* LibrarySpotlightIndexer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibrarySpotlightIndexer.swift; sourceTree = "<group>"; };
 		D4C0DE000000000000000163 /* ReplayGainTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplayGainTests.swift; sourceTree = "<group>"; };
 		D4C0DE000000000000000164 /* ReplayGain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplayGain.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000165 /* LibraryScanImportTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryScanImportTests.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000166 /* LibraryScanImporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryScanImporter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -302,6 +306,7 @@
 				D4C0DE000000000000000123 /* AudioFileExtensionFilter.swift */,
 				D4C0DE000000000000000124 /* ScannedAudioFile.swift */,
 				D4C0DE000000000000000125 /* LibraryScanner.swift */,
+				D4C0DE000000000000000166 /* LibraryScanImporter.swift */,
 				D4C0DE000000000000000126 /* SourceRootAccess.swift */,
 				D4C0DE000000000000000131 /* MetadataReading.swift */,
 				D4C0DE000000000000000132 /* AudioFileMetadata.swift */,
@@ -376,6 +381,7 @@
 				D4C0DE00000000000000015D /* OutputRouteTests.swift */,
 				D4C0DE000000000000000161 /* SpotlightIndexerTests.swift */,
 				D4C0DE000000000000000163 /* ReplayGainTests.swift */,
+				D4C0DE000000000000000165 /* LibraryScanImportTests.swift */,
 				D4C0DE00000000000000010F /* Info.plist */,
 			);
 			path = PlayerAppTests;
@@ -550,6 +556,7 @@
 				D4C0DE000000000000000021 /* AudioFileExtensionFilter.swift in Sources */,
 				D4C0DE000000000000000022 /* ScannedAudioFile.swift in Sources */,
 				D4C0DE000000000000000023 /* LibraryScanner.swift in Sources */,
+				D4C0DE000000000000000068 /* LibraryScanImporter.swift in Sources */,
 				D4C0DE000000000000000024 /* SourceRootAccess.swift in Sources */,
 				D4C0DE000000000000000031 /* MetadataReading.swift in Sources */,
 				D4C0DE000000000000000032 /* AudioFileMetadata.swift in Sources */,
@@ -615,6 +622,7 @@
 				D4C0DE00000000000000005F /* OutputRouteTests.swift in Sources */,
 				D4C0DE000000000000000063 /* SpotlightIndexerTests.swift in Sources */,
 				D4C0DE000000000000000065 /* ReplayGainTests.swift in Sources */,
+				D4C0DE000000000000000067 /* LibraryScanImportTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

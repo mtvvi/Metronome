@@ -22,12 +22,17 @@ struct DependencyContainer: Sendable {
             return SourcesViewModel()
         }
 
+        let spotlightIndexer = LibrarySpotlightIndexer()
         return SourcesViewModel(
             repository: repository,
             musicLibraryImporter: MusicLibraryImporter(
                 sourceRootRepository: repository,
                 trackRepository: repository,
-                spotlightIndexer: LibrarySpotlightIndexer()
+                spotlightIndexer: spotlightIndexer
+            ),
+            libraryScanImporter: LibraryScanImporter(
+                trackRepository: repository,
+                spotlightIndexer: spotlightIndexer
             )
         )
     }

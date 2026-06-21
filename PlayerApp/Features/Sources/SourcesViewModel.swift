@@ -11,17 +11,20 @@ final class SourcesViewModel: ObservableObject {
     private let repository: (any SourceRootRepository)?
     private let scanner: any LibraryScanning
     private let musicLibraryImporter: (any MusicLibraryImporting)?
+    private let libraryScanImporter: (any LibraryScanImporting)?
 
     init(
         access: any SourceRootAccessing = SourceRootAccess(),
         repository: (any SourceRootRepository)? = nil,
         scanner: any LibraryScanning = LibraryScanner(),
-        musicLibraryImporter: (any MusicLibraryImporting)? = nil
+        musicLibraryImporter: (any MusicLibraryImporting)? = nil,
+        libraryScanImporter: (any LibraryScanImporting)? = nil
     ) {
         self.access = access
         self.repository = repository
         self.scanner = scanner
         self.musicLibraryImporter = musicLibraryImporter
+        self.libraryScanImporter = libraryScanImporter
     }
 
     var canImportMusicLibrary: Bool {
@@ -54,6 +57,12 @@ final class SourcesViewModel: ObservableObject {
         do {
             let resource = try access.resolve(sourceRoot)
             defer { resource.stopAccessing() }
+
+            if let libraryScanImporter {
+                let summary = try await libraryScanImporter.importSource(sourceRoot, rootURL: resource.url)
+                statusMessage = statusMessage(for: summary, sourceRoot: sourceRoot)
+                return
+            }
 
             let files = try await scanner.scan(rootURL: resource.url)
             statusMessage = "Found \(files.count) audio files in \(sourceRoot.displayName)."
@@ -89,5 +98,16 @@ final class SourcesViewModel: ObservableObject {
         }
 
         return "Imported \(summary.importedCount) Music Library tracks. Skipped \(summary.protectedSkippedCount) protected and \(summary.unavailableSkippedCount) unavailable."
+    }
+
+    private func statusMessage(
+        for summary: LibraryScanImportSummary,
+        sourceRoot: SourceRootRecord
+    ) -> String {
+        if summary.failedMetadataCount == 0 {
+            return "Imported \(summary.importedTrackCount) audio files from \(sourceRoot.displayName)."
+        }
+
+        return "Imported \(summary.importedTrackCount) of \(summary.scannedFileCount) audio files from \(sourceRoot.displayName). Failed metadata for \(summary.failedMetadataCount)."
     }
 }
