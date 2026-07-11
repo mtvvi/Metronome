@@ -5,7 +5,11 @@
 	<key>CFBundleDisplayName</key>
 	<string>Metronome</string>
 	<key>NSAppleMusicUsageDescription</key>
-	<string>Metronome imports local, non-protected Music library items that have readable asset URLs.</string>
+	<string>Metronome shows your Music library and plays locally available, non-protected audio when you choose Import Music Library.</string>
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+	<true/>
+	<key>UIFileSharingEnabled</key>
+	<true/>
 	<key>UILaunchScreen</key>
 	<dict/>
 	<key>UIBackgroundModes</key>

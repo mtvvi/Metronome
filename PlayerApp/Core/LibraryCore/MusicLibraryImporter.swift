@@ -24,6 +24,7 @@ struct MusicLibraryMediaItem: Equatable, Sendable {
     var persistentID: Int64
     var assetURL: URL?
     var hasProtectedAsset: Bool
+    var isCloudItem: Bool
     var title: String?
     var albumTitle: String?
     var albumArtist: String?
@@ -39,6 +40,7 @@ struct MusicLibraryMediaItem: Equatable, Sendable {
         persistentID: Int64,
         assetURL: URL?,
         hasProtectedAsset: Bool,
+        isCloudItem: Bool = false,
         title: String? = nil,
         albumTitle: String? = nil,
         albumArtist: String? = nil,
@@ -53,6 +55,7 @@ struct MusicLibraryMediaItem: Equatable, Sendable {
         self.persistentID = persistentID
         self.assetURL = assetURL
         self.hasProtectedAsset = hasProtectedAsset
+        self.isCloudItem = isCloudItem
         self.title = title
         self.albumTitle = albumTitle
         self.albumArtist = albumArtist
@@ -71,6 +74,7 @@ struct MusicLibraryImportSummary: Equatable, Sendable {
     var importedCount: Int
     var protectedSkippedCount: Int
     var unavailableSkippedCount: Int
+    var searchIndexWarning = false
 }
 
 struct MusicLibraryImporter: MusicLibraryImporting {
@@ -114,28 +118,55 @@ struct MusicLibraryImporter: MusicLibraryImporting {
         var importedTracks: [TrackRecord] = []
 
         for item in query.songs() {
-            guard !item.hasProtectedAsset else {
+            let availabilityReason: PlaybackUnavailabilityReason?
+            if item.hasProtectedAsset {
                 protectedSkippedCount += 1
-                continue
-            }
-
-            guard let assetURL = item.assetURL else {
+                availabilityReason = .protectedAsset
+            } else if item.assetURL == nil {
                 unavailableSkippedCount += 1
-                continue
+                availabilityReason = item.isCloudItem ? .cloudOnly : .assetUnavailable
+            } else {
+                availabilityReason = nil
             }
 
-            importedTracks.append(trackRecord(from: item, assetURL: assetURL))
+            importedTracks.append(trackRecord(
+                from: item,
+                availabilityReason: availabilityReason
+            ))
         }
 
         try sourceRootRepository.upsertSourceRoots([Self.musicLibrarySourceRoot()])
-        try trackRepository.upsertTracks(importedTracks)
-        try? await spotlightIndexer?.indexTracks(importedTracks)
+        let reconciliation: SourceReconciliationResult
+        if let repository = trackRepository as? any TrackReconciliationRepository {
+            reconciliation = try repository.reconcileSource(
+                sourceRootID: Self.sourceRootID,
+                scanID: UUID().uuidString,
+                tracks: importedTracks
+            )
+        } else {
+            try trackRepository.upsertTracks(importedTracks)
+            reconciliation = SourceReconciliationResult(deletedTrackIDs: [])
+        }
+        var searchIndexWarning = false
+        do {
+            try await spotlightIndexer?.indexTracks(importedTracks)
+        } catch {
+            searchIndexWarning = true
+        }
+        if !reconciliation.deletedTrackIDs.isEmpty {
+            do {
+                try await spotlightIndexer?.deleteTracks(withIDs: reconciliation.deletedTrackIDs)
+            } catch {
+                searchIndexWarning = true
+            }
+        }
 
         return MusicLibraryImportSummary(
             authorizationStatus: authorizationStatus,
-            importedCount: importedTracks.count,
+            importedCount: importedTracks.count - protectedSkippedCount - unavailableSkippedCount,
             protectedSkippedCount: protectedSkippedCount,
-            unavailableSkippedCount: unavailableSkippedCount
+            unavailableSkippedCount: unavailableSkippedCount,
+            searchIndexWarning: searchIndexWarning
         )
     }
 
@@ -162,20 +193,22 @@ struct MusicLibraryImporter: MusicLibraryImporting {
 
     private func trackRecord(
         from item: MusicLibraryMediaItem,
-        assetURL: URL
+        availabilityReason: PlaybackUnavailabilityReason?
     ) -> TrackRecord {
         TrackRecord(
             id: "\(Self.sourceRootID)-\(item.persistentID)",
             sourceRootID: Self.sourceRootID,
             sourceKind: Self.sourceKind,
+            playbackLocatorKind: PlaybackLocatorKind.musicPersistentID.rawValue,
+            availabilityReason: availabilityReason?.rawValue,
             bookmarkData: nil,
             mediaPersistentID: item.persistentID,
             relativePath: nil,
-            fileName: fileName(for: assetURL, fallbackTitle: item.title),
+            fileName: fileName(for: item.assetURL, fallbackTitle: item.title),
             fileSize: nil,
             modifiedDate: nil,
             contentHash: nil,
-            containerFormat: containerFormat(for: assetURL),
+            containerFormat: containerFormat(for: item.assetURL),
             codec: nil,
             sampleRate: nil,
             bitDepth: nil,
@@ -209,16 +242,17 @@ struct MusicLibraryImporter: MusicLibraryImporting {
         )
     }
 
-    private func fileName(for assetURL: URL, fallbackTitle: String?) -> String {
-        let fileName = assetURL.lastPathComponent
-        if !fileName.isEmpty {
+    private func fileName(for assetURL: URL?, fallbackTitle: String?) -> String {
+        let fileName = assetURL?.lastPathComponent
+        if let fileName, !fileName.isEmpty {
             return fileName
         }
 
         return fallbackTitle ?? "Music Library Item"
     }
 
-    private func containerFormat(for assetURL: URL) -> String? {
+    private func containerFormat(for assetURL: URL?) -> String? {
+        guard let assetURL else { return nil }
         let pathExtension = assetURL.pathExtension
         return pathExtension.isEmpty ? nil : pathExtension.uppercased()
     }

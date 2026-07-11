@@ -36,7 +36,7 @@ final class EqualizerNodeController {
 
     func apply(state: EqualizerState) {
         node.isBypassed = state.isEffectivelyBypassed
-        node.globalGainDB = Float(state.effectivePreampGainDB)
+        node.globalGainDB = Self.nativeGain(state.effectivePreampGainDB)
 
         let effectiveBands = Array(state.effectiveBands.prefix(16))
 
@@ -58,6 +58,40 @@ final class EqualizerNodeController {
                 )
             )
         }
+    }
+
+    func apply(snapshot: DSPConfigurationSnapshot) {
+        node.isBypassed = snapshot.isEqualizerBypassed
+            && abs(snapshot.gainPlan.resultingGainDB) <= 0.000_001
+        node.globalGainDB = Self.nativeGain(snapshot.gainPlan.resultingGainDB)
+        let bands = Array(snapshot.bands.prefix(16))
+
+        for index in 0..<16 {
+            guard bands.indices.contains(index) else {
+                node.configureBand(at: index, configuration: .bypassed)
+                continue
+            }
+            let band = bands[index]
+            node.configureBand(
+                at: index,
+                configuration: EqualizerBandNodeConfiguration(
+                    frequencyHz: Float(band.frequencyHz),
+                    gainDB: Float(band.filterType.usesGain ? band.gainDB : 0),
+                    bandwidthOctaves: Float(
+                        band.filterType.usesBandwidth
+                            ? EQBandwidthConverter.bandwidthOctaves(forQ: band.q)
+                            : 1
+                    ),
+                    isBypassed: snapshot.isEqualizerBypassed || band.isBypassed,
+                    filterType: band.filterType
+                )
+            )
+        }
+    }
+
+    private static func nativeGain(_ value: Double) -> Float {
+        guard value.isFinite else { return 0 }
+        return Float(min(max(value, -96), 24))
     }
 }
 
@@ -93,15 +127,31 @@ final class AVAudioUnitEQNodeAdapter: EqualizerNodeApplying {
     }
 }
 
-private extension PEQFilterType {
+extension PEQFilterType {
     var avAudioUnitEQFilterType: AVAudioUnitEQFilterType {
         switch self {
         case .peaking:
             return .parametric
+        case .lowPass:
+            return .lowPass
+        case .highPass:
+            return .highPass
+        case .resonantLowPass:
+            return .resonantLowPass
+        case .resonantHighPass:
+            return .resonantHighPass
+        case .bandPass:
+            return .bandPass
+        case .bandStop:
+            return .bandStop
         case .lowShelf:
             return .lowShelf
         case .highShelf:
             return .highShelf
+        case .resonantLowShelf:
+            return .resonantLowShelf
+        case .resonantHighShelf:
+            return .resonantHighShelf
         }
     }
 }

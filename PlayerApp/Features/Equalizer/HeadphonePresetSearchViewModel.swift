@@ -9,14 +9,21 @@ final class HeadphonePresetSearchViewModel: ObservableObject {
     @Published private(set) var errorMessage: String?
 
     private let repository: any HeadphonePresetRepository
+    private var searchTask: Task<Void, Never>?
 
-    init(repository: any HeadphonePresetRepository = JSONHeadphonePresetRepository()) {
+    init(repository: any HeadphonePresetRepository = JSONHeadphonePresetRepository(bundle: .main)) {
         self.repository = repository
-        search()
     }
+
+    deinit { searchTask?.cancel() }
 
     func updateQuery(_ query: String) {
         self.query = query
+        search()
+    }
+
+    func loadInitialResults() {
+        guard results.isEmpty, query.isEmpty else { return }
         search()
     }
 
@@ -34,13 +41,24 @@ final class HeadphonePresetSearchViewModel: ObservableObject {
     }
 
     private func search() {
-        do {
-            results = try repository.search(matching: query)
-            errorMessage = nil
-        } catch {
-            results = []
-            selectedPreset = nil
-            errorMessage = "Preset search failed."
+        searchTask?.cancel()
+        let query = query
+        let repository = repository
+        searchTask = Task { [weak self] in
+            if !query.isEmpty {
+                try? await Task.sleep(for: .milliseconds(120))
+            }
+            guard !Task.isCancelled else { return }
+            do {
+                let values = try await repository.search(matching: query)
+                guard !Task.isCancelled else { return }
+                self?.results = values
+                self?.errorMessage = nil
+            } catch {
+                self?.results = []
+                self?.selectedPreset = nil
+                self?.errorMessage = String(localized: "Preset search failed.")
+            }
         }
     }
 }

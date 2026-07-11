@@ -16,8 +16,17 @@ struct AudioMetadataNormalizationResult: Equatable, Sendable {
 enum AudioMetadataTagNormalizer {
     static func normalize(rawTags: [AudioRawTag]) throws -> AudioMetadataNormalizationResult {
         var tags = AudioMetadataTags.empty
+        let boundedRawTags = rawTags.prefix(256).map { rawTag in
+            AudioRawTag(
+                keySpace: rawTag.keySpace.map { String($0.prefix(512)) },
+                key: rawTag.key.map { String($0.prefix(512)) },
+                commonKey: rawTag.commonKey.map { String($0.prefix(512)) },
+                identifier: rawTag.identifier.map { String($0.prefix(512)) },
+                value: String(rawTag.value.prefix(4_096))
+            )
+        }
 
-        for rawTag in rawTags {
+        for rawTag in boundedRawTags {
             let keys = normalizedKeys(for: rawTag)
 
             if keys.contains("title") {
@@ -60,7 +69,7 @@ enum AudioMetadataTagNormalizer {
         let encoder = JSONEncoder()
         encoder.outputFormatting = [.sortedKeys]
         let rawTagsJSON = String(
-            data: try encoder.encode(rawTags),
+            data: try encoder.encode(boundedRawTags),
             encoding: .utf8
         ) ?? "[]"
 
@@ -105,7 +114,8 @@ enum AudioMetadataTagNormalizer {
             return Double(normalizedValue)
         }
 
-        return Double(String(token))
+        guard let value = Double(String(token)), value.isFinite else { return nil }
+        return value
     }
 
     private static func parseReplayGainPeak(_ value: String) -> Double? {

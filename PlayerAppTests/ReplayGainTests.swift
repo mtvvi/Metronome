@@ -82,4 +82,63 @@ final class ReplayGainTests: XCTestCase {
         XCTAssertEqual(adjustment.appliedGainDB, 0)
         XCTAssertNil(adjustment.source)
     }
+
+    func testDSPGainPlanExplainsEveryGainContribution() {
+        let plan = DSPGainPlan(
+            userMasterGainDB: -2,
+            replayGainDB: 4,
+            clippingAdjustmentDB: -3
+        )
+
+        XCTAssertEqual(plan.userMasterGainDB, -2)
+        XCTAssertEqual(plan.replayGainDB, 4)
+        XCTAssertEqual(plan.clippingAdjustmentDB, -3)
+        XCTAssertEqual(plan.resultingGainDB, -1)
+    }
+
+    func testMissingMetadataUsesConfiguredFallbackPreamp() {
+        let adjustment = ReplayGainPolicy.adjustment(
+            for: ReplayGainMetadata(),
+            settings: ReplayGainSettings(
+                isEnabled: true,
+                mode: .album,
+                preampGainDB: 2,
+                preampWithoutMetadataDB: -3
+            ),
+            bitPerfectModeEnabled: false
+        )
+
+        XCTAssertEqual(adjustment.source, .noMetadataFallback)
+        XCTAssertEqual(adjustment.requestedGainDB, -3)
+        XCTAssertEqual(adjustment.appliedGainDB, -3)
+    }
+
+    func testExtremePeakProducesFiniteClippingLimitedGain() {
+        let adjustment = ReplayGainPolicy.adjustment(
+            for: ReplayGainMetadata(trackGainDB: 24, trackPeak: 100),
+            settings: ReplayGainSettings(isEnabled: true, mode: .track),
+            bitPerfectModeEnabled: false
+        )
+
+        XCTAssertTrue(adjustment.appliedGainDB.isFinite)
+        XCTAssertLessThan(adjustment.appliedGainDB, 0)
+        XCTAssertTrue(adjustment.didPreventClipping)
+    }
+
+    func testNonFiniteMetadataAndSettingsFallBackToFiniteUnityGain() {
+        let adjustment = ReplayGainPolicy.adjustment(
+            for: ReplayGainMetadata(trackGainDB: .nan, trackPeak: .infinity),
+            settings: ReplayGainSettings(
+                isEnabled: true,
+                mode: .track,
+                preampGainDB: .nan,
+                preampWithoutMetadataDB: .infinity
+            ),
+            bitPerfectModeEnabled: false
+        )
+
+        XCTAssertEqual(adjustment.source, .noMetadataFallback)
+        XCTAssertEqual(adjustment.appliedGainDB, 0)
+        XCTAssertTrue(adjustment.appliedGainDB.isFinite)
+    }
 }

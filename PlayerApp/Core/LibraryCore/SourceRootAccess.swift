@@ -12,6 +12,14 @@ protocol SourceRootAccessing: Sendable {
 }
 
 struct SourceRootAccess: SourceRootAccessing {
+    private let appDocumentsRoot: @Sendable () throws -> URL
+
+    init(
+        appDocumentsRoot: @escaping @Sendable () throws -> URL = PlaybackLocatorResolver.defaultAppFilesRoot
+    ) {
+        self.appDocumentsRoot = appDocumentsRoot
+    }
+
     func makeSecurityScopedSource(from url: URL) throws -> SourceRootRecord {
         let bookmarkData = try url.bookmarkData(
             options: [.withSecurityScope],
@@ -31,6 +39,12 @@ struct SourceRootAccess: SourceRootAccessing {
     }
 
     func resolve(_ sourceRoot: SourceRootRecord) throws -> SecurityScopedResource {
+        if sourceRoot.kind == "appDocuments" {
+            return SecurityScopedResource(
+                url: try appDocumentsRoot(),
+                didStartAccessing: false
+            )
+        }
         guard let bookmarkData = sourceRoot.bookmarkData else {
             throw SourceAccessError.missingBookmarkData
         }
@@ -43,16 +57,22 @@ struct SourceRootAccess: SourceRootAccessing {
             bookmarkDataIsStale: &isStale
         )
 
-        guard !isStale else {
-            throw SourceAccessError.staleBookmark
-        }
+        let refreshedBookmarkData = isStale ? try url.bookmarkData(
+            options: [.withSecurityScope],
+            includingResourceValuesForKeys: nil,
+            relativeTo: nil
+        ) : nil
 
         let didStartAccessing = url.startAccessingSecurityScopedResource()
         guard didStartAccessing else {
             throw SourceAccessError.permissionDenied
         }
 
-        return SecurityScopedResource(url: url, didStartAccessing: didStartAccessing)
+        return SecurityScopedResource(
+            url: url,
+            didStartAccessing: didStartAccessing,
+            refreshedBookmarkData: refreshedBookmarkData
+        )
     }
 
     private func displayName(for url: URL) -> String {
@@ -61,19 +81,38 @@ struct SourceRootAccess: SourceRootAccessing {
     }
 }
 
-final class SecurityScopedResource {
+final class SecurityScopedResource: @unchecked Sendable {
     let url: URL
+    let refreshedBookmarkData: Data?
     private var didStartAccessing: Bool
+    private let stateLock = NSLock()
+    private let stopAccessingHandler: (() -> Void)?
 
-    init(url: URL, didStartAccessing: Bool) {
+    init(
+        url: URL,
+        didStartAccessing: Bool,
+        refreshedBookmarkData: Data? = nil,
+        stopAccessingHandler: (() -> Void)? = nil
+    ) {
         self.url = url
         self.didStartAccessing = didStartAccessing
+        self.refreshedBookmarkData = refreshedBookmarkData
+        self.stopAccessingHandler = stopAccessingHandler
     }
 
     func stopAccessing() {
-        guard didStartAccessing else { return }
-        url.stopAccessingSecurityScopedResource()
+        stateLock.lock()
+        guard didStartAccessing else {
+            stateLock.unlock()
+            return
+        }
         didStartAccessing = false
+        stateLock.unlock()
+        if let stopAccessingHandler {
+            stopAccessingHandler()
+        } else {
+            url.stopAccessingSecurityScopedResource()
+        }
     }
 
     deinit {

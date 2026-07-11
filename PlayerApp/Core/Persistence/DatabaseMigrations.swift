@@ -96,6 +96,113 @@ enum DatabaseMigrations {
                 """)
         }
 
+        migrator.registerMigration("addStablePlaybackLocators") { db in
+            try db.execute(sql: """
+                ALTER TABLE tracks
+                ADD COLUMN playback_locator_kind TEXT NOT NULL DEFAULT 'securityScopedSource'
+                """)
+            try db.execute(sql: """
+                ALTER TABLE tracks
+                ADD COLUMN availability_reason TEXT
+                """)
+            try db.execute(sql: """
+                UPDATE tracks
+                SET playback_locator_kind = CASE
+                    WHEN media_persistent_id IS NOT NULL THEN 'musicPersistentID'
+                    WHEN source_kind = 'appDocuments' THEN 'appRelativePath'
+                    ELSE 'securityScopedSource'
+                END
+                """)
+        }
+
+        migrator.registerMigration("addPlaybackQueueState") { db in
+            try db.execute(sql: """
+                CREATE TABLE playback_queue_state (
+                    id INTEGER PRIMARY KEY CHECK (id = 1),
+                    item_ids_json BLOB NOT NULL,
+                    original_item_ids_json BLOB NOT NULL,
+                    current_index INTEGER,
+                    current_position REAL NOT NULL DEFAULT 0,
+                    repeat_mode TEXT NOT NULL DEFAULT 'off',
+                    is_shuffle_enabled INTEGER NOT NULL DEFAULT 0
+                )
+                """)
+        }
+
+        migrator.registerMigration("addParametricEQPersistence") { db in
+            try db.execute(sql: """
+                CREATE TABLE eq_presets (
+                    id TEXT PRIMARY KEY,
+                    name TEXT NOT NULL,
+                    origin TEXT NOT NULL,
+                    is_enabled INTEGER NOT NULL DEFAULT 0,
+                    preamp_gain_db REAL NOT NULL DEFAULT 0,
+                    prevent_clipping INTEGER NOT NULL DEFAULT 1,
+                    updated_at REAL NOT NULL
+                )
+                """)
+            try db.execute(sql: """
+                CREATE TABLE eq_bands (
+                    id TEXT PRIMARY KEY,
+                    preset_id TEXT NOT NULL REFERENCES eq_presets(id) ON DELETE CASCADE,
+                    position INTEGER NOT NULL,
+                    filter_type TEXT NOT NULL,
+                    frequency_hz REAL NOT NULL,
+                    gain_db REAL NOT NULL,
+                    q REAL NOT NULL,
+                    is_enabled INTEGER NOT NULL DEFAULT 1,
+                    UNIQUE(preset_id, position)
+                )
+                """)
+            try db.execute(sql: """
+                CREATE TABLE eq_assignments (
+                    scope_key TEXT PRIMARY KEY,
+                    preset_id TEXT NOT NULL REFERENCES eq_presets(id) ON DELETE CASCADE
+                )
+                """)
+            try db.execute(sql: """
+                CREATE TABLE dsp_settings (
+                    id INTEGER PRIMARY KEY CHECK (id = 1),
+                    master_gain_db REAL NOT NULL DEFAULT 0,
+                    bit_perfect_enabled INTEGER NOT NULL DEFAULT 0,
+                    replay_gain_enabled INTEGER NOT NULL DEFAULT 0,
+                    replay_gain_mode TEXT NOT NULL DEFAULT 'album',
+                    replay_gain_preamp_db REAL NOT NULL DEFAULT 0,
+                    replay_gain_no_metadata_preamp_db REAL NOT NULL DEFAULT 0,
+                    replay_gain_prevent_clipping INTEGER NOT NULL DEFAULT 1,
+                    last_selected_band_id TEXT
+                )
+                """)
+        }
+
+        migrator.registerMigration("addSourceReconciliationGeneration") { db in
+            try db.execute(sql: "ALTER TABLE tracks ADD COLUMN last_seen_scan_id TEXT")
+        }
+
+        migrator.registerMigration("addLibraryBrowsingIndexes") { db in
+            try db.execute(sql: """
+                CREATE INDEX tracks_library_page_index ON tracks(
+                    COALESCE(album, ''), COALESCE(disc_number, 0),
+                    COALESCE(track_number, 0), file_name, id
+                )
+                """)
+            try db.execute(sql: """
+                CREATE INDEX tracks_source_scan_index
+                ON tracks(source_root_id, last_seen_scan_id)
+                """)
+            try db.execute(sql: """
+                CREATE INDEX tracks_album_artist_index
+                ON tracks(album, album_artist, artist, disc_number, track_number)
+                """)
+        }
+
+        migrator.registerMigration("addAnalyzerPreference") { db in
+            try db.execute(sql: """
+                ALTER TABLE dsp_settings
+                ADD COLUMN analyzer_enabled INTEGER NOT NULL DEFAULT 1
+                """)
+        }
+
         return migrator
     }
 }

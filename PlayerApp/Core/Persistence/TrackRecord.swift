@@ -7,6 +7,9 @@ struct TrackRecord: Codable, Equatable, FetchableRecord, PersistableRecord, Send
     var id: String
     var sourceRootID: String
     var sourceKind: String
+    var playbackLocatorKind: String = "securityScopedSource"
+    var availabilityReason: String? = nil
+    var lastSeenScanID: String? = nil
     var bookmarkData: Data?
     var mediaPersistentID: Int64?
     var relativePath: String?
@@ -51,6 +54,9 @@ struct TrackRecord: Codable, Equatable, FetchableRecord, PersistableRecord, Send
         case id
         case sourceRootID = "source_root_id"
         case sourceKind = "source_kind"
+        case playbackLocatorKind = "playback_locator_kind"
+        case availabilityReason = "availability_reason"
+        case lastSeenScanID = "last_seen_scan_id"
         case bookmarkData = "bookmark_data"
         case mediaPersistentID = "media_persistent_id"
         case relativePath = "relative_path"

@@ -1,0 +1,10 @@
+Third-Party Notices
+
+This application uses GRDB.swift and SFBAudioEngine under their respective
+licenses. SFBAudioEngine's resolved codec graph may include dynamically linked
+components under LGPL or MPL terms. Before distribution, the generated
+Package.resolved, embedded frameworks, replacement/relinking rights, source
+offers, and exact license files must be verified from the Release build.
+
+Do not distribute a build whose codec linkage or notice obligations have not
+passed the release license gate.

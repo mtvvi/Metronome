@@ -4,6 +4,7 @@ import Foundation
 enum AudioSessionEvent: Equatable, Sendable {
     case interruption(AudioSessionInterruptionEvent)
     case routeChanged(AudioSessionRouteChangeEvent)
+    case mediaServicesWereReset
 }
 
 enum AudioSessionInterruptionEvent: Equatable, Sendable {
@@ -85,6 +86,13 @@ final class AudioSessionEventObserver: @unchecked Sendable {
                 queue: nil
             ) { [weak self] notification in
                 self?.handleRouteChange(notification)
+            },
+            notificationCenter.addObserver(
+                forName: AVAudioSession.mediaServicesWereResetNotification,
+                object: nil,
+                queue: nil
+            ) { [weak self] _ in
+                self?.handler?.handleAudioSessionEvent(.mediaServicesWereReset)
             }
         ]
     }

@@ -61,7 +61,7 @@ final class SFBAudioIntegrationTests: XCTestCase {
     }
 
     func testPlaybackEngineRejectsRemoteURLsWithoutActivatingAudioSession() throws {
-        let remoteURL = URL(string: "https://example.com/track.flac")!
+        let remoteURL = try XCTUnwrap(URL(string: "https://example.com/track.flac"))
         let session = FakeAudioSessionController()
         let backend = FakePlaybackBackend()
         let engine = PlaybackEngine(session: session, backend: backend)

@@ -23,6 +23,11 @@ final class MusicLibraryImporterTests: XCTestCase {
         XCTAssertEqual(repository.sourceRoots.map(\.kind), ["musicLibrary"])
         XCTAssertEqual(repository.tracks.map(\.mediaPersistentID), [42])
         XCTAssertEqual(repository.tracks.map(\.sourceKind), ["musicLibrary"])
+        XCTAssertEqual(
+            repository.tracks.map(\.playbackLocatorKind),
+            [PlaybackLocatorKind.musicPersistentID.rawValue]
+        )
+        XCTAssertEqual(repository.tracks.map(\.availabilityReason), [nil])
     }
 
     func testDoesNotQueryWhenAuthorizationIsDenied() async throws {
@@ -46,7 +51,7 @@ final class MusicLibraryImporterTests: XCTestCase {
         XCTAssertTrue(repository.tracks.isEmpty)
     }
 
-    func testSkipsProtectedAndUnavailableItems() async throws {
+    func testPersistsProtectedAndUnavailableItemsWithTypedAvailability() async throws {
         let authorization = FakeMusicLibraryAuthorization(statuses: [.authorized])
         let query = FakeMusicLibraryQuery(items: [
             makeMediaItem(id: 1, assetURL: fileURL("readable.m4a"), hasProtectedAsset: false),
@@ -66,7 +71,31 @@ final class MusicLibraryImporterTests: XCTestCase {
         XCTAssertEqual(summary.importedCount, 1)
         XCTAssertEqual(summary.protectedSkippedCount, 1)
         XCTAssertEqual(summary.unavailableSkippedCount, 1)
-        XCTAssertEqual(repository.tracks.map(\.mediaPersistentID), [1])
+        XCTAssertEqual(repository.tracks.map(\.mediaPersistentID), [1, 2, 3])
+        XCTAssertEqual(
+            repository.tracks.map(\.availabilityReason),
+            [nil, PlaybackUnavailabilityReason.protectedAsset.rawValue,
+             PlaybackUnavailabilityReason.assetUnavailable.rawValue]
+        )
+    }
+
+    func testMarksCloudOnlyItemSeparatelyFromGenericUnavailableAsset() async throws {
+        let repository = FakeMusicLibraryRepository()
+        let importer = MusicLibraryImporter(
+            authorization: FakeMusicLibraryAuthorization(statuses: [.authorized]),
+            query: FakeMusicLibraryQuery(items: [
+                makeMediaItem(id: 4, assetURL: nil, isCloudItem: true)
+            ]),
+            sourceRootRepository: repository,
+            trackRepository: repository
+        )
+
+        _ = try await importer.importLocalMusicLibrary()
+
+        XCTAssertEqual(
+            repository.tracks.first?.availabilityReason,
+            PlaybackUnavailabilityReason.cloudOnly.rawValue
+        )
     }
 
     func testIndexesImportedMusicLibraryTracksForSpotlight() async throws {
@@ -85,7 +114,10 @@ final class MusicLibraryImporterTests: XCTestCase {
 
         _ = try await importer.importLocalMusicLibrary()
 
-        XCTAssertEqual(spotlightIndexer.indexedTracks.map(\.id), ["music-library-1"])
+        XCTAssertEqual(
+            spotlightIndexer.indexedTracks.map(\.id),
+            ["music-library-1", "music-library-2"]
+        )
     }
 
     func testMusicLibraryImportSucceedsWhenSpotlightIndexingFails() async throws {
@@ -147,6 +179,7 @@ final class MusicLibraryImporterTests: XCTestCase {
         XCTAssertEqual(track.trackNumber, 2)
         XCTAssertEqual(track.duration, 123.5)
         XCTAssertEqual(track.relativePath, nil)
+        XCTAssertEqual(track.playbackLocatorKind, PlaybackLocatorKind.musicPersistentID.rawValue)
     }
 
     @MainActor
@@ -166,8 +199,39 @@ final class MusicLibraryImporterTests: XCTestCase {
         XCTAssertEqual(viewModel.latestMusicLibraryImportSummary, summary)
         XCTAssertEqual(
             viewModel.statusMessage,
-            "Imported 3 Music Library tracks. Skipped 1 protected and 2 unavailable."
+            "Imported 3 playable Music Library tracks. Kept 1 protected and 2 unavailable items with playback disabled."
         )
+    }
+
+    @MainActor
+    func testRemovingMusicLibrarySourceStopsChangeObservation() async {
+        let source = SourceRootRecord(
+            id: "music-library",
+            kind: "musicLibrary",
+            displayName: "Music Library",
+            bookmarkData: nil,
+            baseURL: nil,
+            isEnabled: true,
+            lastScanDate: nil
+        )
+        let repository = FakeMusicSourceManager(source: source)
+        let observer = FakeMusicLibraryChangeObserver()
+        let viewModel = SourcesViewModel(
+            repository: repository,
+            musicLibraryImporter: FakeMusicLibraryImporter(summary: MusicLibraryImportSummary(
+                authorizationStatus: .authorized,
+                importedCount: 0,
+                protectedSkippedCount: 0,
+                unavailableSkippedCount: 0
+            )),
+            musicLibraryChangeObserver: observer
+        )
+
+        await viewModel.loadSources()
+        await Task.yield()
+        await viewModel.removeSource(source)
+        XCTAssertGreaterThan(observer.stopCount, 0)
+        XCTAssertTrue(viewModel.sources.isEmpty)
     }
 }
 
@@ -175,6 +239,7 @@ private func makeMediaItem(
     id: Int64,
     assetURL: URL?,
     hasProtectedAsset: Bool = false,
+    isCloudItem: Bool = false,
     title: String? = nil,
     albumTitle: String? = nil,
     albumArtist: String? = nil,
@@ -190,6 +255,7 @@ private func makeMediaItem(
         persistentID: id,
         assetURL: assetURL,
         hasProtectedAsset: hasProtectedAsset,
+        isCloudItem: isCloudItem,
         title: title,
         albumTitle: albumTitle,
         albumArtist: albumArtist,
@@ -285,6 +351,45 @@ private struct FakeMusicLibraryImporter: MusicLibraryImporting {
 
     func importLocalMusicLibrary() async throws -> MusicLibraryImportSummary {
         summary
+    }
+}
+
+private final class FakeMusicSourceManager: SourceRootRepository, SourceManagingRepository, @unchecked Sendable {
+    private var sourceRoots: [SourceRootRecord]
+    init(source: SourceRootRecord) {
+        sourceRoots = [source]
+    }
+    func fetchSourceRoot(id: String) throws -> SourceRootRecord? {
+        sourceRoots.first { $0.id == id }
+    }
+
+    func fetchSourceRoots() throws -> [SourceRootRecord] {
+        sourceRoots
+    }
+
+    func upsertSourceRoots(_ sourceRoots: [SourceRootRecord]) throws {
+        self.sourceRoots = sourceRoots
+    }
+
+    func removeSourceIndex(id: String) throws -> [String] {
+        []
+    }
+
+    func removeSourceRoot(id: String) throws -> [String] {
+        sourceRoots.removeAll { $0.id == id }
+        return []
+    }
+}
+
+@MainActor
+private final class FakeMusicLibraryChangeObserver: MusicLibraryChangeObserving {
+    private(set) var stopCount = 0
+    func changes() -> AsyncStream<MusicLibraryChange> {
+        AsyncStream { _ in }
+    }
+
+    func stop() {
+        stopCount += 1
     }
 }
 

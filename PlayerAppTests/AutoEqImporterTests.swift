@@ -19,7 +19,7 @@ final class AutoEqImporterTests: XCTestCase {
         XCTAssertEqual(imported.preset.name, "Sennheiser HD 650")
         XCTAssertTrue(imported.preset.isEnabled)
         XCTAssertEqual(imported.preset.preampGainDB, -6.4, accuracy: 0.001)
-        XCTAssertEqual(imported.preset.bands.count, 16)
+        XCTAssertEqual(imported.preset.bands.count, 4)
 
         XCTAssertEqual(imported.preset.bands[0].filterType, .peaking)
         XCTAssertEqual(imported.preset.bands[0].frequencyHz, 24, accuracy: 0.001)
@@ -30,7 +30,6 @@ final class AutoEqImporterTests: XCTestCase {
         XCTAssertFalse(imported.preset.bands[1].isEnabled)
         XCTAssertEqual(imported.preset.bands[2].filterType, .lowShelf)
         XCTAssertEqual(imported.preset.bands[3].filterType, .highShelf)
-        XCTAssertTrue(imported.preset.bands.dropFirst(4).allSatisfy { !$0.isEnabled })
 
         XCTAssertEqual(imported.attribution.sourceName, "AutoEq")
         XCTAssertEqual(imported.attribution.licenseName, "MIT")
@@ -46,7 +45,44 @@ final class AutoEqImporterTests: XCTestCase {
         }
     }
 
-    func testHeadphonePresetRepositorySearchesNameAndSource() throws {
+    func testMoreThanSixteenFiltersRequiresExplicitTruncation() throws {
+        let filters = (1...17).map {
+            "Filter \($0): ON PK Fc \(100 + $0) Hz Gain 1 dB Q 1"
+        }.joined(separator: "\n")
+
+        XCTAssertThrowsError(try AutoEqImporter.importEqualizerAPO(
+            filters,
+            presetName: "Too Many"
+        )) { error in
+            XCTAssertEqual(error as? AutoEqImportError, .tooManyFilters(maximum: 16))
+        }
+
+        let imported = try AutoEqImporter.importEqualizerAPO(
+            filters,
+            presetName: "Confirmed",
+            allowTruncation: true
+        )
+        XCTAssertEqual(imported.preset.bands.count, 16)
+        XCTAssertEqual(imported.issues.count, 1)
+        XCTAssertEqual(imported.issues.first?.lineNumber, 17)
+    }
+
+    func testUnsupportedDirectiveProducesLineSpecificWarning() throws {
+        let imported = try AutoEqImporter.importEqualizerAPO(
+            """
+            Device: Headphones
+            Filter 1: ON PK Fc 1000 Hz Gain -2 dB Q 1
+            """,
+            presetName: "Warning"
+        )
+
+        XCTAssertEqual(imported.preset.bands.count, 1)
+        XCTAssertEqual(imported.issues.count, 1)
+        XCTAssertEqual(imported.issues.first?.lineNumber, 1)
+        XCTAssertEqual(imported.issues.first?.severity, .warning)
+    }
+
+    func testHeadphonePresetRepositorySearchesNameAndSource() async throws {
         let repository = JSONHeadphonePresetRepository(presets: [
             makeHeadphonePreset(
                 id: "hd650",
@@ -60,18 +96,12 @@ final class AutoEqImporterTests: XCTestCase {
             )
         ])
 
-        XCTAssertEqual(
-            try repository.search(matching: "hd").map(\.id),
-            ["hd650"]
-        )
-        XCTAssertEqual(
-            try repository.search(matching: "CRIN").map(\.id),
-            ["sundara"]
-        )
-        XCTAssertEqual(
-            try repository.search(matching: "").map(\.id),
-            ["hd650", "sundara"]
-        )
+        let nameResults = try await repository.search(matching: "hd")
+        let sourceResults = try await repository.search(matching: "CRIN")
+        let allResults = try await repository.search(matching: "")
+        XCTAssertEqual(nameResults.map(\.id), ["hd650"])
+        XCTAssertEqual(sourceResults.map(\.id), ["sundara"])
+        XCTAssertEqual(allResults.map(\.id), ["hd650", "sundara"])
     }
 
     @MainActor
@@ -93,7 +123,7 @@ final class AutoEqImporterTests: XCTestCase {
     }
 
     @MainActor
-    func testSearchViewModelSelectsPresetForAttributionDetails() throws {
+    func testSearchViewModelSelectsPresetForAttributionDetails() async throws {
         let preset = makeHeadphonePreset(
             id: "hd650",
             headphoneName: "Sennheiser HD 650",
@@ -105,6 +135,7 @@ final class AutoEqImporterTests: XCTestCase {
 
         viewModel.updateQuery("650")
         viewModel.select(preset)
+        try await Task.sleep(for: .milliseconds(180))
 
         XCTAssertEqual(viewModel.results.map(\.id), ["hd650"])
         XCTAssertEqual(viewModel.selectedPreset?.sourceDescription, "oratory1990")

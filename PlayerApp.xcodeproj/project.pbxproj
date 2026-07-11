@@ -95,10 +95,104 @@
 		D4C0DE00000000000000006B /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000169 /* LibraryView.swift */; };
 		D4C0DE00000000000000006C /* LibraryPlaybackTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE00000000000000016A /* LibraryPlaybackTests.swift */; };
 		D4C0DE00000000000000006D /* LibraryTrackPlaybackCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE00000000000000016B /* LibraryTrackPlaybackCoordinator.swift */; };
+		D4C0DE00000000000000006E /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE00000000000000016C /* AppError.swift */; };
+		D4C0DE00000000000000006F /* LoadableState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE00000000000000016D /* LoadableState.swift */; };
+		A11CE0000000000000000001 /* LocalizedFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11CE0000000000000000002 /* LocalizedFormat.swift */; };
+		D4C0DE000000000000000070 /* AppBootstrapStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE00000000000000016E /* AppBootstrapStore.swift */; };
+		D4C0DE000000000000000071 /* PlaybackSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE00000000000000016F /* PlaybackSnapshot.swift */; };
+		D4C0DE000000000000000072 /* PlaybackCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000170 /* PlaybackCoordinator.swift */; };
+		D4C0DE000000000000000073 /* PlaybackStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000171 /* PlaybackStore.swift */; };
+		D4C0DE000000000000000074 /* PlaybackCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000172 /* PlaybackCoordinatorTests.swift */; };
+		D4C0DE000000000000000075 /* PlaybackLocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000173 /* PlaybackLocator.swift */; };
+		D4C0DE000000000000000076 /* PlaybackLocatorResolving.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000174 /* PlaybackLocatorResolving.swift */; };
+		D4C0DE000000000000000077 /* MusicItemAssetResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000175 /* MusicItemAssetResolver.swift */; };
+		D4C0DE000000000000000078 /* QueueRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000176 /* QueueRepository.swift */; };
+		D4C0DE000000000000000079 /* QueuePersistenceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000177 /* QueuePersistenceTests.swift */; };
+		D4C0DE00000000000000007A /* NowPlayingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000178 /* NowPlayingView.swift */; };
+		D4C0DE00000000000000007B /* QueueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000179 /* QueueView.swift */; };
+		D4C0DE00000000000000007C /* PlaybackQueueRestorer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE00000000000000017A /* PlaybackQueueRestorer.swift */; };
+		D4C0DE00000000000000007D /* AudioFormatSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE00000000000000017B /* AudioFormatSnapshot.swift */; };
+		D4C0DE00000000000000007E /* AudioGraphController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE00000000000000017C /* AudioGraphController.swift */; };
+		D4C0DE00000000000000007F /* AudioGraphIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE00000000000000017D /* AudioGraphIntegrationTests.swift */; };
+		D4C0DE000000000000000080 /* EQParameterLimits.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE00000000000000017E /* EQParameterLimits.swift */; };
+		D4C0DE000000000000000081 /* EQPresetValidating.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE00000000000000017F /* EQPresetValidating.swift */; };
+		D4C0DE000000000000000082 /* EqualizerAssignment.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000180 /* EqualizerAssignment.swift */; };
+		D4C0DE000000000000000083 /* EQPresetRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000181 /* EQPresetRepository.swift */; };
+		D4C0DE000000000000000084 /* GRDBEQPresetRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000182 /* GRDBEQPresetRepository.swift */; };
+		D4C0DE000000000000000085 /* EQPresetRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000183 /* EQPresetRepositoryTests.swift */; };
+		D4C0DE000000000000000086 /* DSPGainPlan.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000184 /* DSPGainPlan.swift */; };
+		D4C0DE000000000000000087 /* DSPConfigurationSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000185 /* DSPConfigurationSnapshot.swift */; };
+		D4C0DE000000000000000088 /* EqualizerService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000186 /* EqualizerService.swift */; };
+		D4C0DE000000000000000089 /* EQFrequencyResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000187 /* EQFrequencyResponse.swift */; };
+		D4C0DE00000000000000008A /* EQResponseCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000188 /* EQResponseCalculator.swift */; };
+		D4C0DE00000000000000008B /* EqualizerGraphGeometry.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000189 /* EqualizerGraphGeometry.swift */; };
+		D4C0DE00000000000000008C /* EqualizerResponseGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE00000000000000018A /* EqualizerResponseGraph.swift */; };
+		D4C0DE00000000000000008D /* EQResponseCalculatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE00000000000000018B /* EQResponseCalculatorTests.swift */; };
+		D4C0DE00000000000000008E /* EqualizerGraphGeometryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE00000000000000018C /* EqualizerGraphGeometryTests.swift */; };
+		D4C0DE00000000000000008F /* EqualizerHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE00000000000000018D /* EqualizerHeader.swift */; };
+		D4C0DE000000000000000090 /* MasterGainControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE00000000000000018E /* MasterGainControl.swift */; };
+		D4C0DE000000000000000091 /* BandSelectorStrip.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE00000000000000018F /* BandSelectorStrip.swift */; };
+		D4C0DE000000000000000092 /* BandParameterPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000190 /* BandParameterPanel.swift */; };
+		D4C0DE000000000000000093 /* ParameterRuler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000191 /* ParameterRuler.swift */; };
+		D4C0DE000000000000000094 /* FilterTypePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000192 /* FilterTypePicker.swift */; };
+		D4C0DE000000000000000095 /* NumericParameterEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000193 /* NumericParameterEditor.swift */; };
+		D4C0DE000000000000000096 /* EqualizerToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000194 /* EqualizerToolbar.swift */; };
+		D4C0DE000000000000000097 /* EqualizerAccessibility.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000195 /* EqualizerAccessibility.swift */; };
+		D4C0DE000000000000000098 /* EqualizerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000196 /* EqualizerViewModelTests.swift */; };
+		D4C0DE000000000000000099 /* RealtimePCMBuffer.c in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE000000000000000198 /* RealtimePCMBuffer.c */; };
+		D4C0DE00000000000000009A /* SpectrumAnalyzerWorker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE00000000000000019A /* SpectrumAnalyzerWorker.swift */; };
+		D4C0DE00000000000000009B /* SpectrumSnapshot.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE00000000000000019B /* SpectrumSnapshot.swift */; };
+		D4C0DE00000000000000009C /* ClippingProtectionController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE00000000000000019C /* ClippingProtectionController.swift */; };
+		D4C0DE00000000000000009D /* RealtimePCMBufferTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE00000000000000019D /* RealtimePCMBufferTests.swift */; };
+		D4C0DE00000000000000009E /* ClippingProtectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE00000000000000019E /* ClippingProtectionTests.swift */; };
+		D4C0DE00000000000000009F /* SpectrumAnalyzerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE00000000000000019F /* SpectrumAnalyzerTests.swift */; };
+		D4C0DE0000000000000000A0 /* PresetLibrarySheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE0000000000000001A0 /* PresetLibrarySheet.swift */; };
+		D4C0DE0000000000000000A1 /* EqualizerImportExportSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE0000000000000001A1 /* EqualizerImportExportSheet.swift */; };
+		D4C0DE0000000000000000A2 /* PresetDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE0000000000000001A2 /* PresetDetailView.swift */; };
+		D4C0DE0000000000000000A3 /* headphone-presets.json in Resources */ = {isa = PBXBuildFile; fileRef = D4C0DE0000000000000001A3 /* headphone-presets.json */; };
+		D4C0DE0000000000000000A4 /* AutoEq-Attribution.txt in Resources */ = {isa = PBXBuildFile; fileRef = D4C0DE0000000000000001A4 /* AutoEq-Attribution.txt */; };
+		D4C0DE0000000000000000A5 /* EQImportExportTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE0000000000000001A5 /* EQImportExportTests.swift */; };
+		D4C0DE0000000000000000A6 /* HeadphonePresetRepositoryTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE0000000000000001A6 /* HeadphonePresetRepositoryTests.swift */; };
+		D4C0DE0000000000000000A7 /* ScanProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE0000000000000001A7 /* ScanProgress.swift */; };
+		D4C0DE0000000000000000A8 /* SourceReconciler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE0000000000000001A8 /* SourceReconciler.swift */; };
+		D4C0DE0000000000000000A9 /* SourceReconcilerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE0000000000000001A9 /* SourceReconcilerTests.swift */; };
+		D4C0DE0000000000000000AA /* TrackRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE0000000000000001AA /* TrackRow.swift */; };
+		D4C0DE0000000000000000AB /* ArtworkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE0000000000000001AB /* ArtworkView.swift */; };
+		D4C0DE0000000000000000AC /* AlbumsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE0000000000000001AC /* AlbumsView.swift */; };
+		D4C0DE0000000000000000AD /* ArtistsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE0000000000000001AD /* ArtistsView.swift */; };
+		D4C0DE0000000000000000AE /* AlbumDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE0000000000000001AE /* AlbumDetailView.swift */; };
+		D4C0DE0000000000000000AF /* ArtistDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE0000000000000001AF /* ArtistDetailView.swift */; };
+		D4C0DE0000000000000000B0 /* LibraryPaginationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE0000000000000001B0 /* LibraryPaginationTests.swift */; };
+		D4C0DE0000000000000000B1 /* EqualizerAssignmentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE0000000000000001B1 /* EqualizerAssignmentTests.swift */; };
+		D4C0DE0000000000000000B2 /* PlaybackSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE0000000000000001B2 /* PlaybackSettingsView.swift */; };
+		D4C0DE0000000000000000B3 /* DSPGainPlanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE0000000000000001B3 /* DSPGainPlanTests.swift */; };
+		D4C0DE0000000000000000B4 /* AudioCapability.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE0000000000000001B4 /* AudioCapability.swift */; };
+		D4C0DE0000000000000000B5 /* AudioCapabilityReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE0000000000000001B5 /* AudioCapabilityReport.swift */; };
+		D4C0DE0000000000000000B6 /* AudioCapabilitiesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE0000000000000001B6 /* AudioCapabilitiesView.swift */; };
+		D4C0DE0000000000000000B7 /* AudioFormatMatrixTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE0000000000000001B7 /* AudioFormatMatrixTests.swift */; };
+		D4C0DE0000000000000000B8 /* DesignTokens.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE0000000000000001B8 /* DesignTokens.swift */; };
+		D4C0DE0000000000000000B9 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE0000000000000001B9 /* SettingsView.swift */; };
+		D4C0DE0000000000000000BA /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = D4C0DE0000000000000001BA /* Localizable.xcstrings */; };
+		D4C0DE0000000000000000BB /* LicensesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE0000000000000001BB /* LicensesView.swift */; };
+		D4C0DE0000000000000000BC /* SFBAudioEngine.txt in Resources */ = {isa = PBXBuildFile; fileRef = D4C0DE0000000000000001BC /* SFBAudioEngine.txt */; };
+		D4C0DE0000000000000000BD /* GRDB.txt in Resources */ = {isa = PBXBuildFile; fileRef = D4C0DE0000000000000001BD /* GRDB.txt */; };
+		D4C0DE0000000000000000BE /* ThirdPartyNotices.txt in Resources */ = {isa = PBXBuildFile; fileRef = D4C0DE0000000000000001BE /* ThirdPartyNotices.txt */; };
+		D4C0DE0000000000000000BF /* MigrationUpgradeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE0000000000000001BF /* MigrationUpgradeTests.swift */; };
+		D4C0DE0000000000000000C0 /* LargeLibraryPerformanceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE0000000000000001C0 /* LargeLibraryPerformanceTests.swift */; };
+		D4C0DE0000000000000000C1 /* ReleaseSmokeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4C0DE0000000000000001C1 /* ReleaseSmokeTests.swift */; };
+		A11CE0000000000000000003 /* AccessibilitySmokeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A11CE0000000000000000004 /* AccessibilitySmokeTests.swift */; };
+		D4C0DE0000000000000000C2 /* InfoPlist.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = D4C0DE0000000000000001C3 /* InfoPlist.xcstrings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		D4C0DE000000000000000901 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D4C0DE000000000000000801 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D4C0DE000000000000000401;
+			remoteInfo = PlayerApp;
+		};
+		D4C0DE000000000000000903 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D4C0DE000000000000000801 /* Project object */;
 			proxyType = 1;
@@ -196,6 +290,96 @@
 		D4C0DE000000000000000169 /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryView.swift; sourceTree = "<group>"; };
 		D4C0DE00000000000000016A /* LibraryPlaybackTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryPlaybackTests.swift; sourceTree = "<group>"; };
 		D4C0DE00000000000000016B /* LibraryTrackPlaybackCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryTrackPlaybackCoordinator.swift; sourceTree = "<group>"; };
+		D4C0DE00000000000000016C /* AppError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppError.swift; sourceTree = "<group>"; };
+		D4C0DE00000000000000016D /* LoadableState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadableState.swift; sourceTree = "<group>"; };
+		A11CE0000000000000000002 /* LocalizedFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizedFormat.swift; sourceTree = "<group>"; };
+		D4C0DE00000000000000016E /* AppBootstrapStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppBootstrapStore.swift; sourceTree = "<group>"; };
+		D4C0DE00000000000000016F /* PlaybackSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackSnapshot.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000170 /* PlaybackCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackCoordinator.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000171 /* PlaybackStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackStore.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000172 /* PlaybackCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackCoordinatorTests.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000173 /* PlaybackLocator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackLocator.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000174 /* PlaybackLocatorResolving.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackLocatorResolving.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000175 /* MusicItemAssetResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicItemAssetResolver.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000176 /* QueueRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueRepository.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000177 /* QueuePersistenceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueuePersistenceTests.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000178 /* NowPlayingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NowPlayingView.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000179 /* QueueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QueueView.swift; sourceTree = "<group>"; };
+		D4C0DE00000000000000017A /* PlaybackQueueRestorer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackQueueRestorer.swift; sourceTree = "<group>"; };
+		D4C0DE00000000000000017B /* AudioFormatSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioFormatSnapshot.swift; sourceTree = "<group>"; };
+		D4C0DE00000000000000017C /* AudioGraphController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioGraphController.swift; sourceTree = "<group>"; };
+		D4C0DE00000000000000017D /* AudioGraphIntegrationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioGraphIntegrationTests.swift; sourceTree = "<group>"; };
+		D4C0DE00000000000000017E /* EQParameterLimits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EQParameterLimits.swift; sourceTree = "<group>"; };
+		D4C0DE00000000000000017F /* EQPresetValidating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EQPresetValidating.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000180 /* EqualizerAssignment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EqualizerAssignment.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000181 /* EQPresetRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EQPresetRepository.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000182 /* GRDBEQPresetRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GRDBEQPresetRepository.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000183 /* EQPresetRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EQPresetRepositoryTests.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000184 /* DSPGainPlan.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSPGainPlan.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000185 /* DSPConfigurationSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSPConfigurationSnapshot.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000186 /* EqualizerService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EqualizerService.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000187 /* EQFrequencyResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EQFrequencyResponse.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000188 /* EQResponseCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EQResponseCalculator.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000189 /* EqualizerGraphGeometry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EqualizerGraphGeometry.swift; sourceTree = "<group>"; };
+		D4C0DE00000000000000018A /* EqualizerResponseGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EqualizerResponseGraph.swift; sourceTree = "<group>"; };
+		D4C0DE00000000000000018B /* EQResponseCalculatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EQResponseCalculatorTests.swift; sourceTree = "<group>"; };
+		D4C0DE00000000000000018C /* EqualizerGraphGeometryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EqualizerGraphGeometryTests.swift; sourceTree = "<group>"; };
+		D4C0DE00000000000000018D /* EqualizerHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EqualizerHeader.swift; sourceTree = "<group>"; };
+		D4C0DE00000000000000018E /* MasterGainControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterGainControl.swift; sourceTree = "<group>"; };
+		D4C0DE00000000000000018F /* BandSelectorStrip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandSelectorStrip.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000190 /* BandParameterPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BandParameterPanel.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000191 /* ParameterRuler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterRuler.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000192 /* FilterTypePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterTypePicker.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000193 /* NumericParameterEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NumericParameterEditor.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000194 /* EqualizerToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EqualizerToolbar.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000195 /* EqualizerAccessibility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EqualizerAccessibility.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000196 /* EqualizerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EqualizerViewModelTests.swift; sourceTree = "<group>"; };
+		D4C0DE000000000000000197 /* RealtimePCMBuffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RealtimePCMBuffer.h; sourceTree = "<group>"; };
+		D4C0DE000000000000000198 /* RealtimePCMBuffer.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = RealtimePCMBuffer.c; sourceTree = "<group>"; };
+		D4C0DE000000000000000199 /* PlayerApp-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "PlayerApp-Bridging-Header.h"; sourceTree = "<group>"; };
+		D4C0DE00000000000000019A /* SpectrumAnalyzerWorker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpectrumAnalyzerWorker.swift; sourceTree = "<group>"; };
+		D4C0DE00000000000000019B /* SpectrumSnapshot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpectrumSnapshot.swift; sourceTree = "<group>"; };
+		D4C0DE00000000000000019C /* ClippingProtectionController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClippingProtectionController.swift; sourceTree = "<group>"; };
+		D4C0DE00000000000000019D /* RealtimePCMBufferTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealtimePCMBufferTests.swift; sourceTree = "<group>"; };
+		D4C0DE00000000000000019E /* ClippingProtectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClippingProtectionTests.swift; sourceTree = "<group>"; };
+		D4C0DE00000000000000019F /* SpectrumAnalyzerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpectrumAnalyzerTests.swift; sourceTree = "<group>"; };
+		D4C0DE0000000000000001A0 /* PresetLibrarySheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetLibrarySheet.swift; sourceTree = "<group>"; };
+		D4C0DE0000000000000001A1 /* EqualizerImportExportSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EqualizerImportExportSheet.swift; sourceTree = "<group>"; };
+		D4C0DE0000000000000001A2 /* PresetDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetDetailView.swift; sourceTree = "<group>"; };
+		D4C0DE0000000000000001A3 /* headphone-presets.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = "headphone-presets.json"; sourceTree = "<group>"; };
+		D4C0DE0000000000000001A4 /* AutoEq-Attribution.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = "AutoEq-Attribution.txt"; sourceTree = "<group>"; };
+		D4C0DE0000000000000001A5 /* EQImportExportTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EQImportExportTests.swift; sourceTree = "<group>"; };
+		D4C0DE0000000000000001A6 /* HeadphonePresetRepositoryTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeadphonePresetRepositoryTests.swift; sourceTree = "<group>"; };
+		D4C0DE0000000000000001A7 /* ScanProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScanProgress.swift; sourceTree = "<group>"; };
+		D4C0DE0000000000000001A8 /* SourceReconciler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceReconciler.swift; sourceTree = "<group>"; };
+		D4C0DE0000000000000001A9 /* SourceReconcilerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceReconcilerTests.swift; sourceTree = "<group>"; };
+		D4C0DE0000000000000001AA /* TrackRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackRow.swift; sourceTree = "<group>"; };
+		D4C0DE0000000000000001AB /* ArtworkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtworkView.swift; sourceTree = "<group>"; };
+		D4C0DE0000000000000001AC /* AlbumsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumsView.swift; sourceTree = "<group>"; };
+		D4C0DE0000000000000001AD /* ArtistsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistsView.swift; sourceTree = "<group>"; };
+		D4C0DE0000000000000001AE /* AlbumDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumDetailView.swift; sourceTree = "<group>"; };
+		D4C0DE0000000000000001AF /* ArtistDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArtistDetailView.swift; sourceTree = "<group>"; };
+		D4C0DE0000000000000001B0 /* LibraryPaginationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryPaginationTests.swift; sourceTree = "<group>"; };
+		D4C0DE0000000000000001B1 /* EqualizerAssignmentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EqualizerAssignmentTests.swift; sourceTree = "<group>"; };
+		D4C0DE0000000000000001B2 /* PlaybackSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaybackSettingsView.swift; sourceTree = "<group>"; };
+		D4C0DE0000000000000001B3 /* DSPGainPlanTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DSPGainPlanTests.swift; sourceTree = "<group>"; };
+		D4C0DE0000000000000001B4 /* AudioCapability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCapability.swift; sourceTree = "<group>"; };
+		D4C0DE0000000000000001B5 /* AudioCapabilityReport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCapabilityReport.swift; sourceTree = "<group>"; };
+		D4C0DE0000000000000001B6 /* AudioCapabilitiesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioCapabilitiesView.swift; sourceTree = "<group>"; };
+		D4C0DE0000000000000001B7 /* AudioFormatMatrixTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioFormatMatrixTests.swift; sourceTree = "<group>"; };
+		D4C0DE0000000000000001B8 /* DesignTokens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignTokens.swift; sourceTree = "<group>"; };
+		D4C0DE0000000000000001B9 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		D4C0DE0000000000000001BA /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
+		D4C0DE0000000000000001BB /* LicensesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicensesView.swift; sourceTree = "<group>"; };
+		D4C0DE0000000000000001BC /* SFBAudioEngine.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = SFBAudioEngine.txt; sourceTree = "<group>"; };
+		D4C0DE0000000000000001BD /* GRDB.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = GRDB.txt; sourceTree = "<group>"; };
+		D4C0DE0000000000000001BE /* ThirdPartyNotices.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = ThirdPartyNotices.txt; sourceTree = "<group>"; };
+		D4C0DE0000000000000001BF /* MigrationUpgradeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MigrationUpgradeTests.swift; sourceTree = "<group>"; };
+		D4C0DE0000000000000001C0 /* LargeLibraryPerformanceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeLibraryPerformanceTests.swift; sourceTree = "<group>"; };
+		D4C0DE0000000000000001C1 /* ReleaseSmokeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReleaseSmokeTests.swift; sourceTree = "<group>"; };
+		A11CE0000000000000000004 /* AccessibilitySmokeTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilitySmokeTests.swift; sourceTree = "<group>"; };
+		D4C0DE0000000000000001C2 /* PlayerAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PlayerAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D4C0DE0000000000000001C3 /* InfoPlist.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = InfoPlist.xcstrings; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -217,6 +401,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D4C0DE000000000000000308 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -225,6 +416,7 @@
 			children = (
 				D4C0DE000000000000000202 /* PlayerApp */,
 				D4C0DE00000000000000020D /* PlayerAppTests */,
+				D4C0DE000000000000000217 /* PlayerAppUITests */,
 				D4C0DE00000000000000020E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -235,6 +427,7 @@
 				D4C0DE000000000000000203 /* App */,
 				D4C0DE000000000000000207 /* Core */,
 				D4C0DE000000000000000204 /* Features */,
+				D4C0DE000000000000000212 /* Resources */,
 				D4C0DE00000000000000010E /* Info.plist */,
 			);
 			path = PlayerApp;
@@ -244,6 +437,7 @@
 			isa = PBXGroup;
 			children = (
 				D4C0DE000000000000000101 /* PlayerAppApp.swift */,
+				D4C0DE00000000000000016E /* AppBootstrapStore.swift */,
 				D4C0DE000000000000000103 /* DependencyContainer.swift */,
 				D4C0DE000000000000000102 /* RootView.swift */,
 			);
@@ -258,6 +452,8 @@
 				D4C0DE000000000000000210 /* Equalizer */,
 				D4C0DE00000000000000020F /* Sources */,
 				D4C0DE000000000000000211 /* Output */,
+				D4C0DE000000000000000215 /* Settings */,
+				D4C0DE000000000000000216 /* SharedFeatures */,
 			);
 			path = Features;
 			sourceTree = "<group>";
@@ -265,6 +461,12 @@
 		D4C0DE000000000000000205 /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				D4C0DE0000000000000001AA /* TrackRow.swift */,
+				D4C0DE0000000000000001AB /* ArtworkView.swift */,
+				D4C0DE0000000000000001AC /* AlbumsView.swift */,
+				D4C0DE0000000000000001AD /* ArtistsView.swift */,
+				D4C0DE0000000000000001AE /* AlbumDetailView.swift */,
+				D4C0DE0000000000000001AF /* ArtistDetailView.swift */,
 				D4C0DE00000000000000010A /* LibraryFeature.swift */,
 				D4C0DE000000000000000168 /* LibraryViewModel.swift */,
 				D4C0DE000000000000000169 /* LibraryView.swift */,
@@ -276,6 +478,9 @@
 			isa = PBXGroup;
 			children = (
 				D4C0DE00000000000000010B /* NowPlayingFeature.swift */,
+				D4C0DE000000000000000171 /* PlaybackStore.swift */,
+				D4C0DE000000000000000178 /* NowPlayingView.swift */,
+				D4C0DE000000000000000179 /* QueueView.swift */,
 			);
 			path = NowPlaying;
 			sourceTree = "<group>";
@@ -295,7 +500,22 @@
 		D4C0DE000000000000000208 /* AudioCore */ = {
 			isa = PBXGroup;
 			children = (
+				D4C0DE0000000000000001B4 /* AudioCapability.swift */,
+				D4C0DE0000000000000001B5 /* AudioCapabilityReport.swift */,
+				D4C0DE000000000000000197 /* RealtimePCMBuffer.h */,
+				D4C0DE000000000000000198 /* RealtimePCMBuffer.c */,
+				D4C0DE000000000000000199 /* PlayerApp-Bridging-Header.h */,
+				D4C0DE00000000000000019A /* SpectrumAnalyzerWorker.swift */,
+				D4C0DE00000000000000019B /* SpectrumSnapshot.swift */,
+				D4C0DE00000000000000019C /* ClippingProtectionController.swift */,
+				D4C0DE00000000000000017B /* AudioFormatSnapshot.swift */,
+				D4C0DE00000000000000017C /* AudioGraphController.swift */,
+				D4C0DE000000000000000184 /* DSPGainPlan.swift */,
+				D4C0DE000000000000000185 /* DSPConfigurationSnapshot.swift */,
+				D4C0DE000000000000000186 /* EqualizerService.swift */,
 				D4C0DE000000000000000104 /* PlaybackControlling.swift */,
+				D4C0DE00000000000000016F /* PlaybackSnapshot.swift */,
+				D4C0DE000000000000000170 /* PlaybackCoordinator.swift */,
 				D4C0DE000000000000000137 /* AudioSessionController.swift */,
 				D4C0DE000000000000000138 /* PlaybackEngine.swift */,
 				D4C0DE000000000000000139 /* SFBAudioPlaybackBackend.swift */,
@@ -315,11 +535,17 @@
 		D4C0DE000000000000000209 /* LibraryCore */ = {
 			isa = PBXGroup;
 			children = (
+				D4C0DE0000000000000001A7 /* ScanProgress.swift */,
+				D4C0DE0000000000000001A8 /* SourceReconciler.swift */,
 				D4C0DE000000000000000123 /* AudioFileExtensionFilter.swift */,
 				D4C0DE000000000000000124 /* ScannedAudioFile.swift */,
 				D4C0DE000000000000000125 /* LibraryScanner.swift */,
 				D4C0DE000000000000000166 /* LibraryScanImporter.swift */,
 				D4C0DE00000000000000016B /* LibraryTrackPlaybackCoordinator.swift */,
+				D4C0DE000000000000000173 /* PlaybackLocator.swift */,
+				D4C0DE000000000000000174 /* PlaybackLocatorResolving.swift */,
+				D4C0DE000000000000000175 /* MusicItemAssetResolver.swift */,
+				D4C0DE00000000000000017A /* PlaybackQueueRestorer.swift */,
 				D4C0DE000000000000000126 /* SourceRootAccess.swift */,
 				D4C0DE000000000000000131 /* MetadataReading.swift */,
 				D4C0DE000000000000000132 /* AudioFileMetadata.swift */,
@@ -347,6 +573,9 @@
 				D4C0DE000000000000000127 /* SourceRootRepository.swift */,
 				D4C0DE000000000000000106 /* TrackRepository.swift */,
 				D4C0DE000000000000000107 /* SearchRepository.swift */,
+				D4C0DE000000000000000176 /* QueueRepository.swift */,
+				D4C0DE000000000000000181 /* EQPresetRepository.swift */,
+				D4C0DE000000000000000182 /* GRDBEQPresetRepository.swift */,
 			);
 			path = Persistence;
 			sourceTree = "<group>";
@@ -355,6 +584,11 @@
 			isa = PBXGroup;
 			children = (
 				D4C0DE000000000000000108 /* DSPModule.swift */,
+				D4C0DE00000000000000017E /* EQParameterLimits.swift */,
+				D4C0DE00000000000000017F /* EQPresetValidating.swift */,
+				D4C0DE000000000000000180 /* EqualizerAssignment.swift */,
+				D4C0DE000000000000000187 /* EQFrequencyResponse.swift */,
+				D4C0DE000000000000000188 /* EQResponseCalculator.swift */,
 				D4C0DE000000000000000141 /* PEQBand.swift */,
 				D4C0DE000000000000000142 /* EQPreset.swift */,
 				D4C0DE000000000000000143 /* EqualizerState.swift */,
@@ -373,6 +607,9 @@
 			isa = PBXGroup;
 			children = (
 				D4C0DE000000000000000109 /* SharedModule.swift */,
+				D4C0DE00000000000000016C /* AppError.swift */,
+				D4C0DE00000000000000016D /* LoadableState.swift */,
+				A11CE0000000000000000002 /* LocalizedFormat.swift */,
 			);
 			path = Shared;
 			sourceTree = "<group>";
@@ -381,6 +618,25 @@
 			isa = PBXGroup;
 			children = (
 				D4C0DE00000000000000010D /* BootstrapTests.swift */,
+				D4C0DE000000000000000172 /* PlaybackCoordinatorTests.swift */,
+				D4C0DE000000000000000177 /* QueuePersistenceTests.swift */,
+				D4C0DE00000000000000017D /* AudioGraphIntegrationTests.swift */,
+				D4C0DE00000000000000018B /* EQResponseCalculatorTests.swift */,
+				D4C0DE00000000000000018C /* EqualizerGraphGeometryTests.swift */,
+				D4C0DE000000000000000196 /* EqualizerViewModelTests.swift */,
+				D4C0DE00000000000000019D /* RealtimePCMBufferTests.swift */,
+				D4C0DE00000000000000019E /* ClippingProtectionTests.swift */,
+				D4C0DE00000000000000019F /* SpectrumAnalyzerTests.swift */,
+				D4C0DE0000000000000001A5 /* EQImportExportTests.swift */,
+				D4C0DE0000000000000001A6 /* HeadphonePresetRepositoryTests.swift */,
+				D4C0DE0000000000000001A9 /* SourceReconcilerTests.swift */,
+				D4C0DE0000000000000001B0 /* LibraryPaginationTests.swift */,
+				D4C0DE0000000000000001B1 /* EqualizerAssignmentTests.swift */,
+				D4C0DE0000000000000001B3 /* DSPGainPlanTests.swift */,
+				D4C0DE0000000000000001B7 /* AudioFormatMatrixTests.swift */,
+				D4C0DE0000000000000001BF /* MigrationUpgradeTests.swift */,
+				D4C0DE0000000000000001C0 /* LargeLibraryPerformanceTests.swift */,
+				D4C0DE000000000000000183 /* EQPresetRepositoryTests.swift */,
 				D4C0DE000000000000000112 /* DatabaseTests.swift */,
 				D4C0DE000000000000000122 /* LibraryScannerTests.swift */,
 				D4C0DE000000000000000130 /* MetadataReaderTests.swift */,
@@ -407,8 +663,18 @@
 			children = (
 				D4C0DE000000000000000110 /* PlayerApp.app */,
 				D4C0DE000000000000000111 /* PlayerAppTests.xctest */,
+				D4C0DE0000000000000001C2 /* PlayerAppUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		D4C0DE000000000000000217 /* PlayerAppUITests */ = {
+			isa = PBXGroup;
+			children = (
+				D4C0DE0000000000000001C1 /* ReleaseSmokeTests.swift */,
+				A11CE0000000000000000004 /* AccessibilitySmokeTests.swift */,
+			);
+			path = PlayerAppUITests;
 			sourceTree = "<group>";
 		};
 		D4C0DE00000000000000020F /* Sources */ = {
@@ -425,6 +691,20 @@
 		D4C0DE000000000000000210 /* Equalizer */ = {
 			isa = PBXGroup;
 			children = (
+				D4C0DE0000000000000001A0 /* PresetLibrarySheet.swift */,
+				D4C0DE0000000000000001A1 /* EqualizerImportExportSheet.swift */,
+				D4C0DE0000000000000001A2 /* PresetDetailView.swift */,
+				D4C0DE00000000000000018D /* EqualizerHeader.swift */,
+				D4C0DE00000000000000018E /* MasterGainControl.swift */,
+				D4C0DE00000000000000018F /* BandSelectorStrip.swift */,
+				D4C0DE000000000000000190 /* BandParameterPanel.swift */,
+				D4C0DE000000000000000191 /* ParameterRuler.swift */,
+				D4C0DE000000000000000192 /* FilterTypePicker.swift */,
+				D4C0DE000000000000000193 /* NumericParameterEditor.swift */,
+				D4C0DE000000000000000194 /* EqualizerToolbar.swift */,
+				D4C0DE000000000000000195 /* EqualizerAccessibility.swift */,
+				D4C0DE000000000000000189 /* EqualizerGraphGeometry.swift */,
+				D4C0DE00000000000000018A /* EqualizerResponseGraph.swift */,
 				D4C0DE000000000000000146 /* EqualizerViewModel.swift */,
 				D4C0DE000000000000000151 /* HeadphonePresetSearchViewModel.swift */,
 				D4C0DE000000000000000147 /* EqualizerView.swift */,
@@ -440,6 +720,56 @@
 				D4C0DE000000000000000160 /* OutputRouteView.swift */,
 			);
 			path = Output;
+			sourceTree = "<group>";
+		};
+		D4C0DE000000000000000212 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				D4C0DE0000000000000001C3 /* InfoPlist.xcstrings */,
+				D4C0DE0000000000000001BA /* Localizable.xcstrings */,
+				D4C0DE000000000000000213 /* AutoEq */,
+				D4C0DE000000000000000214 /* Licenses */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		D4C0DE000000000000000213 /* AutoEq */ = {
+			isa = PBXGroup;
+			children = (
+				D4C0DE0000000000000001A3 /* headphone-presets.json */,
+			);
+			path = AutoEq;
+			sourceTree = "<group>";
+		};
+		D4C0DE000000000000000214 /* Licenses */ = {
+			isa = PBXGroup;
+			children = (
+				D4C0DE0000000000000001A4 /* AutoEq-Attribution.txt */,
+				D4C0DE0000000000000001BC /* SFBAudioEngine.txt */,
+				D4C0DE0000000000000001BD /* GRDB.txt */,
+				D4C0DE0000000000000001BE /* ThirdPartyNotices.txt */,
+			);
+			path = Licenses;
+			sourceTree = "<group>";
+		};
+		D4C0DE000000000000000215 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				D4C0DE0000000000000001B2 /* PlaybackSettingsView.swift */,
+				D4C0DE0000000000000001B6 /* AudioCapabilitiesView.swift */,
+				D4C0DE0000000000000001B9 /* SettingsView.swift */,
+				D4C0DE0000000000000001BB /* LicensesView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		D4C0DE000000000000000216 /* SharedFeatures */ = {
+			isa = PBXGroup;
+			children = (
+				D4C0DE0000000000000001B8 /* DesignTokens.swift */,
+			);
+			name = Shared;
+			path = Shared;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -488,6 +818,26 @@
 			productReference = D4C0DE000000000000000111 /* PlayerAppTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		D4C0DE000000000000000403 /* PlayerAppUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D4C0DE000000000000000504 /* Build configuration list for PBXNativeTarget "PlayerAppUITests" */;
+			buildPhases = (
+				D4C0DE000000000000000307 /* Sources */,
+				D4C0DE000000000000000308 /* Frameworks */,
+				D4C0DE000000000000000309 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D4C0DE000000000000000904 /* PBXTargetDependency */,
+			);
+			name = PlayerAppUITests;
+			packageProductDependencies = (
+			);
+			productName = PlayerAppUITests;
+			productReference = D4C0DE0000000000000001C2 /* PlayerAppUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -505,6 +855,10 @@
 						CreatedOnToolsVersion = 16.0;
 						TestTargetID = D4C0DE000000000000000401;
 					};
+					D4C0DE000000000000000403 = {
+						CreatedOnToolsVersion = 16.0;
+						TestTargetID = D4C0DE000000000000000401;
+					};
 				};
 			};
 			buildConfigurationList = D4C0DE000000000000000501 /* Build configuration list for PBXProject "PlayerApp" */;
@@ -513,6 +867,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				ru,
 				Base,
 			);
 			mainGroup = D4C0DE000000000000000201;
@@ -526,6 +881,7 @@
 			targets = (
 				D4C0DE000000000000000401 /* PlayerApp */,
 				D4C0DE000000000000000402 /* PlayerAppTests */,
+				D4C0DE000000000000000403 /* PlayerAppUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -535,10 +891,24 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D4C0DE0000000000000000C2 /* InfoPlist.xcstrings in Resources */,
+				D4C0DE0000000000000000BA /* Localizable.xcstrings in Resources */,
+				D4C0DE0000000000000000BC /* SFBAudioEngine.txt in Resources */,
+				D4C0DE0000000000000000BD /* GRDB.txt in Resources */,
+				D4C0DE0000000000000000BE /* ThirdPartyNotices.txt in Resources */,
+				D4C0DE0000000000000000A3 /* headphone-presets.json in Resources */,
+				D4C0DE0000000000000000A4 /* AutoEq-Attribution.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		D4C0DE000000000000000306 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D4C0DE000000000000000309 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -553,9 +923,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				D4C0DE000000000000000001 /* PlayerAppApp.swift in Sources */,
+				D4C0DE000000000000000070 /* AppBootstrapStore.swift in Sources */,
 				D4C0DE000000000000000003 /* DependencyContainer.swift in Sources */,
 				D4C0DE000000000000000002 /* RootView.swift in Sources */,
 				D4C0DE000000000000000004 /* PlaybackControlling.swift in Sources */,
+				D4C0DE0000000000000000B4 /* AudioCapability.swift in Sources */,
+				D4C0DE0000000000000000B5 /* AudioCapabilityReport.swift in Sources */,
+				D4C0DE000000000000000099 /* RealtimePCMBuffer.c in Sources */,
+				D4C0DE00000000000000009A /* SpectrumAnalyzerWorker.swift in Sources */,
+				D4C0DE00000000000000009B /* SpectrumSnapshot.swift in Sources */,
+				D4C0DE00000000000000009C /* ClippingProtectionController.swift in Sources */,
+				D4C0DE00000000000000007D /* AudioFormatSnapshot.swift in Sources */,
+				D4C0DE00000000000000007E /* AudioGraphController.swift in Sources */,
+				D4C0DE000000000000000086 /* DSPGainPlan.swift in Sources */,
+				D4C0DE000000000000000087 /* DSPConfigurationSnapshot.swift in Sources */,
+				D4C0DE000000000000000088 /* EqualizerService.swift in Sources */,
+				D4C0DE000000000000000071 /* PlaybackSnapshot.swift in Sources */,
+				D4C0DE000000000000000072 /* PlaybackCoordinator.swift in Sources */,
 				D4C0DE000000000000000037 /* AudioSessionController.swift in Sources */,
 				D4C0DE000000000000000038 /* PlaybackEngine.swift in Sources */,
 				D4C0DE000000000000000039 /* SFBAudioPlaybackBackend.swift in Sources */,
@@ -569,10 +953,16 @@
 				D4C0DE00000000000000005A /* QueueDecoderPreparing.swift in Sources */,
 				D4C0DE00000000000000005B /* GaplessPlaybackCoordinator.swift in Sources */,
 				D4C0DE000000000000000021 /* AudioFileExtensionFilter.swift in Sources */,
+				D4C0DE0000000000000000A7 /* ScanProgress.swift in Sources */,
+				D4C0DE0000000000000000A8 /* SourceReconciler.swift in Sources */,
 				D4C0DE000000000000000022 /* ScannedAudioFile.swift in Sources */,
 				D4C0DE000000000000000023 /* LibraryScanner.swift in Sources */,
 				D4C0DE000000000000000068 /* LibraryScanImporter.swift in Sources */,
 				D4C0DE00000000000000006D /* LibraryTrackPlaybackCoordinator.swift in Sources */,
+				D4C0DE000000000000000075 /* PlaybackLocator.swift in Sources */,
+				D4C0DE000000000000000076 /* PlaybackLocatorResolving.swift in Sources */,
+				D4C0DE000000000000000077 /* MusicItemAssetResolver.swift in Sources */,
+				D4C0DE00000000000000007C /* PlaybackQueueRestorer.swift in Sources */,
 				D4C0DE000000000000000024 /* SourceRootAccess.swift in Sources */,
 				D4C0DE000000000000000031 /* MetadataReading.swift in Sources */,
 				D4C0DE000000000000000032 /* AudioFileMetadata.swift in Sources */,
@@ -593,7 +983,15 @@
 				D4C0DE000000000000000025 /* SourceRootRepository.swift in Sources */,
 				D4C0DE000000000000000006 /* TrackRepository.swift in Sources */,
 				D4C0DE000000000000000007 /* SearchRepository.swift in Sources */,
+				D4C0DE000000000000000078 /* QueueRepository.swift in Sources */,
+				D4C0DE000000000000000083 /* EQPresetRepository.swift in Sources */,
+				D4C0DE000000000000000084 /* GRDBEQPresetRepository.swift in Sources */,
 				D4C0DE000000000000000008 /* DSPModule.swift in Sources */,
+				D4C0DE000000000000000080 /* EQParameterLimits.swift in Sources */,
+				D4C0DE000000000000000081 /* EQPresetValidating.swift in Sources */,
+				D4C0DE000000000000000082 /* EqualizerAssignment.swift in Sources */,
+				D4C0DE000000000000000089 /* EQFrequencyResponse.swift in Sources */,
+				D4C0DE00000000000000008A /* EQResponseCalculator.swift in Sources */,
 				D4C0DE000000000000000043 /* PEQBand.swift in Sources */,
 				D4C0DE000000000000000044 /* EQPreset.swift in Sources */,
 				D4C0DE000000000000000045 /* EqualizerState.swift in Sources */,
@@ -605,11 +1003,37 @@
 				D4C0DE000000000000000056 /* BiquadFilter.swift in Sources */,
 				D4C0DE000000000000000057 /* CustomBiquadDSPPrototype.swift in Sources */,
 				D4C0DE000000000000000009 /* SharedModule.swift in Sources */,
+				D4C0DE00000000000000006E /* AppError.swift in Sources */,
+				D4C0DE00000000000000006F /* LoadableState.swift in Sources */,
+				A11CE0000000000000000001 /* LocalizedFormat.swift in Sources */,
 				D4C0DE00000000000000000A /* LibraryFeature.swift in Sources */,
 				D4C0DE00000000000000006A /* LibraryViewModel.swift in Sources */,
+				D4C0DE0000000000000000AA /* TrackRow.swift in Sources */,
+				D4C0DE0000000000000000AB /* ArtworkView.swift in Sources */,
+				D4C0DE0000000000000000AC /* AlbumsView.swift in Sources */,
+				D4C0DE0000000000000000AD /* ArtistsView.swift in Sources */,
+				D4C0DE0000000000000000AE /* AlbumDetailView.swift in Sources */,
+				D4C0DE0000000000000000AF /* ArtistDetailView.swift in Sources */,
 				D4C0DE00000000000000006B /* LibraryView.swift in Sources */,
 				D4C0DE00000000000000000B /* NowPlayingFeature.swift in Sources */,
+				D4C0DE000000000000000073 /* PlaybackStore.swift in Sources */,
+				D4C0DE00000000000000007A /* NowPlayingView.swift in Sources */,
+				D4C0DE00000000000000007B /* QueueView.swift in Sources */,
 				D4C0DE000000000000000048 /* EqualizerViewModel.swift in Sources */,
+				D4C0DE00000000000000008F /* EqualizerHeader.swift in Sources */,
+				D4C0DE000000000000000090 /* MasterGainControl.swift in Sources */,
+				D4C0DE000000000000000091 /* BandSelectorStrip.swift in Sources */,
+				D4C0DE000000000000000092 /* BandParameterPanel.swift in Sources */,
+				D4C0DE000000000000000093 /* ParameterRuler.swift in Sources */,
+				D4C0DE000000000000000094 /* FilterTypePicker.swift in Sources */,
+				D4C0DE000000000000000095 /* NumericParameterEditor.swift in Sources */,
+				D4C0DE000000000000000096 /* EqualizerToolbar.swift in Sources */,
+				D4C0DE000000000000000097 /* EqualizerAccessibility.swift in Sources */,
+				D4C0DE0000000000000000A0 /* PresetLibrarySheet.swift in Sources */,
+				D4C0DE0000000000000000A1 /* EqualizerImportExportSheet.swift in Sources */,
+				D4C0DE0000000000000000A2 /* PresetDetailView.swift in Sources */,
+				D4C0DE00000000000000008B /* EqualizerGraphGeometry.swift in Sources */,
+				D4C0DE00000000000000008C /* EqualizerResponseGraph.swift in Sources */,
 				D4C0DE000000000000000053 /* HeadphonePresetSearchViewModel.swift in Sources */,
 				D4C0DE000000000000000049 /* EqualizerView.swift in Sources */,
 				D4C0DE000000000000000060 /* AirPlayRoutePickerView.swift in Sources */,
@@ -619,6 +1043,11 @@
 				D4C0DE000000000000000027 /* SourcesViewModel.swift in Sources */,
 				D4C0DE000000000000000028 /* SourcesView.swift in Sources */,
 				D4C0DE00000000000000000C /* SourcesFeature.swift in Sources */,
+				D4C0DE0000000000000000B2 /* PlaybackSettingsView.swift in Sources */,
+				D4C0DE0000000000000000B6 /* AudioCapabilitiesView.swift in Sources */,
+				D4C0DE0000000000000000B8 /* DesignTokens.swift in Sources */,
+				D4C0DE0000000000000000B9 /* SettingsView.swift in Sources */,
+				D4C0DE0000000000000000BB /* LicensesView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -627,6 +1056,25 @@
 			buildActionMask = 2147483647;
 			files = (
 				D4C0DE00000000000000000D /* BootstrapTests.swift in Sources */,
+				D4C0DE000000000000000074 /* PlaybackCoordinatorTests.swift in Sources */,
+				D4C0DE000000000000000079 /* QueuePersistenceTests.swift in Sources */,
+				D4C0DE00000000000000007F /* AudioGraphIntegrationTests.swift in Sources */,
+				D4C0DE000000000000000085 /* EQPresetRepositoryTests.swift in Sources */,
+				D4C0DE00000000000000008D /* EQResponseCalculatorTests.swift in Sources */,
+				D4C0DE00000000000000008E /* EqualizerGraphGeometryTests.swift in Sources */,
+				D4C0DE000000000000000098 /* EqualizerViewModelTests.swift in Sources */,
+				D4C0DE00000000000000009D /* RealtimePCMBufferTests.swift in Sources */,
+				D4C0DE00000000000000009E /* ClippingProtectionTests.swift in Sources */,
+				D4C0DE00000000000000009F /* SpectrumAnalyzerTests.swift in Sources */,
+				D4C0DE0000000000000000A5 /* EQImportExportTests.swift in Sources */,
+				D4C0DE0000000000000000A6 /* HeadphonePresetRepositoryTests.swift in Sources */,
+				D4C0DE0000000000000000A9 /* SourceReconcilerTests.swift in Sources */,
+				D4C0DE0000000000000000B0 /* LibraryPaginationTests.swift in Sources */,
+				D4C0DE0000000000000000B1 /* EqualizerAssignmentTests.swift in Sources */,
+				D4C0DE0000000000000000B3 /* DSPGainPlanTests.swift in Sources */,
+				D4C0DE0000000000000000B7 /* AudioFormatMatrixTests.swift in Sources */,
+				D4C0DE0000000000000000BF /* MigrationUpgradeTests.swift in Sources */,
+				D4C0DE0000000000000000C0 /* LargeLibraryPerformanceTests.swift in Sources */,
 				D4C0DE00000000000000000F /* DatabaseTests.swift in Sources */,
 				D4C0DE000000000000000020 /* LibraryScannerTests.swift in Sources */,
 				D4C0DE000000000000000030 /* MetadataReaderTests.swift in Sources */,
@@ -646,6 +1094,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D4C0DE000000000000000307 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D4C0DE0000000000000000C1 /* ReleaseSmokeTests.swift in Sources */,
+				A11CE0000000000000000003 /* AccessibilitySmokeTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -653,6 +1110,11 @@
 			isa = PBXTargetDependency;
 			target = D4C0DE000000000000000401 /* PlayerApp */;
 			targetProxy = D4C0DE000000000000000901 /* PBXContainerItemProxy */;
+		};
+		D4C0DE000000000000000904 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D4C0DE000000000000000401 /* PlayerApp */;
+			targetProxy = D4C0DE000000000000000903 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -787,6 +1249,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.mtvvi.metronome;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "PlayerApp/Core/AudioCore/PlayerApp-Bridging-Header.h";
 				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -806,6 +1269,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.mtvvi.metronome;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "PlayerApp/Core/AudioCore/PlayerApp-Bridging-Header.h";
 				SWIFT_VERSION = 6.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -847,6 +1311,38 @@
 			};
 			name = Release;
 		};
+		D4C0DE000000000000000607 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mtvvi.metronome.uitests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_TARGET_NAME = PlayerApp;
+			};
+			name = Debug;
+		};
+		D4C0DE000000000000000608 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mtvvi.metronome.uitests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_TARGET_NAME = PlayerApp;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -877,6 +1373,15 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		D4C0DE000000000000000504 /* Build configuration list for PBXNativeTarget "PlayerAppUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D4C0DE000000000000000607 /* Debug */,
+				D4C0DE000000000000000608 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
@@ -884,16 +1389,16 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/groue/GRDB.swift.git";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 7.11.1;
+				kind = exactVersion;
+				version = 7.11.1;
 			};
 		};
 		D4C0DE000000000000000703 /* XCRemoteSwiftPackageReference "SFBAudioEngine" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/sbooth/SFBAudioEngine.git";
 			requirement = {
-				branch = main;
-				kind = branch;
+				kind = exactVersion;
+				version = 0.13.0;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

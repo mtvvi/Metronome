@@ -45,6 +45,7 @@ enum ReplayGainMode: String, Codable, Equatable, Sendable {
 enum ReplayGainSource: String, Codable, Equatable, Sendable {
     case track
     case album
+    case noMetadataFallback
 }
 
 struct ReplayGainSettings: Equatable, Sendable {
@@ -52,17 +53,20 @@ struct ReplayGainSettings: Equatable, Sendable {
     var mode: ReplayGainMode
     var preampGainDB: Double
     var preventClipping: Bool
+    var preampWithoutMetadataDB: Double
 
     init(
         isEnabled: Bool = false,
         mode: ReplayGainMode = .album,
         preampGainDB: Double = 0,
-        preventClipping: Bool = true
+        preventClipping: Bool = true,
+        preampWithoutMetadataDB: Double = 0
     ) {
         self.isEnabled = isEnabled
         self.mode = mode
         self.preampGainDB = preampGainDB
         self.preventClipping = preventClipping
+        self.preampWithoutMetadataDB = preampWithoutMetadataDB
     }
 }
 
@@ -92,11 +96,19 @@ enum ReplayGainPolicy {
             return .bypassed
         }
 
-        guard let selection = gainSelection(for: metadata, mode: settings.mode) else {
-            return .bypassed
-        }
+        let selection = gainSelection(for: metadata, mode: settings.mode)
+            ?? (
+                source: ReplayGainSource.noMetadataFallback,
+                gainDB: settings.preampWithoutMetadataDB.isFinite
+                    ? settings.preampWithoutMetadataDB
+                    : 0,
+                peak: nil
+            )
 
-        let requestedGainDB = selection.gainDB + settings.preampGainDB
+        let metadataPreamp = settings.preampGainDB.isFinite ? settings.preampGainDB : 0
+        let requestedGainDB = selection.source == .noMetadataFallback
+            ? selection.gainDB
+            : selection.gainDB + metadataPreamp
         let limitedGainDB = clippingLimitedGainDB(
             requestedGainDB: requestedGainDB,
             peak: selection.peak,
@@ -118,16 +130,18 @@ enum ReplayGainPolicy {
     ) -> (source: ReplayGainSource, gainDB: Double, peak: Double?)? {
         switch mode {
         case .track:
-            return metadata.trackGainDB.map {
-                (source: .track, gainDB: $0, peak: metadata.trackPeak)
+            return metadata.trackGainDB.flatMap { gain in
+                guard gain.isFinite else { return nil }
+                return (source: .track, gainDB: gain, peak: metadata.trackPeak)
             }
         case .album:
-            if let albumGainDB = metadata.albumGainDB {
+            if let albumGainDB = metadata.albumGainDB, albumGainDB.isFinite {
                 return (source: .album, gainDB: albumGainDB, peak: metadata.albumPeak)
             }
 
-            return metadata.trackGainDB.map {
-                (source: .track, gainDB: $0, peak: metadata.trackPeak)
+            return metadata.trackGainDB.flatMap { gain in
+                guard gain.isFinite else { return nil }
+                return (source: .track, gainDB: gain, peak: metadata.trackPeak)
             }
         }
     }

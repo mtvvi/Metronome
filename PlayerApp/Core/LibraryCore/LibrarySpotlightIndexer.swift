@@ -19,6 +19,11 @@ protocol SpotlightSearchIndexing: Sendable {
 
 protocol LibraryTrackSearchIndexing: Sendable {
     func indexTracks(_ tracks: [TrackRecord]) async throws
+    func deleteTracks(withIDs trackIDs: [String]) async throws
+}
+
+extension LibraryTrackSearchIndexing {
+    func deleteTracks(withIDs trackIDs: [String]) async throws {}
 }
 
 enum SpotlightTrackItemMapper {

@@ -15,6 +15,52 @@ enum RemoteCommandResult: Equatable, Sendable {
     }
 }
 
+struct RemoteCommandCapabilities: Equatable, Sendable {
+    var canPlay: Bool
+    var canPause: Bool
+    var canGoNext: Bool
+    var canGoPrevious: Bool
+    var canSeek: Bool
+
+    static let all = RemoteCommandCapabilities(
+        canPlay: true,
+        canPause: true,
+        canGoNext: true,
+        canGoPrevious: true,
+        canSeek: true
+    )
+
+    init(snapshot: PlaybackSnapshot) {
+        let hasItem = snapshot.currentItem != nil
+        canPlay = hasItem && snapshot.status != .playing
+        canPause = snapshot.status == .playing
+        canGoNext = hasItem && (
+            snapshot.repeatMode == .all
+                || (snapshot.currentIndex.map { $0 < snapshot.queue.count - 1 } ?? false)
+        )
+        canGoPrevious = hasItem && (
+            snapshot.elapsed > 5
+                || (snapshot.currentIndex.map { $0 > 0 } ?? false)
+                || snapshot.repeatMode == .all
+        )
+        canSeek = hasItem
+    }
+
+    init(
+        canPlay: Bool,
+        canPause: Bool,
+        canGoNext: Bool,
+        canGoPrevious: Bool,
+        canSeek: Bool
+    ) {
+        self.canPlay = canPlay
+        self.canPause = canPause
+        self.canGoNext = canGoNext
+        self.canGoPrevious = canGoPrevious
+        self.canSeek = canSeek
+    }
+}
+
 protocol RemotePlaybackCommandHandling: Sendable {
     func play() -> RemoteCommandResult
     func pause() -> RemoteCommandResult
@@ -30,6 +76,7 @@ protocol RemoteCommandRegistering: AnyObject {
     func registerNext(_ handler: @escaping () -> RemoteCommandResult)
     func registerPrevious(_ handler: @escaping () -> RemoteCommandResult)
     func registerSeek(_ handler: @escaping (TimeInterval) -> RemoteCommandResult)
+    func setCapabilities(_ capabilities: RemoteCommandCapabilities)
     func removeAllTargets()
 }
 
@@ -41,7 +88,10 @@ final class RemoteCommandController {
         self.commandCenter = commandCenter
     }
 
-    func install(playback: any RemotePlaybackCommandHandling) {
+    func install(
+        playback: any RemotePlaybackCommandHandling,
+        capabilities: RemoteCommandCapabilities = .all
+    ) {
         uninstall()
 
         commandCenter.registerPlay {
@@ -59,6 +109,11 @@ final class RemoteCommandController {
         commandCenter.registerSeek { time in
             playback.seek(to: time)
         }
+        commandCenter.setCapabilities(capabilities)
+    }
+
+    func updateCapabilities(_ capabilities: RemoteCommandCapabilities) {
+        commandCenter.setCapabilities(capabilities)
     }
 
     func uninstall() {
@@ -114,6 +169,14 @@ final class MPRemoteCommandCenterAdapter: RemoteCommandRegistering {
             item.command.removeTarget(item.target)
         }
         targets.removeAll()
+    }
+
+    func setCapabilities(_ capabilities: RemoteCommandCapabilities) {
+        center.playCommand.isEnabled = capabilities.canPlay
+        center.pauseCommand.isEnabled = capabilities.canPause
+        center.nextTrackCommand.isEnabled = capabilities.canGoNext
+        center.previousTrackCommand.isEnabled = capabilities.canGoPrevious
+        center.changePlaybackPositionCommand.isEnabled = capabilities.canSeek
     }
 
     private func register(

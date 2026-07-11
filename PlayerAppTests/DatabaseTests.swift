@@ -3,6 +3,33 @@ import XCTest
 @testable import PlayerApp
 
 final class DatabaseTests: XCTestCase {
+    func testTrackWritesPublishLibraryChange() async throws {
+        let repository = GRDBTrackRepository(database: try PlayerDatabase.inMemory())
+        try repository.upsertSourceRoots([SourceRootRecord(
+            id: "source-1",
+            kind: "securityScopedFolder",
+            displayName: "Observed",
+            bookmarkData: nil,
+            baseURL: nil,
+            isEnabled: true,
+            lastScanDate: nil
+        )])
+        let stream = repository.libraryChanges()
+        var iterator = stream.makeAsyncIterator()
+
+        try repository.upsertTracks([
+            makeTrack(
+                id: "observed-track",
+                album: "Observed",
+                trackNumber: 1,
+                fileName: "observed.flac"
+            )
+        ])
+
+        let change = await iterator.next()
+        XCTAssertEqual(change, .tracksChanged)
+    }
+
     func testMigrationsCreateLibraryTables() throws {
         let database = try PlayerDatabase.inMemory()
 
@@ -22,6 +49,61 @@ final class DatabaseTests: XCTestCase {
         XCTAssertTrue(tableNames.contains("tracks"))
         XCTAssertTrue(tableNames.contains("artwork"))
         XCTAssertTrue(tableNames.contains("track_fts"))
+        XCTAssertTrue(tableNames.contains("eq_presets"))
+        XCTAssertTrue(tableNames.contains("eq_bands"))
+        XCTAssertTrue(tableNames.contains("eq_assignments"))
+        XCTAssertTrue(tableNames.contains("dsp_settings"))
+    }
+
+    func testMigrationsAddStablePlaybackLocatorColumns() throws {
+        let database = try PlayerDatabase.inMemory()
+
+        let columnNames = try database.read { db in
+            try Row.fetchAll(db, sql: "PRAGMA table_info(tracks)")
+                .compactMap { row in row["name"] as String? }
+        }
+
+        XCTAssertTrue(columnNames.contains("playback_locator_kind"))
+        XCTAssertTrue(columnNames.contains("source_root_id"))
+        XCTAssertTrue(columnNames.contains("relative_path"))
+        XCTAssertTrue(columnNames.contains("media_persistent_id"))
+        XCTAssertTrue(columnNames.contains("availability_reason"))
+    }
+
+    func testPlaybackLocatorAndAvailabilityRoundTrip() throws {
+        let database = try PlayerDatabase.inMemory()
+        let repository = GRDBTrackRepository(database: database)
+        let sourceRoot = SourceRootRecord(
+            id: MusicLibraryImporter.sourceRootID,
+            kind: MusicLibraryImporter.sourceKind,
+            displayName: "Music Library",
+            bookmarkData: nil,
+            baseURL: nil,
+            isEnabled: true,
+            lastScanDate: nil
+        )
+        var track = makeTrack(
+            id: "music-library-42",
+            album: "Unavailable Album",
+            trackNumber: 1,
+            fileName: "Unavailable Track"
+        )
+        track.sourceRootID = sourceRoot.id
+        track.sourceKind = sourceRoot.kind
+        track.mediaPersistentID = 42
+        track.relativePath = nil
+        track.playbackLocatorKind = PlaybackLocatorKind.musicPersistentID.rawValue
+        track.availabilityReason = PlaybackUnavailabilityReason.cloudOnly.rawValue
+
+        try repository.upsertSourceRoots([sourceRoot])
+        try repository.upsertTracks([track])
+
+        let result = try XCTUnwrap(repository.fetchLibraryTracks(limit: 1).first?.track)
+        XCTAssertEqual(result.playbackLocatorKind, PlaybackLocatorKind.musicPersistentID.rawValue)
+        XCTAssertEqual(result.sourceRootID, MusicLibraryImporter.sourceRootID)
+        XCTAssertNil(result.relativePath)
+        XCTAssertEqual(result.mediaPersistentID, 42)
+        XCTAssertEqual(result.availabilityReason, PlaybackUnavailabilityReason.cloudOnly.rawValue)
     }
 
     func testBatchUpsertUpdatesSearchIndex() throws {
@@ -160,6 +242,51 @@ final class DatabaseTests: XCTestCase {
         let results = try repository.fetchLibraryTracks(limit: 10)
 
         XCTAssertEqual(results.map(\.track.id), ["track-3", "track-1", "track-2"])
+    }
+
+    func testRemovingOnlySourceIndexKeepsFolderPermissionRecord() throws {
+        let database = try PlayerDatabase.inMemory()
+        let repository = GRDBTrackRepository(database: database)
+        let source = SourceRootRecord(
+            id: "source-1",
+            kind: "securityScopedFolder",
+            displayName: "Documents",
+            bookmarkData: Data([1, 2, 3]),
+            baseURL: "file:///Documents",
+            isEnabled: true,
+            lastScanDate: nil
+        )
+        try repository.upsertSourceRoots([source])
+        try repository.upsertTracks([
+            makeTrack(id: "track-1", album: "Album", trackNumber: 1, fileName: "one.flac")
+        ])
+
+        let removedTrackIDs = try repository.removeSourceIndex(id: source.id)
+
+        XCTAssertEqual(removedTrackIDs, ["track-1"])
+        XCTAssertEqual(try repository.fetchSourceRoot(id: source.id), source)
+        XCTAssertTrue(try repository.fetchLibraryTracks(limit: 10).isEmpty)
+        XCTAssertTrue(try repository.searchTracks(matching: "one", limit: 10).isEmpty)
+    }
+
+    func testTrackCountsAreGroupedBySourceRoot() throws {
+        let database = try PlayerDatabase.inMemory()
+        let repository = GRDBTrackRepository(database: database)
+        try repository.upsertSourceRoots([SourceRootRecord(
+            id: "source-1",
+            kind: "securityScopedFolder",
+            displayName: "Documents",
+            bookmarkData: nil,
+            baseURL: nil,
+            isEnabled: true,
+            lastScanDate: nil
+        )])
+        try repository.upsertTracks([
+            makeTrack(id: "track-1", album: "Album", trackNumber: 1, fileName: "one.flac"),
+            makeTrack(id: "track-2", album: "Album", trackNumber: 2, fileName: "two.flac")
+        ])
+
+        XCTAssertEqual(try repository.fetchTrackCountsBySourceRoot(), ["source-1": 2])
     }
 
     private func makeTrack(

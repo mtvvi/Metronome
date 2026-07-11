@@ -2,6 +2,14 @@ import XCTest
 @testable import PlayerApp
 
 final class LibraryScanImportTests: XCTestCase {
+    func testScanProgressTreatsReconciliationAsCancellableWork() {
+        XCTAssertTrue(ScanProgress.Phase.enumerating.isRunning)
+        XCTAssertTrue(ScanProgress.Phase.readingMetadata.isRunning)
+        XCTAssertTrue(ScanProgress.Phase.reconciling.isRunning)
+        XCTAssertFalse(ScanProgress.Phase.completed.isRunning)
+        XCTAssertFalse(ScanProgress.Phase.cancelled.isRunning)
+    }
+
     func testMapperPersistsMetadataReplayGainAndSourceIdentity() throws {
         let sourceRoot = Self.sourceRoot()
         let scannedFile = ScannedAudioFile(
@@ -84,6 +92,102 @@ final class LibraryScanImportTests: XCTestCase {
         XCTAssertEqual(summary.failedMetadataCount, 1)
         XCTAssertEqual(repository.tracks.map(\.id), ["file:source-1:readable.flac"])
         XCTAssertEqual(spotlightIndexer.indexedTracks.map(\.id), ["file:source-1:readable.flac"])
+        XCTAssertNotNil(try repository.fetchSourceRoot(id: sourceRoot.id)?.lastScanDate)
+    }
+
+    func testScanSessionPublishesProgressStreamAndCompletion() async throws {
+        let sourceRoot = Self.sourceRoot()
+        let fileURL = URL(fileURLWithPath: "/music/readable.flac")
+        let importer = LibraryScanImporter(
+            scanner: FakeLibraryScanner(files: [
+                ScannedAudioFile(
+                    url: fileURL,
+                    relativePath: "readable.flac",
+                    fileName: "readable.flac",
+                    fileExtension: "flac"
+                )
+            ]),
+            metadataReader: FakeMetadataReader(results: [
+                fileURL: .success(Self.metadata())
+            ]),
+            trackRepository: FakeTrackRepository()
+        )
+
+        let session = importer.startImport(
+            sourceRoot,
+            rootURL: URL(fileURLWithPath: "/music")
+        )
+        var progress: [ScanProgress] = []
+        for await update in session.progress {
+            progress.append(update)
+        }
+        let summary = try await session.value
+
+        XCTAssertEqual(progress.first?.phase, .enumerating)
+        XCTAssertTrue(progress.contains { $0.phase == .readingMetadata })
+        XCTAssertTrue(progress.contains { $0.phase == .reconciling })
+        XCTAssertEqual(progress.last?.phase, .completed)
+        XCTAssertTrue(progress.allSatisfy { $0.scanID == session.scanID })
+        XCTAssertTrue(progress.allSatisfy { $0.sourceRootID == sourceRoot.id })
+        XCTAssertEqual(summary.importedTrackCount, 1)
+    }
+
+    func testCancellingScanSessionPublishesCancelledTerminalProgress() async {
+        let sourceRoot = Self.sourceRoot()
+        let importer = LibraryScanImporter(
+            scanner: BlockingLibraryScanner(),
+            metadataReader: FakeMetadataReader(results: [:]),
+            trackRepository: FakeTrackRepository()
+        )
+        let session = importer.startImport(
+            sourceRoot,
+            rootURL: URL(fileURLWithPath: "/music")
+        )
+        var iterator = session.progress.makeAsyncIterator()
+
+        let first = await iterator.next()
+        session.cancel()
+        do {
+            _ = try await session.value
+            XCTFail("Expected the scan session to be cancelled.")
+        } catch is CancellationError {
+            // Expected.
+        } catch {
+            XCTFail("Unexpected cancellation error: \(error)")
+        }
+        var terminal = first
+        while let progress = await iterator.next() {
+            terminal = progress
+        }
+
+        XCTAssertEqual(first?.phase, .enumerating)
+        XCTAssertEqual(terminal?.phase, .cancelled)
+    }
+
+    func testImporterDeduplicatesIdenticalArtworkBeforePersistence() async throws {
+        let artwork = AudioArtwork(data: Data([1, 2, 3]), mimeType: "image/png")
+        var metadata = Self.metadata()
+        metadata.artwork = artwork
+        let firstURL = URL(fileURLWithPath: "/music/first.flac")
+        let secondURL = URL(fileURLWithPath: "/music/second.flac")
+        let artworkRepository = FakeArtworkRepository()
+        let importer = LibraryScanImporter(
+            scanner: FakeLibraryScanner(files: [
+                ScannedAudioFile(url: firstURL, relativePath: "first.flac", fileName: "first.flac", fileExtension: "flac"),
+                ScannedAudioFile(url: secondURL, relativePath: "second.flac", fileName: "second.flac", fileExtension: "flac")
+            ]),
+            metadataReader: FakeMetadataReader(results: [
+                firstURL: .success(metadata),
+                secondURL: .success(metadata)
+            ]),
+            trackRepository: FakeTrackRepository(),
+            artworkRepository: artworkRepository
+        )
+
+        _ = try await importer.importSource(Self.sourceRoot(), rootURL: URL(fileURLWithPath: "/music"))
+
+        XCTAssertEqual(artworkRepository.records.count, 1)
+        XCTAssertEqual(artworkRepository.records.first?.data, artwork.data)
     }
 
     @MainActor
@@ -170,6 +274,13 @@ private actor FakeLibraryScanner: LibraryScanning {
     }
 }
 
+private actor BlockingLibraryScanner: LibraryScanning {
+    func scan(rootURL: URL) async throws -> [ScannedAudioFile] {
+        try await Task.sleep(for: .seconds(60))
+        return []
+    }
+}
+
 private struct FakeMetadataReader: MetadataReading {
     var results: [URL: Result<AudioFileMetadata, Error>]
 
@@ -178,11 +289,38 @@ private struct FakeMetadataReader: MetadataReading {
     }
 }
 
-private final class FakeTrackRepository: TrackRepository, @unchecked Sendable {
+private final class FakeTrackRepository: TrackRepository, SourceRootRepository, @unchecked Sendable {
     private(set) var tracks: [TrackRecord] = []
+    private var sourceRoots: [String: SourceRootRecord] = [:]
 
     func upsertTracks(_ tracks: [TrackRecord]) throws {
         self.tracks = tracks
+    }
+
+    func fetchSourceRoot(id: String) throws -> SourceRootRecord? {
+        sourceRoots[id]
+    }
+
+    func fetchSourceRoots() throws -> [SourceRootRecord] {
+        Array(sourceRoots.values)
+    }
+
+    func upsertSourceRoots(_ sourceRoots: [SourceRootRecord]) throws {
+        for sourceRoot in sourceRoots {
+            self.sourceRoots[sourceRoot.id] = sourceRoot
+        }
+    }
+}
+
+private final class FakeArtworkRepository: ArtworkRepository, @unchecked Sendable {
+    private(set) var records: [ArtworkRecord] = []
+
+    func upsertArtwork(_ artworkRecords: [ArtworkRecord]) throws {
+        records = artworkRecords
+    }
+
+    func fetchArtwork(id: String) throws -> ArtworkRecord? {
+        records.first { $0.id == id }
     }
 }
 

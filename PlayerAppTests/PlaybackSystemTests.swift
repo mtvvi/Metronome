@@ -49,6 +49,53 @@ final class PlaybackSystemTests: XCTestCase {
         XCTAssertNil(commandCenter.seekHandler)
     }
 
+    func testRemoteCommandCapabilitiesFollowPlaybackSnapshot() {
+        let commandCenter = FakeRemoteCommandCenter()
+        let controller = RemoteCommandController(commandCenter: commandCenter)
+        let item = PlaybackItem(
+            id: "one",
+            url: URL(fileURLWithPath: "/music/one.flac"),
+            metadata: NowPlayingTrackMetadata(fileName: "one.flac")
+        )
+        let snapshot = PlaybackSnapshot(
+            status: .playing,
+            currentItem: item,
+            elapsed: 6,
+            queue: [item],
+            currentIndex: 0,
+            failureMessage: nil
+        )
+
+        controller.install(
+            playback: FakeRemotePlaybackCommandHandler(),
+            capabilities: RemoteCommandCapabilities(snapshot: snapshot)
+        )
+
+        XCTAssertFalse(commandCenter.capabilities.canPlay)
+        XCTAssertTrue(commandCenter.capabilities.canPause)
+        XCTAssertFalse(commandCenter.capabilities.canGoNext)
+        XCTAssertTrue(commandCenter.capabilities.canGoPrevious)
+        XCTAssertTrue(commandCenter.capabilities.canSeek)
+    }
+
+    func testPreviousRemoteCommandIsDisabledAtStartOfFirstTrack() {
+        let item = PlaybackItem(
+            id: "one",
+            url: URL(fileURLWithPath: "/music/one.flac"),
+            metadata: NowPlayingTrackMetadata(fileName: "one.flac")
+        )
+        let snapshot = PlaybackSnapshot(
+            status: .playing,
+            currentItem: item,
+            elapsed: 0,
+            queue: [item],
+            currentIndex: 0,
+            failureMessage: nil
+        )
+
+        XCTAssertFalse(RemoteCommandCapabilities(snapshot: snapshot).canGoPrevious)
+    }
+
     func testAudioSessionEventObserverParsesInterruptionAndRouteChangeNotifications() {
         let notificationCenter = NotificationCenter()
         let handler = FakeAudioSessionEventHandler()
@@ -81,15 +128,53 @@ final class PlaybackSystemTests: XCTestCase {
                 AVAudioSessionRouteChangeReasonKey: AVAudioSession.RouteChangeReason.oldDeviceUnavailable.rawValue
             ]
         )
+        notificationCenter.post(
+            name: AVAudioSession.mediaServicesWereResetNotification,
+            object: nil
+        )
 
         XCTAssertEqual(
             handler.events,
             [
                 .interruption(.began),
                 .interruption(.ended(shouldResume: true)),
-                .routeChanged(AudioSessionRouteChangeEvent(reason: .oldDeviceUnavailable))
+                .routeChanged(AudioSessionRouteChangeEvent(reason: .oldDeviceUnavailable)),
+                .mediaServicesWereReset
             ]
         )
+    }
+
+    func testInterruptionDoesNotResumePlaybackThatWasAlreadyPaused() {
+        let playback = FakePlaybackController()
+        let handler = PlaybackAudioSessionEventHandler(
+            playback: playback,
+            diagnosticsProvider: FakeRouteDiagnosticsProvider(
+                diagnostics: AudioRouteDiagnostics(actualSampleRate: 44_100, outputs: [])
+            ),
+            isPlaybackActive: { false }
+        )
+
+        handler.handleAudioSessionEvent(.interruption(.began))
+        handler.handleAudioSessionEvent(.interruption(.ended(shouldResume: true)))
+
+        XCTAssertTrue(playback.events.isEmpty)
+    }
+
+    func testRouteLossPausesAndMediaServicesResetStopsPlayback() {
+        let playback = FakePlaybackController()
+        let handler = PlaybackAudioSessionEventHandler(
+            playback: playback,
+            diagnosticsProvider: FakeRouteDiagnosticsProvider(
+                diagnostics: AudioRouteDiagnostics(actualSampleRate: 44_100, outputs: [])
+            )
+        )
+
+        handler.handleAudioSessionEvent(
+            .routeChanged(AudioSessionRouteChangeEvent(reason: .oldDeviceUnavailable))
+        )
+        handler.handleAudioSessionEvent(.mediaServicesWereReset)
+
+        XCTAssertEqual(playback.events, [.pause, .stop])
     }
 
     func testRouteDiagnosticsModelSummarizesActualOutput() {
@@ -174,6 +259,7 @@ final class PlaybackSystemTests: XCTestCase {
         XCTAssertEqual(handler.previous(), .commandFailed)
         XCTAssertEqual(playback.events, [.resume, .pause, .seek(31)])
     }
+
 }
 
 @MainActor
@@ -188,6 +274,7 @@ private final class FakeRemoteCommandCenter: RemoteCommandRegistering {
     var nextHandler: (() -> RemoteCommandResult)?
     var previousHandler: (() -> RemoteCommandResult)?
     var seekHandler: ((TimeInterval) -> RemoteCommandResult)?
+    var capabilities: RemoteCommandCapabilities = .all
 
     func registerPlay(_ handler: @escaping () -> RemoteCommandResult) {
         playHandler = handler
@@ -207,6 +294,10 @@ private final class FakeRemoteCommandCenter: RemoteCommandRegistering {
 
     func registerSeek(_ handler: @escaping (TimeInterval) -> RemoteCommandResult) {
         seekHandler = handler
+    }
+
+    func setCapabilities(_ capabilities: RemoteCommandCapabilities) {
+        self.capabilities = capabilities
     }
 
     func removeAllTargets() {

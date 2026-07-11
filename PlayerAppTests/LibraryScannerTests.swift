@@ -47,6 +47,18 @@ final class LibraryScannerTests: XCTestCase {
         }
     }
 
+    func testScannerDropsEnumeratorResultsOutsideSelectedRoot() async throws {
+        let root = URL(fileURLWithPath: "/selected")
+        let scanner = LibraryScanner(enumerator: FixedEnumerator(urls: [
+            root.appendingPathComponent("inside.flac"),
+            URL(fileURLWithPath: "/other/outside.flac")
+        ]))
+
+        let files = try await scanner.scan(rootURL: root)
+
+        XCTAssertEqual(files.map(\.relativePath), ["inside.flac"])
+    }
+
     private func makeTemporaryDirectory() throws -> URL {
         let rootURL = FileManager.default.temporaryDirectory
             .appendingPathComponent(UUID().uuidString, isDirectory: true)
@@ -74,5 +86,13 @@ private struct DelayedEnumerator: DirectoryFileEnumerating {
     func audioCandidateURLs(under rootURL: URL) async throws -> [URL] {
         try await Task.sleep(nanoseconds: 5_000_000_000)
         return []
+    }
+}
+
+private struct FixedEnumerator: DirectoryFileEnumerating {
+    var urls: [URL]
+
+    func audioCandidateURLs(under rootURL: URL) async throws -> [URL] {
+        urls
     }
 }

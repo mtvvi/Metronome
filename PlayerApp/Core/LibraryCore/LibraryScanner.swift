@@ -15,33 +15,36 @@ actor LibraryScanner: LibraryScanning {
         try Task.checkCancellation()
 
         let urls = try await enumerator.audioCandidateURLs(under: rootURL)
-
-        return try urls
-            .map { url in
-                try Task.checkCancellation()
-                return ScannedAudioFile(
-                    url: url,
-                    relativePath: Self.relativePath(for: url, rootURL: rootURL),
-                    fileName: url.lastPathComponent,
-                    fileExtension: url.pathExtension.lowercased()
-                )
+        var files: [ScannedAudioFile] = []
+        files.reserveCapacity(urls.count)
+        for url in urls {
+            try Task.checkCancellation()
+            guard let relativePath = Self.relativePath(for: url, rootURL: rootURL) else {
+                continue
             }
-            .sorted { $0.relativePath.localizedStandardCompare($1.relativePath) == .orderedAscending }
+            files.append(ScannedAudioFile(
+                url: url,
+                relativePath: relativePath,
+                fileName: url.lastPathComponent,
+                fileExtension: url.pathExtension.lowercased()
+            ))
+        }
+        return files.sorted {
+            $0.relativePath.localizedStandardCompare($1.relativePath) == .orderedAscending
+        }
     }
 
-    private static func relativePath(for fileURL: URL, rootURL: URL) -> String {
-        let rootPath = rootURL.standardizedFileURL.path
-        let filePath = fileURL.standardizedFileURL.path
+    private static func relativePath(for fileURL: URL, rootURL: URL) -> String? {
+        let root = rootURL.standardizedFileURL.resolvingSymlinksInPath()
+        let file = fileURL.standardizedFileURL.resolvingSymlinksInPath()
+        let rootComponents = root.pathComponents
+        let fileComponents = file.pathComponents
 
-        guard filePath.hasPrefix(rootPath) else {
-            return fileURL.lastPathComponent
+        guard fileComponents.count > rootComponents.count,
+              Array(fileComponents.prefix(rootComponents.count)) == rootComponents else {
+            return nil
         }
-
-        var relativePath = String(filePath.dropFirst(rootPath.count))
-        while relativePath.hasPrefix("/") {
-            relativePath.removeFirst()
-        }
-        return relativePath.replacingOccurrences(of: "\\", with: "/")
+        return fileComponents.dropFirst(rootComponents.count).joined(separator: "/")
     }
 }
 

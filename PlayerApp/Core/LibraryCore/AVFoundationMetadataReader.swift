@@ -54,7 +54,8 @@ struct AVFoundationMetadataReader: MetadataReading {
 
     private func artwork(from metadataItems: [AVMetadataItem]) -> AudioArtwork? {
         guard let artworkItem = metadataItems.first(where: { $0.commonKey == .commonKeyArtwork }),
-              let data = artworkItem.dataValue else {
+              let data = artworkItem.dataValue,
+              data.count <= 20_000_000 else {
             return nil
         }
 

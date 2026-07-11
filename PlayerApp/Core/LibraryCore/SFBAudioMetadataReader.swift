@@ -85,21 +85,23 @@ struct SFBAudioMetadataLoader: SFBAudioMetadataLoading {
     }
 
     private func appendRawTag(_ key: String, _ value: String?, to tags: inout [AudioRawTag]) {
-        guard let value, !value.isEmpty else { return }
+        guard tags.count < 256, let value, !value.isEmpty else { return }
 
         tags.append(
             AudioRawTag(
                 keySpace: "SFBAudioEngine",
-                key: key,
+                key: String(key.prefix(512)),
                 commonKey: nil,
                 identifier: nil,
-                value: value
+                value: String(value.prefix(4_096))
             )
         )
     }
 
     private func artwork(from metadata: AudioMetadata) -> AudioArtwork? {
         guard let picture = metadata.attachedPictures.first else { return nil }
-        return AudioArtwork(data: picture.imageData as Data, mimeType: nil)
+        let data = picture.imageData as Data
+        guard data.count <= 20_000_000 else { return nil }
+        return AudioArtwork(data: data, mimeType: nil)
     }
 }

@@ -1,0 +1,22 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "NSAppleMusicUsageDescription" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Metronome shows your Music library and plays locally available, non-protected audio when you choose Import Music Library."
+          }
+        },
+        "ru" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Metronome показывает вашу медиатеку Music и воспроизводит локально доступные аудиофайлы без DRM после выбора импорта медиатеки."
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

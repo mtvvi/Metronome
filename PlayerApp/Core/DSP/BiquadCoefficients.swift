@@ -23,7 +23,10 @@ struct BiquadCoefficients: Equatable, Sendable {
         q: Double
     ) -> BiquadCoefficients {
         guard
-            abs(gainDB) > 0.000_001,
+            sampleRate.isFinite,
+            frequencyHz.isFinite,
+            gainDB.isFinite,
+            q.isFinite,
             sampleRate > 0,
             frequencyHz > 0,
             q > 0
@@ -36,8 +39,22 @@ struct BiquadCoefficients: Equatable, Sendable {
         let omega = 2 * Double.pi * clampedFrequency / sampleRate
         let cosine = cos(omega)
         let sine = sin(omega)
-        let alpha = sine / (2 * q)
         let amplitude = pow(10, gainDB / 40)
+        let alpha: Double
+        switch filterType {
+        case .lowPass, .highPass:
+            alpha = sine / (2 * sqrt(0.5))
+        case .lowShelf, .highShelf:
+            alpha = sine * sqrt(2) / 2
+        case .peaking, .resonantLowPass, .resonantHighPass, .bandPass,
+             .bandStop, .resonantLowShelf, .resonantHighShelf:
+            alpha = sine / (2 * q)
+        }
+
+        if [.peaking, .lowShelf, .highShelf, .resonantLowShelf, .resonantHighShelf]
+            .contains(filterType), abs(gainDB) <= 0.000_001 {
+            return .identity
+        }
 
         switch filterType {
         case .peaking:
@@ -50,7 +67,47 @@ struct BiquadCoefficients: Equatable, Sendable {
                 a2: 1 - alpha / amplitude
             )
 
-        case .lowShelf:
+        case .lowPass, .resonantLowPass:
+            return normalized(
+                b0: (1 - cosine) / 2,
+                b1: 1 - cosine,
+                b2: (1 - cosine) / 2,
+                a0: 1 + alpha,
+                a1: -2 * cosine,
+                a2: 1 - alpha
+            )
+
+        case .highPass, .resonantHighPass:
+            return normalized(
+                b0: (1 + cosine) / 2,
+                b1: -(1 + cosine),
+                b2: (1 + cosine) / 2,
+                a0: 1 + alpha,
+                a1: -2 * cosine,
+                a2: 1 - alpha
+            )
+
+        case .bandPass:
+            return normalized(
+                b0: alpha,
+                b1: 0,
+                b2: -alpha,
+                a0: 1 + alpha,
+                a1: -2 * cosine,
+                a2: 1 - alpha
+            )
+
+        case .bandStop:
+            return normalized(
+                b0: 1,
+                b1: -2 * cosine,
+                b2: 1,
+                a0: 1 + alpha,
+                a1: -2 * cosine,
+                a2: 1 - alpha
+            )
+
+        case .lowShelf, .resonantLowShelf:
             let rootAmplitude = sqrt(amplitude)
             return normalized(
                 b0: amplitude * ((amplitude + 1) - (amplitude - 1) * cosine + 2 * rootAmplitude * alpha),
@@ -61,7 +118,7 @@ struct BiquadCoefficients: Equatable, Sendable {
                 a2: (amplitude + 1) + (amplitude - 1) * cosine - 2 * rootAmplitude * alpha
             )
 
-        case .highShelf:
+        case .highShelf, .resonantHighShelf:
             let rootAmplitude = sqrt(amplitude)
             return normalized(
                 b0: amplitude * ((amplitude + 1) + (amplitude - 1) * cosine + 2 * rootAmplitude * alpha),

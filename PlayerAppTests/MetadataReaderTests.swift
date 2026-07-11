@@ -38,6 +38,35 @@ final class MetadataReaderTests: XCTestCase {
         XCTAssertNotNil(metadata.rawTagsJSON)
     }
 
+    func testTagNormalizerBoundsStoredMetadataAndRejectsNonFiniteReplayGain() throws {
+        var rawTags = (0..<300).map { index in
+            AudioRawTag(
+                keySpace: "custom",
+                key: "key-\(index)",
+                commonKey: nil,
+                identifier: nil,
+                value: String(repeating: "x", count: 5_000)
+            )
+        }
+        rawTags.insert(AudioRawTag(
+            keySpace: "vorbis",
+            key: "REPLAYGAIN_TRACK_GAIN",
+            commonKey: nil,
+            identifier: nil,
+            value: "NaN dB"
+        ), at: 0)
+
+        let result = try AudioMetadataTagNormalizer.normalize(rawTags: rawTags)
+        let stored = try JSONDecoder().decode(
+            [AudioRawTag].self,
+            from: try XCTUnwrap(result.rawTagsJSON.data(using: .utf8))
+        )
+
+        XCTAssertEqual(stored.count, 256)
+        XCTAssertTrue(stored.allSatisfy { $0.value.count <= 4_096 })
+        XCTAssertNil(result.tags.replayGainTrackGain)
+    }
+
     private func makeTemporaryWAVFixture() throws -> URL {
         let rootURL = FileManager.default.temporaryDirectory
             .appendingPathComponent(UUID().uuidString, isDirectory: true)

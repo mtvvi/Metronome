@@ -1,0 +1,9 @@
+AutoEq
+Copyright (c) 2018-2026 Jaakko Pasanen
+
+Source: https://github.com/jaakkopasanen/AutoEq
+Pinned source revision for catalog generation:
+7ae0f56d53074872b028649617a22bbb4232feb7
+
+Licensed under the MIT License. The generated preset catalog must retain this
+attribution and must only be regenerated from the reviewed pinned revision.
